@@ -1,0 +1,10 @@
+!SESSION 2022-09-12 23:26:52.113 -----------------------------------------------
+eclipse.buildId=4.20.0.I20210611-1600
+java.version=16.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=es_AR
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-09-12 23:28:19.950
+!MESSAGE Indexed 'TP_1' (1 sources, 56 headers) in 1,67 sec: 974 declarations; 1.970 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0 %)
