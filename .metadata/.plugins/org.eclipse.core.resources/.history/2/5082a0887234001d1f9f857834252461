@@ -1,0 +1,63 @@
+/*
+ * utn_funciones.c
+ *
+ *  Created on: 14 sep. 2022
+ *      Author: miguel
+ */
+#include "utn_funciones.h"
+
+/*static int myGets(char* cadena , int largo)
+ * Objetivo de la funcion :
+ * Lee ​de​ ​stdin​ ​hasta​ ​que​ ​encuentra​ ​un​ '\n' o ​hasta​ ​que​ ​haya​ ​copiado​ ​en​ ​cadena
+ * agrega un ‘\0’ en la última posición de la cadena (determinada por la función strlen)
+ *
+ *Parametros : char* cadena , tipo char , Define el ​tamaño​ ​de​ ​cadena
+ *Parametros : int largo , tipo int ,Puntero​ ​al​ ​espacio​ ​de​ ​memoria​ ​donde​ ​se​ ​copiara​ ​la​ ​cadena​ ​
+ *
+ *Varibles :
+ *	int retorno ; , tipo int :es el encargado de informar si salio todo ok
+ *
+ *Return : int retorno : retorna 0 si salio todo bien , caso contrario -1 */
+int myGets(char* cadena , int largo)
+{
+	int retorno = -1;
+	char bufferString [4000];
+
+	if(cadena != NULL && largo > 0)
+	{
+//limpiamos el buffer
+		__fpurge(stdin);
+//tomo todo lo que se escribe por teclado hasta el enter (\n)y el \0
+//si salio todo bien me devuelve un puntero a cadena , de lo contrario un NULL
+		if(fgets(bufferString , sizeof(bufferString), stdin) != NULL)
+		{
+/*entro ; siginifica que lleno de caracteres bufferString y no se paso del tamañio sizeof(bufferString)*/
+			if(bufferString[strlen(bufferString) -1] == '\n')
+			{
+				bufferString[strlen(bufferString) -1] = '\0';
+
+			}
+//si el tamañio en donde escribi los datos (bufferString) es menor a el largo de cadena es ok
+			if(strlen(bufferString) <= largo)
+			{
+				strncpy(cadena, bufferString , largo);
+				retorno = 0;
+			}
+		}
+	}
+	return retorno;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

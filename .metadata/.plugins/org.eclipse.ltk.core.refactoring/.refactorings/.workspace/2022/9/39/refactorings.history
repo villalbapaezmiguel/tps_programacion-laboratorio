@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;TP_1/src/utn_funciones.h&apos;" deleteContents="false" description="Delete resource &apos;TP_1/src/utn_funciones.h&apos;" element1="/TP_1/src/utn_funciones.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1663621128290"/>&#x0A;<refactoring comment="Delete resource &apos;TP_1/src/utn_funciones.c&apos;" deleteContents="false" description="Delete resource &apos;TP_1/src/utn_funciones.c&apos;" element1="/TP_1/src/utn_funciones.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1663621135561"/>
+</session>

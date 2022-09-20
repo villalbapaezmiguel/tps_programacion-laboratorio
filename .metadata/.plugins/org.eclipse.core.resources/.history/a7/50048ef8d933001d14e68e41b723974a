@@ -1,0 +1,532 @@
+/*
+ * utn.c
+ *
+ *  Created on: 4 sep. 2022
+ *      Author: miguel
+ */
+#include "utn.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio_ext.h>
+
+static int getInt(int* pResultado );
+static int esNumerica(char* cadena);
+static int myGets(char* cadena , int largo);
+
+/*validadcionTemperaturaCelsius
+ *Retorno 1 : congelacion
+ *Retorno 2 : ebullicion
+ *Retorno 3 : esta bien */
+int validacionTemperaturasCelsius(float temperatura)
+{
+	int retorno = -1;
+
+	if(temperatura > 0)
+	{
+		if(temperatura < 100)
+		{
+			retorno = 3 ;
+		}else{
+			retorno = 2;
+		}
+	}else{
+		retorno = 1;
+	}
+
+
+	return retorno;
+}
+
+/*validadcionTemperaturaFahrenheit
+ *Retorno 1 : congelacion
+ *Retorno 2 : ebullicion
+ *Retorno 3 : esta bien */
+int validacionTemperaturasFahrenheit(float temperatura)
+{
+	int retorno = -1;
+
+	if(temperatura > 32)
+	{
+		if(temperatura < 212)
+		{
+			retorno = 3 ;
+		}else{
+			retorno = 2;
+		}
+	}else{
+		retorno = 1;
+	}
+
+	return retorno;
+}
+
+//Pasar de Celsius a Fahrenheit
+float conversionCelsius_a_Fahrenheit(float celsius, float fahrenheit)
+{
+	float retorno = -1;
+
+	retorno = (celsius *9/5)+32 ;
+
+	return retorno;
+}
+
+
+//Pasar de Fahrenheit a Celsius
+float conversionFahrenheit_a_Celsius(float celsius, float fahrenheit)
+{
+	float retorno = -1;
+
+	retorno = (celsius - 32)*9/5 ;
+
+	return retorno;
+}
+
+/*int pedirNumero(int* numero , char* mensaje, char* mensajeError , int maximo , int minimo)
+ *Objetivo de la funcion :
+ * pide un numero al usuario , lo valida , comprueba y devuelve el resultado.
+ *
+ *ParaMetros :
+ * Parametro : int* numero : tipo entero , Puntero a un entero , alli se dejara el numero ingresado como parametro
+ * Parametro : char* mensaje : tipo char , es una cadena de caracteres que contendra un mensaje para pedir que ingrese una letra
+ * Parametro : char* mensajeError : tipo char , es una cadena de caracteres que contendra un mensaje de ERROR para resaltar que algo salio mal al ingreso del caracter
+ * Parametro : int maximo : tipo entero , Valor maximo aceptado
+ * Parametro : int minimo : tipo entero , Valor mimini aceptado
+ *
+ *Variables :
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * int auxiliar : tipo entero , se encarga de pedir el numero para luego pasarle al pentero numero que se encuentra como parametro (int* numero)
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ **/
+int pedirNumero(int* numero , char* mensaje, char* mensajeError , int maximo , int minimo)
+{
+	int retorno = -1;
+	int auxiliar ;
+
+	if(numero != NULL && mensaje != NULL && mensajeError != NULL && maximo > minimo)//valida
+	{
+		printf("\n%s",mensaje);//Muestra el mensaje
+		scanf("%d", &auxiliar);//lo pide
+		if(auxiliar >= minimo && auxiliar <= maximo)//comprueba
+		{
+			*numero = auxiliar;// devuelve el resultado al puntero
+			retorno = 0;// devuelve el resultado al retorno de que salio ok
+		}else{
+			printf("\n%s",mensajeError);//Muestra el mensaje de error
+		}
+	}else{
+		printf("\n%s",mensajeError);//Muestra el mensaje de error
+	}
+	return retorno;//lo retona
+}
+
+void menu (void)
+{
+
+	int opcion ;
+	int banderaLoguarse = -1;
+	int banderaCompras = -1;
+	int contadorCompras = 0;
+	int contadorVentas = 0;
+	do {
+		printf("\n1.Loguearse \n2.Comprar \n3.Ver mis compras \n4.Vender \n5.Salir");
+		if(pedirNumero(&opcion, "\nIngrese una opcion : ", "\nERROR", 5, 1) == 0)
+		{
+			switch(opcion)
+			{
+				case 1:
+					printf("\n---------------------------------Loguearse---------------------------------");
+					banderaLoguarse = 1;
+					break;
+				case 2:
+					if(banderaLoguarse == 1)
+					{
+						printf("\n---------------------------------Comprar---------------------------------");
+						banderaCompras = 0;
+						contadorCompras++;
+
+					}else{
+						printf("\nPrimero se tiene que loguear ");
+					}
+					break;
+				case 3:
+					if(banderaLoguarse == 1)
+					{
+						if(banderaCompras == 0)
+						{
+							printf("\n---------------------------------Ver mis compras---------------------------------");
+						}else{
+							printf("\nprimero tiene que comprar al menos una vez");
+						}
+
+					}else{
+						printf("\nPrimero se tiene que loguear ");
+					}
+					break;
+				case 4:
+/*E. A lo anterior sumarle que haya compras para poder vender. (Si compré una vez y vendí una vez no puedo ingresar a vender).*/
+					if(banderaLoguarse == 1)
+					{
+						if(contadorCompras > 1)
+						{
+							if(contadorVentas > 1)
+							{
+								printf("\n---------------------------------Vender---------------------------------");
+								menuVender();
+
+							}else{
+
+								printf("\n***********Tiene que vender mas de una vez********** ");
+							}
+						}else{
+
+							printf("\n***********Tiene que comprar mas de una vez**********");
+							printf("\nSi compré una vez y vendí una vez no puedo ingresar a vender");
+						}
+							contadorVentas ++;
+							printf("\nvendio");
+
+					}else{
+						printf("\nPrimero se tiene que loguear ");
+					}
+					break;
+				case 5:
+					printf("\n---------------------------------Salir---------------------------------");
+					break;
+				default : printf("\nOpcion incorrecta ");
+			}
+		}
+	} while (opcion != 5 );
+
+}
+
+
+
+void menuVender (void)
+{
+	int opcion ;
+	printf("\n--------------------------------- Menu para Vender ---------------------------------");
+	do {
+		pedirNumero(&opcion, "\n1) Vender \n2) Hacer factura \n3)volver atras \nIngrese una opcion : ", "\nERROR", 3,1);
+		switch(opcion)
+		{
+			case 1:
+				printf("\nVender");
+				break;
+			case 2:
+				printf("\nHacer factura");
+				break;
+			case 3:
+				printf("\nVolver atrás");
+				break;
+			default : printf("\nopcion incorrecta ");
+		}
+
+	} while (opcion != 3);
+
+}
+
+
+/*función que calcule el promedio de los valores del Array que
+recibe y me devuelva el promedio*/
+int calcularPromedioArray(int array[], int limite)
+{
+	float promedio  = -1;
+	int suma ;
+	int contador = 0;
+	int i;
+
+	if(limite > 0)
+	{
+		for (i = 0; i < limite; ++i) {
+
+			if(array[i] != -99)
+			{
+				suma += array[i];
+				contador ++;
+			}
+		}
+
+		promedio =  (float)suma / contador;
+	}
+
+	return promedio;
+}
+
+/*int pedirLetra(char* letra , char* mensaje , char* mensajeError)
+ *Objetivo de la funcion :
+ * esta funcion se encarga de pedir una letra.
+ *
+ *Parametros :
+ * Parametro : char* letra : tipo char ,es el caracter ingresado como parametro
+ * Parametro : char* mensaje : tipo char , es una cadena de caracteres que contendra un mensaje para pedir que ingrese una letra
+ * Parametro : char* mensajeError : tipo char , es una cadena de caracteres que contendra un mensaje de ERROR para resaltar que algo salio mal al ingreso del caracter
+ *
+ *Varibles :
+ * int retorno : tipo entero ,  es el encargado de informar si salio todo ok
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ **/
+int pedirLetra(char* letra , char* mensaje , char* mensajeError)
+{
+	int retorno = -1;
+	if(letra != NULL && mensaje != NULL && mensajeError != NULL)//valida
+	{
+
+		printf("%s",mensaje);//Muestra el mensaje
+		__fpurge(stdin);//vacía los buffers del flujo dado
+		scanf("%c", letra);//lo pide
+
+		retorno = 0; //devuelve el resultado al retorno de que salio ok
+	}
+
+	return retorno ;//lo retorna
+}
+//		printf("\nDesea continuar (s/n)?");
+//		__fpurge(stdin);
+
+int inicializarArray (int array [], int limite )
+{
+	int retorno = -1;
+	int i ;
+
+	if(array != NULL && limite > 0)
+	{
+		for (i = 0; i < limite; ++i) {
+
+			array[i] = -99;
+		}
+	}
+	retorno = 0;
+
+	return retorno;
+}
+
+/* Realizar una función que reciba como parámetros un array de enteros y un entero por referencia*/
+/* La función calculara el máximo valor de ese array y utilizara el valor por referencia para retornar ese valor.*/
+int calcularArrayMaximoValorBandera(int array [],int* enteroMaximo, int limite)
+{
+	int retorno = -1;
+	int i;
+	int bandera = -1;
+	int maximo ;
+
+	if(array != NULL && enteroMaximo != NULL && limite > 0)
+	{
+
+		retorno = 0;
+		for (i = 0; i < limite; ++i) {
+
+			if(bandera == -1)
+			{
+				maximo = array[i];
+				bandera = 0;
+			}else{
+
+				if(maximo < array[i])
+				{
+					maximo = array[i];
+				}
+			}
+		}
+
+		*enteroMaximo = maximo;
+
+	}
+
+	return retorno;
+}
+
+
+//int pedirNombre(char* nombre[], char* mensaje , char mensajeErro )
+//{
+//	int retorno = -1;
+//	int auxiliar [300];
+//
+//	if(nombre != NULL && mensaje != NULL && mensajeErro != NULL)
+//	{
+//		printf("\n%s", mensaje);
+//		__fpurge(stdin);
+//		scanf("%s",auxiliar);
+//
+//
+//
+//	}
+//
+//	return retorno ;
+//
+//}
+
+
+
+/*int pedirNumero(int* numero , char* mensaje, char* mensajeError , int minimo , int maximo)
+ *
+ *Objetivo de la funcion :
+ * pide un numero por consola , lo valida , comprueba y devuelve el resultado.
+ *
+ *ParaMetros :
+ * Parametro : int* pResultado : tipo entero ,Puntero a variable donde se escribirá el valor ingresado en el caso de ser correcto
+ * Parametro : char* mensaje : tipo char , Puntero a cadena de caracteres con mensaje a imprimir antes de pedirle al usuario datos por consola.
+ * Parametro : char* mensajeError : tipo char , Puntero a cadena de caracteres con mensaje de error en el caso de que el dato ingresado no sea válido.
+ * Parametro : int maximo : tipo entero , Valor maximo aceptado
+ * Parametro : int minimo : tipo entero , Valor mimini aceptado
+ *
+ *Variables :
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * int auxiliar : tipo entero , se encarga de pedir el numero para luego pasarle al pentero numero que se encuentra como parametro (int* numero)
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ **/int utn_getNumero(int* pResultado , char* mensaje , char* mensajeError , int minimo , int maximo )
+{
+	 int retorno = -1;
+	 int aux ;
+
+	 if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && (minimo < maximo))
+	 {
+		 printf("\n%s ", mensaje);
+		 if(getInt(&aux) == 0)
+		 {
+			 if(aux > minimo &&  aux < maximo)
+			 {
+				 *pResultado = aux ;
+				 retorno = 0;
+			 }else{
+				 printf("\n%s", mensajeError);
+			 }
+		 }else{
+//limpiamos el buffer , porque la función scanf no descarta el texto previamente ingresado y este queda en el buffer de entrada “standard input” del programa.
+//y mostramos el mensaje error
+			 __fpurge(stdin);
+			 printf("\n%s", mensajeError);
+		 }
+	 }
+	 return retorno ;
+
+}
+
+
+/*static int getInt(int* pResultado )
+ *Objetoivo de la funcion :
+ * Pide un texto al usuario, lo almacena como cadena, valida y convierte el texto a numero y lo devuelve como int.
+ * El texto quedará almacenado como una cadena de caracteres en la variable buffer , luego convertimos ese texto en una variable de otro tipo
+ * con la funcion atoi()
+ *	atoi () :recibe una cadena y devuelve un valor del tipo int.
+ *
+ *Parametro : int* pResultado : tipo int : Puntero a variable donde se escribirá el valor ingresado
+ *
+ *Varibles :
+ *	int retorno , tipo int :es el encargado de informar si salio todo ok
+ *	char buffer , tipo chat : se encarga de tomar los datos ingresados por el usuario (en este caso texto ), para luego pasarlo a enteros
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ * */
+static int getInt(int* pResultado )
+{
+	int retorno = -1;
+	char buffer[400];
+
+	if(pResultado != NULL)
+	{
+		/*fgets :Función que se encarga de leer o almacenar una cadena de caracteres introducida mediante el teclado , La variable es guardada hasta que haya un salto de línea (“\n”)
+		 * significa que lee un archivo (en este caso : stdin),
+		 * 1er parametro : en donde se va a dejar la informacion
+		 * 2do parametro : la longitud o cantidad
+		 * 3er parametro : el archivo*/
+		fgets(buffer, sizeof(buffer), stdin);
+		if(myGets(buffer, sizeof(buffer))== 0 && esNumerica(buffer))
+		{
+			*pResultado = atoi(buffer);
+			retorno = 0;
+		}
+	}
+
+
+	return retorno;
+}
+
+
+/*static int esNumerica(char* cadena)
+ *Objetoivo de la funcion :
+ * Recibe una cadena de caracteres y devuelve 1 en el caso de que el texto este compuesto solo por números.
+ *
+ *Parametro : char* cadena: tipo char* : Puntero a cadena de caracteres
+ *
+ *Varibles :
+ *	int retorno , tipo int :es el encargado de informar si salio todo ok
+ *	char buffer , tipo chat : se encarga de tomar los datos ingresados por el usuario (en este caso texto ), para luego pasarlo a enteros
+ *
+ *Retono : retorna 1 si salio todo bien (y los caracteres son numericos), caso contrario -1
+ * */
+static int esNumerica(char* cadena)
+{
+	int i = 0;
+	int retorno = 1;
+
+	if(cadena != NULL && strlen(cadena) > 0)
+	{
+		while(cadena [i] != '\0')//recorre el array hasta que se tope con el \0(osea el ultimo elemento del array)
+		{
+			if(cadena[i] < '0' || cadena[i] > '9')//si se detecta en la cadena un numero menor a 0 o un numero mayor a 9...
+			{
+				break ;//se corta la ejecucion del programa y manda un retorno de -1 , osea que salio mal la operacion
+				retorno = -1;
+			}
+			i++;
+		}
+	}
+
+	return retorno;
+}
+
+
+/*static int myGets(char* cadena , int largo)
+ * Objetivo de la funcion :
+ * Lee ​de​ ​stdin​ ​hasta​ ​que​ ​encuentra​ ​un​ '\n' o ​hasta​ ​que​ ​haya​ ​copiado​ ​en​ ​cadena
+ * agrega un ‘\0’ en la última posición de la cadena (determinada por la función strlen)
+ *
+ *Parametros : char* cadena , tipo char , Define el ​tamaño​ ​de​ ​cadena
+ *Parametros : int largo , tipo int ,Puntero​ ​al​ ​espacio​ ​de​ ​memoria​ ​donde​ ​se​ ​copiara​ ​la​ ​cadena​ ​
+ *
+ *Varibles :
+ *	int retorno ; , tipo int :es el encargado de informar si salio todo ok
+ *
+ *Return : int retorno : retorna 0 si salio todo bien , caso contrario -1 */
+static int myGets(char* cadena , int largo)
+{
+	int retorno = -1;
+	char bufferCadena[4099];
+
+	if(cadena != NULL && largo > 0)
+	{
+		__fpurge(stdin);
+		if(fgets(bufferCadena , sizeof(bufferCadena) , stdin) != NULL)
+		{
+
+			if(bufferCadena[strnlen(bufferCadena,sizeof(bufferCadena)) -1] == '\n' )
+			{
+				bufferCadena[strnlen(bufferCadena ,sizeof(bufferCadena)) -1] = '\0';
+				retorno =0;
+			}
+
+			if(strnlen(bufferCadena, sizeof(bufferCadena)) <= largo)
+			{
+				strncpy(cadena, bufferCadena, sizeof(bufferCadena));
+				retorno = 0;
+			}
+//			if(cadena[sizeof(bufferCadena) -1] == '\n')
+//			{
+//				cadena[sizeof(bufferCadena) -1] = '\0';
+//				retorno = 0;
+//			}
+		}
+	}
+
+	return retorno;
+}
+
+
+
+
+
+
