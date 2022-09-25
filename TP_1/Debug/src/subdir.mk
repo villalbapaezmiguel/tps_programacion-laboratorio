@@ -5,14 +5,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/TP_1.c \
+../src/funciones.c \
 ../src/utn.c 
 
 OBJS += \
 ./src/TP_1.o \
+./src/funciones.o \
 ./src/utn.o 
 
 C_DEPS += \
 ./src/TP_1.d \
+./src/funciones.d \
 ./src/utn.d 
 
 

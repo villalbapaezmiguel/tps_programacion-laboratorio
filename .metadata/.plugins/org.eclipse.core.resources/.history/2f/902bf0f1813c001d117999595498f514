@@ -1,0 +1,597 @@
+/*
+ ============================================================================
+ Name        : TP_1.c
+ Author      : 
+ Version     :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
+#include <stdio_ext.h>
+#include <stdlib.h>
+#include <string.h>
+#include "utn.h"
+
+#define CONFEDERACION_AFC_ASIA 1//en Asia
+#define CONFEDERACION_CAF_AFRICA 2//en Africa
+#define CONFEDERACION_CONCACAF_ZONA_NORTE 3//en Zona del Norte
+#define CONFEDERACION_CONMEBOL_SUDAMERICA 4//en Sudamerica
+#define CONFEDERACION_UEFA_EUROPA 5//en Europa
+#define CONFEDERACION_OFC_OCEANIA 6//en Oceania
+
+int cargar_confederaciones (int* confederacion );
+int	subMenu_costosDeMantenimiento (int* opcionCostos ,float* costoTransporte , float* costoHospedaje ,float* costoComida);
+void menuPrincipal(void);
+int cargarJugador(int* contadorArqueros , int* contadorDefensores , int* contadorMediocampistas , int* contadorDelanteros  );
+int subMenu_cargaJugadores(int* contadorArqueros , int* contadorDefensores , int* contadorMediocampistas , int* contadorDelanteros , int* confederacion);
+float puntoA_calcularPromedioJugadorMercado (int* cantidadJugadoresIngresados ,int* contadorConfederaciones);
+int puntoA_calcularPromedios(int* cantiadadJugadoresIngresados ,int* contador_AFC_ASIA , int* contador_CAF_AFRICA , int* contador_CONCACAF_ZONA_NORTE , int* contador_CONMEBOL_SUDAMERICA , int* contador_UEFA_EUROPA , int* contador_OFC_OCEANIA,
+		float* promedio_AFC_ASIA , float* promedio_CAF_AFRICA , float* promedio_CONCACAF_ZONA_NORTE , float* promedio_CONMEBOL_SUDAMERICA , float* promedio_UEFA_EUROPA , float* promedio_OFC_OCEANIA);
+int puntoB_calcularCostosMantenimientos(int* cantiadadJugadoresIngresados , float* costoTransporte , float* costoHospedaje , float* costoComida ,float* costoMantenimientoTotal );
+void informar (float* promedio_AFC_ASIA , float* promedio_CAF_AFRICA , float* promedio_CONCACAF_ZONA_NORTE , float* promedio_CONMEBOL_SUDAMERICA , float* promedio_UEFA_EUROPA , float* promedio_OFC_OCEANIA ,
+		float* costoMantenimientoTotal , int* auxAumento, int* banderaAumento , float* costoMantenimientoTotalConAumento);
+
+int main(void) {
+
+	setbuf(stdout,NULL);
+//	menuPrincipal();
+
+	float promedio ;
+	int total = 20;
+	int cantidad = 5;
+
+	promedio = puntoA_calcularPromedioJugadorMercado(&total, &cantidad);
+
+	printf("\nProemdio : %.2f", promedio);
+
+
+	return EXIT_SUCCESS;
+
+}
+
+
+
+/*void menuPrincipal(int* opcion )
+ *Objetivo de la funcion :
+ * 	le muestra un menu de opciones al usuario
+ *
+ *ParaMetros :
+ * Parametro : int* pOpcion  : tipo entero , Puntero a un entero , alli se dejara el numero ingresado como parametro
+ *
+ *Variables :
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * char bufferString : tipo char , se encarga de pedir el numero para luego pasarle al puntero pRespuetas que se encuentra como parametro (int* pRespuesta)
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ **/
+void menuPrincipal(void)
+{
+	int opcion;
+	int banderaPuntoUno = -1;
+	int banderaPuntoDos = -1;
+
+	//Costos del matentenimiento iniciciales
+	float costoTransporte_inicial = 0;
+	float costoHospedaje_inicial = 0;
+	float costoComida_inicial = 0;
+	int opcionCosto ;
+
+	//Carga de jugadores
+	int contadorArqueros = 0;
+	int contadorDefensores = 0;
+	int contadorMediocampistas = 0;
+	int contadorDelanteros = 0;
+	int confederacion ;
+
+	//cantidad de jugadores ingresados
+	int contadorJugadoresIngresados = 0;
+
+	//a
+	int contador_AFC_ASIA = 0;
+	int contador_CAF_AFRICA = 0;
+	int contador_CONCACAF_ZONA_NORTE = 0;
+	int contador_CONMEBOL_SUDAMERICA = 0;
+	int contador_UEFA_EUROPA = 0;
+	int contador_OFC_OCEANIA = 0;
+	float promedio_AFC_ASIA = 0;
+	float promedio_CAF_AFRICA = 0;
+	float promedio_CONCACAF_ZONA_NORTE = 0;
+	float promedio_CONMEBOL_SUDAMERICA = 0;
+	float promedio_UEFA_EUROPA = 0;
+	float promedio_OFC_OCEANIA = 0;
+
+	//B
+	float costoMantenimientoTotal;
+
+
+	//C
+	int auxCostoAumento ;
+	int banderaAumento = -1;
+	float costoMantenimientoTotal_conAumento;
+
+	printf("\n------------------------Menu Principal------------------------\n");
+	do {
+		printf("\n1.Ingreso de los costos de mantenimiento\n Costo Transporte -> $%.2f\n Costo Hospedaje -> $%.2f\n Costo Comida -> $%.2f",costoTransporte_inicial, costoHospedaje_inicial, costoComida_inicial);
+		printf("\n2.Carga de Jugadores\n Arqueros -> %d\n Defensores -> %d\n Mediocampistas -> %d\n Delanteros -> %d",contadorArqueros, contadorDefensores, contadorMediocampistas, contadorDelanteros);
+		printf("\n3.Realizar todos los Calculos\n4.Informar todos los Resultados\n5.Salir");
+		utn_pedirNumeroEntero(&opcion, "\nIngrese una opcion : ", "\nError", 5, 1);
+		switch(opcion)
+		{
+			case 1:
+				printf("\n********Costos de mantenimiento*********\n");
+				banderaPuntoUno = 0;
+				if(subMenu_costosDeMantenimiento(&opcionCosto, &costoTransporte_inicial, &costoHospedaje_inicial, &costoComida_inicial) == 0)
+				{
+					printf("\n------------------Costos de Mantenimiento OK------------------\n");
+				}
+				break;
+			case 2:
+				printf("\n*********Carga de jugadores*********\n");
+				banderaPuntoDos = 0;
+				if(subMenu_cargaJugadores(&contadorArqueros, &contadorDefensores, &contadorMediocampistas, &contadorDelanteros, &confederacion) == 0)
+				{
+					contadorJugadoresIngresados ++;
+					switch(confederacion)
+					{
+						case 1:
+							contador_AFC_ASIA ++;
+							printf("\n*********AFC en Asi : %d *********\n", contador_AFC_ASIA);
+							break;
+						case 2:
+							contador_CAF_AFRICA ++;
+							printf("\n*********CAF en Africa : %d *********\n", contador_CAF_AFRICA);
+							break;
+						case 3:
+							contador_CONCACAF_ZONA_NORTE ++;
+							printf("\n*********CONCACAF en zona del Norte : %d *********\n", contador_CONCACAF_ZONA_NORTE);
+							break;
+						case 4:
+							contador_CONMEBOL_SUDAMERICA ++;
+							printf("\n*********CONMEBOL en sudAmerica : %d *********\n", contador_CONMEBOL_SUDAMERICA);
+							break;
+						case 5:
+							contador_UEFA_EUROPA ++;
+							printf("\n*********UEFA en Europa : %d *********\n", contador_UEFA_EUROPA);
+							break;
+						case 6:
+							contador_OFC_OCEANIA ++;
+							printf("\n*********OFC en Oceania : %d *********\n", contador_OFC_OCEANIA);
+							break;
+					}
+
+					printf("\n------------------Carga de Jugadores OK------------------\n");
+				}
+				break;
+			case 3:
+				if(banderaPuntoUno == 0 && banderaPuntoDos == 0)
+				{
+					printf("\n*********Realizar todos los Calculos*********\n");
+
+						if(puntoA_calcularPromedios(&contadorJugadoresIngresados, &contador_AFC_ASIA, &contador_CAF_AFRICA, &contador_CONCACAF_ZONA_NORTE, &contador_CONMEBOL_SUDAMERICA, &contador_UEFA_EUROPA, &contador_OFC_OCEANIA,
+								&promedio_AFC_ASIA, &promedio_CAF_AFRICA, &promedio_CONCACAF_ZONA_NORTE, &promedio_CONMEBOL_SUDAMERICA, &promedio_UEFA_EUROPA, &promedio_OFC_OCEANIA) == 0)
+						{
+							printf("\npunto A ok");
+						}
+						if(puntoB_calcularCostosMantenimientos(&contadorJugadoresIngresados, &costoTransporte_inicial, &costoHospedaje_inicial, &costoComida_inicial, &costoMantenimientoTotal) == 0)
+						{
+							printf("\npunto B ok");
+						}
+						if(contador_UEFA_EUROPA > contador_AFC_ASIA && contador_UEFA_EUROPA > contador_CAF_AFRICA && contador_UEFA_EUROPA  > contador_CONCACAF_ZONA_NORTE && contador_UEFA_EUROPA > contador_CONMEBOL_SUDAMERICA && contador_UEFA_EUROPA > contador_OFC_OCEANIA)
+						{
+							auxCostoAumento = costoMantenimientoTotal ;
+							auxCostoAumento = auxCostoAumento * 35 /100;
+							costoMantenimientoTotal_conAumento += auxCostoAumento;
+							banderaAumento = 0;
+							printf("\nPunto C ok");
+						}
+
+				}else{
+					printf("\nERROR no tienen datos ingresados en los puntos 1 y 2\n");
+				}
+				break;
+			case 4:
+				if(banderaPuntoUno == 0 && banderaPuntoDos == 0)
+				{
+					printf("\n*********Informar todos los Resultados*********\n");
+					informar(&promedio_AFC_ASIA, &promedio_CAF_AFRICA, &promedio_CONCACAF_ZONA_NORTE, &promedio_CONMEBOL_SUDAMERICA, &promedio_UEFA_EUROPA, &promedio_OFC_OCEANIA, &costoMantenimientoTotal, &auxCostoAumento, &banderaAumento, &costoMantenimientoTotal_conAumento);
+
+				}else{
+					printf("\nERROR no tienen datos ingresados en los puntos 1 y 2\n");
+				}
+
+				break;
+			case 5:
+				printf("\n*********Salir*********\n");
+				break;
+			default : printf("\nOpcion Incorrecta ");
+		}
+
+
+	} while (opcion != 5);
+
+
+}
+
+void informar (float* promedio_AFC_ASIA , float* promedio_CAF_AFRICA , float* promedio_CONCACAF_ZONA_NORTE , float* promedio_CONMEBOL_SUDAMERICA , float* promedio_UEFA_EUROPA , float* promedio_OFC_OCEANIA ,float* costoMantenimientoTotal , int* auxAumento, int* banderaAumento , float* costoMantenimientoTotalConAumento)
+{
+
+	if(promedio_AFC_ASIA != NULL && promedio_CAF_AFRICA != NULL && promedio_CONCACAF_ZONA_NORTE != NULL && promedio_CONMEBOL_SUDAMERICA != NULL && promedio_UEFA_EUROPA != NULL &&
+			promedio_OFC_OCEANIA != NULL && costoMantenimientoTotal != NULL && banderaAumento != NULL && auxAumento != NULL && costoMantenimientoTotalConAumento != NULL)
+	{
+		printf("\nPorcentaje AFC en Asia : %.2f",*promedio_AFC_ASIA);
+		printf("\nPorcentaje CAF en Africa : %.2f", *promedio_CAF_AFRICA);
+		printf("\nPorcentaje CONCACAF en Zona Norte : %.2f", *promedio_CONCACAF_ZONA_NORTE);
+		printf("\nPorcentaje CONMEBOL en Sedamerica : %.2f", *promedio_CONMEBOL_SUDAMERICA);
+		printf("\nPorcentaje UEFA en Europa : %.2f", *promedio_UEFA_EUROPA);
+		printf("\nPorcentaje OFC en Oceania: %.2f", *promedio_OFC_OCEANIA);
+
+		if(banderaAumento == 0)
+		{
+			printf("\nEl costo de mantenimiento era de $%.2f y recibio un aumento de : $%d , su nuevo valor es de : %.2f\n", *costoMantenimientoTotal, *auxAumento, *costoMantenimientoTotalConAumento);
+		}else{
+			printf("\nEl costo de mantenimiento era de $%.2f \n", *costoMantenimientoTotal);
+		}
+
+	}else{
+		printf("\nError al informar \n");
+	}
+
+}
+
+/*retorna 0 si salio bien , de lo contrario -1*/
+int puntoB_calcularCostosMantenimientos(int* cantiadadJugadoresIngresados , float* costoTransporte , float* costoHospedaje , float* costoComida ,float* costoMantenimientoTotal )
+{
+	int retorno = -1;
+	float costoTransporteTotal ;
+	float costoHospedajeTotal;
+	float costoComidaTotal;
+//validar todo
+	if(cantiadadJugadoresIngresados != NULL && costoTransporte != NULL && costoHospedaje != NULL && costoComida != NULL && costoMantenimientoTotal != NULL )
+	{
+
+		costoTransporteTotal = *costoTransporte * *cantiadadJugadoresIngresados;
+		costoHospedajeTotal =  *costoHospedaje * *cantiadadJugadoresIngresados;
+		costoComidaTotal = *costoComida * *cantiadadJugadoresIngresados ;
+
+		*costoMantenimientoTotal = (float)costoTransporteTotal + costoHospedajeTotal + costoComidaTotal ;
+		retorno = 0;
+	}
+
+	return retorno;
+}
+
+
+/*calcula el promedio de todos lo jugadores y los pasa por referencia*/
+int puntoA_calcularPromedios(int* cantiadadJugadoresIngresados ,int* contador_AFC_ASIA , int* contador_CAF_AFRICA , int* contador_CONCACAF_ZONA_NORTE , int* contador_CONMEBOL_SUDAMERICA , int* contador_UEFA_EUROPA , int* contador_OFC_OCEANIA,
+		float* promedio_AFC_ASIA , float* promedio_CAF_AFRICA , float* promedio_CONCACAF_ZONA_NORTE , float* promedio_CONMEBOL_SUDAMERICA , float* promedio_UEFA_EUROPA , float* promedio_OFC_OCEANIA)
+{
+	int retorno = -1;
+
+	if(cantiadadJugadoresIngresados != NULL && contador_AFC_ASIA != NULL && contador_CAF_AFRICA != NULL && contador_CONCACAF_ZONA_NORTE != NULL && contador_CONMEBOL_SUDAMERICA != NULL &&
+			promedio_AFC_ASIA != NULL && promedio_CAF_AFRICA != NULL && promedio_CONCACAF_ZONA_NORTE != NULL && promedio_CONMEBOL_SUDAMERICA != NULL && promedio_UEFA_EUROPA != NULL && promedio_OFC_OCEANIA != NULL)
+	{
+		*promedio_AFC_ASIA = puntoA_calcularPromedioJugadorMercado(cantiadadJugadoresIngresados, contador_AFC_ASIA);
+		*promedio_CAF_AFRICA = puntoA_calcularPromedioJugadorMercado(cantiadadJugadoresIngresados, contador_CAF_AFRICA);
+		*promedio_CONCACAF_ZONA_NORTE = puntoA_calcularPromedioJugadorMercado(cantiadadJugadoresIngresados, contador_CONCACAF_ZONA_NORTE);
+		*promedio_CONMEBOL_SUDAMERICA = puntoA_calcularPromedioJugadorMercado(cantiadadJugadoresIngresados, contador_CONMEBOL_SUDAMERICA);
+		*promedio_UEFA_EUROPA = puntoA_calcularPromedioJugadorMercado(cantiadadJugadoresIngresados, contador_UEFA_EUROPA);
+		*promedio_OFC_OCEANIA = puntoA_calcularPromedioJugadorMercado(cantiadadJugadoresIngresados, contador_OFC_OCEANIA);
+
+		retorno = 0;
+	}
+
+	return retorno;
+}
+
+
+/*devuelve el promedio  */
+float puntoA_calcularPromedioJugadorMercado (int* cantidadJugadoresIngresados ,int* contadorConfederaciones)
+{
+	float promedio = 0;
+	if(cantidadJugadoresIngresados != NULL && contadorConfederaciones != NULL)
+	{
+		promedio = (float)*contadorConfederaciones * 100 / *cantidadJugadoresIngresados;
+
+
+//		auxPromedio = (float)*cantidadJugadoresIngresados * *contadorConfederaciones / 100;
+//		promedio = auxPromedio;
+
+	}
+	return promedio;
+}
+
+int subMenu_cargaJugadores(int* contadorArqueros , int* contadorDefensores , int* contadorMediocampistas , int* contadorDelanteros , int* confederacion)
+{
+	int retorno = -1;
+	int opcion ;
+	int banderaCamisetas = -1;
+	int banderaPosicion = -1;
+	int banderaConfederacion = -1;
+	int banderaSalir = -1;
+	int camisetas ;
+
+
+	if(contadorArqueros != NULL && contadorDefensores != NULL && contadorMediocampistas != NULL && contadorDelanteros != NULL && confederacion != NULL)
+	{
+		retorno = 0;
+		do {
+			printf("\n1)Numero de camiseta \n2)Posicion \n3)Confederación en la que está jugando\n4)salir para que se guarden los datos ingresados");
+			utn_pedirNumeroEntero(&opcion, "\nIngrese una opcion :", "\nError", 4, 1);
+			switch(opcion)
+			{
+				case 1:
+					if(utn_pedirNumeroEntero(&camisetas, "\ningrese un numero de camisata (entre 1 y 32):", "\nError", 32, 1) == 0)
+					{
+						printf("\n--> numero de camiseta OK<--\n");
+						banderaCamisetas = 0;
+					}
+					break;
+				case 2:
+					if(cargarJugador(contadorArqueros, contadorDefensores, contadorMediocampistas, contadorDelanteros) == 0)
+					{
+						printf("\n--> Posicion OK <--\n");
+						banderaPosicion = 0;
+					}
+					break;
+				case 3:
+					if(cargar_confederaciones(confederacion) == 0)
+					{
+						printf("\n-->Confederacion OK <--\n");
+						banderaConfederacion = 0;
+					}
+					break;
+				case 4://salir
+					if(banderaCamisetas == 0 && banderaConfederacion == 0 && banderaPosicion == 0 )
+					{
+						banderaSalir = 0;
+					}else{
+						if(banderaCamisetas == 0 && banderaConfederacion == 0 && banderaPosicion == -1)
+						{
+							printf("\nLe falta la posicion del jugador , no puede salir");
+
+						}else if(banderaConfederacion == 0 && banderaPosicion == 0 && banderaCamisetas == -1)
+						{
+							printf("\nLe falta el numero de camiseta , no puede salir");
+
+						}else if(banderaCamisetas == 0 && banderaPosicion == 0 && banderaConfederacion == -1)
+						{
+							printf("\nLe falta la confederacion , no puede salir");
+						}else{
+
+							if(banderaCamisetas == 0 && banderaConfederacion == -1 && banderaPosicion == -1)
+							{
+								printf("\nLe falta la confederacion , no puede salir");
+								printf("\nLe falta la posicion del jugador , no puede salir");
+							}else if(banderaConfederacion == 0 && banderaCamisetas == -1 && banderaPosicion == -1)
+							{
+								printf("\nLe falta el numero de camiseta , no puede salir");
+								printf("\nLe falta la posicion del jugador , no puede salir");
+							}else if(banderaPosicion == 0 && banderaConfederacion == -1 && banderaCamisetas == -1)
+							{
+								printf("\nLe falta la confederacion , no puede salir");
+								printf("\nLe falta el numero de camiseta , no puede salir");
+							}
+						}
+					}
+					break;
+			}
+
+		} while (banderaSalir == -1);
+	}
+
+
+	return retorno;
+}
+
+
+
+int cargarJugador(int* contadorArqueros , int* contadorDefensores , int* contadorMediocampistas , int* contadorDelanteros  )
+{
+	int opcion ;
+	int bandera = -1;
+	int retorno = -1;
+//	int aux_contadorArqueros = 0;
+//	int aux_contadorDefensores = 0;
+//	int aux_contadorMediocampistas = 0;
+//	int aux_contadorDelanteros = 0;
+
+
+	if(contadorArqueros != NULL && contadorDefensores != NULL && contadorMediocampistas != NULL && contadorDelanteros != NULL)
+	{
+		retorno = 0;
+		do {
+			printf("\n1)Arquero\n2)Defensor\n3)Mediocampista\n4)Delantero");
+			utn_pedirNumeroEntero(&opcion, "\nIngrese una posicion  :", "\nError", 4, 1);
+			switch(opcion)
+			{
+				case 1:
+					if(*contadorArqueros < 2 && bandera == -1 )
+					{
+						printf("\n--> Posicion Arquero OK<--\n");
+
+						*contadorArqueros += 1;
+						bandera = 0;
+					}else{
+						printf("\nXXXXXXXXX->NO puede haber mas de 2 Arqueros <-XXXXXXXXX\n");
+					}
+					break;
+				case 2:
+					if(*contadorDefensores < 8 && bandera == -1 )
+					{
+						printf("\n--> Posicion Defensor OK<--\n");
+
+						*contadorDefensores += 1;
+						bandera = 0;
+
+					}else{
+						printf("\nXXXXXXXXX-> NO puede haber mas de 8 Defensores <-XXXXXXXXX\n");
+					}
+					break;
+				case 3:
+					if(*contadorMediocampistas < 8 && bandera == -1)
+					{
+						printf("\n--> Posicion Mediocampista OK<--\n");
+						*contadorMediocampistas += 1;
+
+						bandera = 0;
+
+					}else{
+						printf("\nXXXXXXXXX-> NO puede haber mas de 8 Mediocampistas <-XXXXXXXXX\n");
+					}
+					break;
+				case 4:
+					if(*contadorDelanteros < 4 && bandera == -1)
+					{
+						printf("\n--> Posicion Delantero OK<--\n");
+						*contadorDelanteros += 1;
+						bandera = 0;
+					}else{
+						printf("\nXXXXXXXXX-> NO puede haber mas de 4 Delanteros <-XXXXXXXXX\n");
+					}
+					break;
+				default : printf("\nOpcion incorrecta");
+			}
+
+		} while (bandera == -1);
+	}
+
+	return retorno;
+}
+
+
+int cargar_confederaciones (int* confederacion )
+{
+	int opcion ;
+	int bandera= -1;
+	int retorno = -1;
+
+	if(confederacion != NULL)
+	{
+		retorno = 0;
+		do {
+			printf("\n1)AFC en Asia\n2)CAF en Africa\n3)CONCACAF en zona del Norte\n4)CONMEBOL en sudAmerica\n5)UEFA en Europa\n6)OFC en Oceania");
+			utn_pedirNumeroEntero(&opcion, "\nIngrese una confederacion : ", "\nError", 6, 1);
+			switch(opcion)
+			{
+				case 1:
+					printf("\n*********AFC en Asia*********\n");
+					if(bandera == -1)
+					{
+						bandera = 0;
+						*confederacion = CONFEDERACION_AFC_ASIA;
+					}
+					break;
+				case 2:
+					printf("\n*********CAF en Africa*********\n");
+					if(bandera == -1)
+					{
+						bandera = 0;
+						*confederacion = CONFEDERACION_CAF_AFRICA;
+					}
+					break;
+				case 3:
+					printf("\n*********CONCACAF en zona del Norte*********\n");
+					if(bandera == -1)
+					{
+						*confederacion = CONFEDERACION_CONCACAF_ZONA_NORTE;
+						bandera = 0;
+					}
+					break;
+				case 4:
+					printf("\n*********CONMEBOL en sudAmerica*********\n");
+					if(bandera == -1)
+					{
+						bandera = 0;
+						*confederacion = CONFEDERACION_CONMEBOL_SUDAMERICA;
+					}
+					break;
+				case 5:
+					printf("\n*********UEFA en Europa*********\n");
+					if(bandera == -1)
+					{
+						bandera = 0;
+						*confederacion = CONFEDERACION_UEFA_EUROPA;
+					}
+					break;
+				case 6:
+					printf("\n*********OFC en Oceania*********\n");
+					if(bandera == -1)
+					{
+						bandera = 0;
+						*confederacion = CONFEDERACION_OFC_OCEANIA;
+					}
+					break;
+				default : printf("\nOpcion Incorrecta ");
+			}
+		} while (bandera == -1);
+
+	}
+
+	return retorno;
+}
+
+int	subMenu_costosDeMantenimiento (int* opcionCostos ,float* costoTransporte , float* costoHospedaje ,float* costoComida )
+{
+	int retono = -1;
+	int opcion ;
+	int banderaCostoHospedaje = -1;
+	int banderaCostoComida	= -1;
+	int banderaCostoTransporte = -1;
+	int banderaSalir = -1;
+
+	if(opcionCostos != NULL && costoTransporte != NULL && costoHospedaje != NULL && costoComida != NULL )
+	{
+		retono = 0;
+		printf("------------------------subMenu Costos de Mantenimiento------------------------");
+		printf("\nHasta que cada Costo no tenga un valor definido , no se le va a dejar salir \n");
+		do {
+			printf("\n1)Costo de hospedaje\n2)Costo de comida\n3)Costo de transporte\n4)Salir");
+			utn_pedirNumeroEntero(&opcion, "\nIngrese una opcion :", "\nError", 4, 1);
+			switch(opcion)
+			{
+				case 1:
+					printf("\n*********Costo de Hospedaje*********\n");
+					if(utn_pedirNumeroFlotante(costoHospedaje,"\nIngrese el costo del Hospedaje (entre 0.0 y 10000.00): ", "\nError", 10000.00, 0.0) == 0)
+					{
+						printf("\n--> Costo de Hospedaje OK <--\n");
+						banderaCostoHospedaje = 0;
+					}
+					break;
+				case 2:
+					printf("\n*********Costo de comida*********\n");
+					if(utn_pedirNumeroFlotante(costoComida, "\nIngrese el costo de la Comida (entre 0.0 y 10000.00): ", "\nError", 10000.0, 0.0) == 0)
+					{
+						printf("\n--> Costo de comida OK <--\n");
+						banderaCostoComida = 0;
+					}
+					break;
+				case 3:
+					printf("\n*********Costo de transporte*********\n");
+					if(utn_pedirNumeroFlotante(costoTransporte, "\nIngrese el costo del Transporte (entre 0.0 y 10000.00): ", "\nError", 10000.0, 0.0) == 0)
+					{
+						printf("\n--> Costo de transporte OK <--\n");
+						banderaCostoTransporte = 0;
+
+					}
+					break;
+				case 4:
+						if(banderaCostoComida == 0 && banderaCostoHospedaje == 0 && banderaCostoTransporte == 0)
+						{
+							printf("\n*********Salir*********\n");
+							banderaSalir = 0;
+
+						}else{
+							printf("\nHasta que cada Costo no tenga un valor definido , no se le va a dejar salir \n");
+						}
+					break;
+
+				default : printf("\nOpcion Incorrecta ");
+			}
+		} while (banderaSalir == -1);
+
+	}
+
+
+	return retono;
+}

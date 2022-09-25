@@ -1,15 +1,20 @@
-01:17:31 **** Incremental Build of configuration Debug for project TP_1 ****
+04:56:15 **** Incremental Build of configuration Debug for project TP_1 ****
 make all 
 Building file: ../src/TP_1.c
 Invoking: GCC C Compiler
 gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/TP_1.d" -MT"src/TP_1.o" -o "src/TP_1.o" "../src/TP_1.c"
 Finished building: ../src/TP_1.c
  
+Building file: ../src/funciones.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/funciones.d" -MT"src/funciones.o" -o "src/funciones.o" "../src/funciones.c"
+Finished building: ../src/funciones.c
+ 
 Building target: TP_1
 Invoking: GCC C Linker
-gcc  -o "TP_1" ./src/TP_1.o ./src/utn.o   
+gcc  -o "TP_1" ./src/TP_1.o ./src/funciones.o ./src/utn.o   
 Finished building target: TP_1
  
 
-01:17:32 Build Finished. 0 errors, 0 warnings. (took 834ms)
+04:56:16 Build Finished. 0 errors, 0 warnings. (took 926ms)
 
