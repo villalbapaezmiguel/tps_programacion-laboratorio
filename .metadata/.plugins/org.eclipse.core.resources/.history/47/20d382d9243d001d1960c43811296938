@@ -13,11 +13,10 @@
  *ParaMetros : ninguno
  *
  *Variables :
- * int opcion : tipo entero
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
  * char bufferString : tipo char , se encarga de pedir el numero para luego pasarle al puntero pRespuetas que se encuentra como parametro (int* pRespuesta)
  *
- *Retono : no retorna nada
- *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
  **/
 void menuPrincipal(void)
 {
