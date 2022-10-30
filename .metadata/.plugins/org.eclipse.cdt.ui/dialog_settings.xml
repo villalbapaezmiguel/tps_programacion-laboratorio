@@ -16,4 +16,7 @@
 		<item key="macroDefinition" value="false"/>
 		<item key="exhausiveFileSearch" value="false"/>
 	</section>
+	<section name="CResourceRenameRefactoringInputPage">
+		<item key="updateReferences" value="true"/>
+	</section>
 </section>
