@@ -7,7 +7,7 @@
 
 #ifndef INFORMES_H_
 #define INFORMES_H_
-#include <stdio_ext.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "utn.h"
 #include "JugadorABM.h"

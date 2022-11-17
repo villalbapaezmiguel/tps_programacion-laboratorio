@@ -4,7 +4,7 @@
  *  Created on: 13 oct. 2022
  *      Author: miguel
  */
-#include <stdio_ext.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -295,7 +295,7 @@ void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
 {
 
 	int anchoColumnaIdJugador = -10;
-	int anchoColumnaNombre = -10;
+	int anchoColumnaNombre = -20;
 	int anchoColumnaPosicion = -15;
 	int anchoColumnaNumeroCamiseta = -16;
 	int anchoColumnaNumeroCamisetaDos = -15;
@@ -307,9 +307,9 @@ void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
 	if(punteroArrayJugador != NULL && largoJugador > 0)
 	{
 		printf("\n");
-		printf("+**********+**********+***************+***************+********************+********************+********************+\n");
+		printf("+**********+********************+***************+***************+********************+********************+********************+\n");
 		printf("|%*s|%*s|%*s|%*s|%*s|%*s|%*s|\n", anchoColumnaIdJugador,"ID",anchoColumnaNombre,"NOMBRE", anchoColumnaPosicion, "POSICION", anchoColumnaNumeroCamiseta, "N° CAMISETA", anchoColumnaSalario,"SALARIO", anchoColumnaIdConfederacion, "CONFEDERACION", anchoColumnaAniosContrato, "AÑIOS DE CONTRATO");
-		printf("+**********+**********+***************+***************+********************+********************+********************+\n");
+		printf("+**********+********************+***************+***************+********************+********************+********************+\n");
 		for (i = 0; i < largoJugador; ++i) {
 
 			if((*(punteroArrayJugador+i)).isEmpty == OCUPADO)
@@ -321,41 +321,41 @@ void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
 					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
 							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
 							anchoColumnaIdConfederacion, "CONMEBOL", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+----------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
 					break;
 				case 101:
 					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
 							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
 							anchoColumnaIdConfederacion, "UEFA", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+----------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
 
 					break;
 				case 102:
 					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
 							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
 							anchoColumnaIdConfederacion, "AFC", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+----------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
 
 					break;
 				case 103:
 					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
 							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
 							anchoColumnaIdConfederacion, "CAF", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+----------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
 
 					break;
 				case 104:
 					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
 							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
 							anchoColumnaIdConfederacion, "CONCACAF", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+----------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
 
 					break;
 				case 106:
 					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
 							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
 							anchoColumnaIdConfederacion, "OFC", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+----------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
 
 					break;
 				}

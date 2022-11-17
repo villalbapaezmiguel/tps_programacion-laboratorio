@@ -357,10 +357,6 @@ int validarNombre(char* pRespuesta , int largo)
 	return retorno;
 }
 
-
-
-
-
 /*int validarNumeroFlotante(char* caracter
  *Objetivo de la funcion :
  *		verifica si la cadena ingresada es flotante
@@ -485,7 +481,7 @@ int utn_pedirLetra(char* pLetra , char* mensaje , char* mensajeError)
 	{
 		printf("\nsolo se va tomar como letra el primer caracter (ejemp : si ingreso ->Hola , va a tomar la -> H)");
 		printf("%s",mensaje);
-		__fpurge(stdin);
+		fflush(stdin);
 
 		if(fgets(bufferCaracter, sizeof(bufferCaracter), stdin) != NULL)
 		{
