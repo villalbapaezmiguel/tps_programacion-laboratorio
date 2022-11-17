@@ -48,3 +48,159 @@ eConfederacion altaForzadaConfederacion(int id, char* nombre , char* region, int
 
 	return auxiliar;
 }
+
+
+/*int inicializar_Confederacion (eConfederacion* punteroArrayConfederacion, int largoConderacion )
+ *Objetivo de la funcion :
+ * inicializa todos los campos isEmtpy en Vacio
+ *
+ *ParaMetros :
+ * Parametro : eConfederacion* punteroArrayConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConderacion : tipo entero , es el largo del array de estrutura
+ *
+ *Variables :
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * int i ; tipo entero , es un contador que va a ir incrementando dentro del for
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ **/
+int confederacion_inicializar_Confederacion (eConfederacion* punteroArrayConfederacion, int largoConderacion )
+{
+	int retorno = -1;
+	int i ;
+
+	if(punteroArrayConfederacion != NULL && largoConderacion > 0 )
+	{
+		retorno = 0;
+		for (i = 0; i < largoConderacion; ++i) {
+			(*(punteroArrayConfederacion+i)).isEmpty = VACIO;
+		}
+	}
+
+
+	return retorno;
+}
+
+/*int buscarLugarLibre (eConfederacion* punteroArray, int largo)
+ *Objetivo de la funcion :
+ * Busca la primera primera posicion libre que encuentra y la devuelve
+ *
+ *ParaMetros :
+ * Parametro : eConfederacion* punteroArray, tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largor : tipo entero , es el largo del array de estrutura
+ *
+ *
+ *Variables :
+ *
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * int i ; tipo entero , es un contador que va a ir incrementando dentro del for
+ *
+ *Retono : int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
+ **/
+int confederacion_buscarLugarLibre (eConfederacion* punteroArray, int largo)
+{
+	int retorno = -1;
+	int i ;
+
+	if(punteroArray != NULL && largo > 0 )
+	{
+		for (i = 0; i < largo; ++i) {
+
+			if((*(punteroArray + i)).isEmpty == VACIO)
+			{
+				retorno = i;
+				break;
+			}
+		}
+	}
+
+	return retorno;
+}
+
+
+/*int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idIngresado)
+ *Objetivo de la funcion :
+ * buscar el id pasado por el parametro y retorna una posicion > 0 si salio todo ok
+ *
+ *ParaMetros :
+ * Parametro : eJugador* punteroArray , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largo : tipo entero , es el largo del array de estrutura
+ * Parametro : int idIngresado : tipo entero , es el idingresado para buscar
+ *
+ *Variables :
+ *
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * int i ; tipo entero , es un contador que va a ir incrementando dentro del for
+ *
+ *Retono : int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
+ **/
+int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idIngresado)
+{
+	int retorno  = -1;
+	int i ;
+
+	if(largo > 0 )
+	{
+		for (i = 0; i < largo; ++i) {
+
+			if((punteroArray+i)->id == idIngresado)
+			{
+				retorno = i;
+				break;
+			}
+		}
+	}
+
+	return retorno;
+}
+
+
+/*Transporte altaTransporte (void)
+ *Objetivo de la funcion :
+ * pide los campos al usuario(descripcion , pesoCarga , cantidadBultos) y lo guarda en una estructura auxliar ,
+ * pone el isEmtpy en OCUPADO ,luego retorna esa misma estructra
+ *
+ *ParaMetros : void
+ *
+ *
+ *Variables :
+ *
+ * Transporte auxTransporte : tipo estructura , es una estructura auxiliar para poder almacenar los datos que le vamos a pedir al usuario
+ * Tipo auxTipo : tipo estructura , es una estructura auxiliar para poder almacenar los datos que le vamos a pedir al usuario
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * int respuestaDescripcion : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ * int respuestaPesoCarga : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ * int respuestaCantidadBulto : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ *
+ *Retono : Retorna una estructura con datos del usuario guardados en sus campos
+ **/
+eConfederacion altaConfederacion (void)
+{
+	eConfederacion auxConfederacion;
+	eJugador auxJugador ;
+
+	int respuestaNombre = -1;
+	int respuestaRegion = -1;
+	int respuestaAnioCreacion = -1;
+
+	do {
+
+		respuestaNombre = utn_pedirNombre(auxConfederacion.nombre, sizeof(auxConfederacion.nombre), "\nIngrese el nombre de la Confederacion (EN MAYUSCULAS): ", "\nError");
+	} while (respuestaNombre == -1);
+
+	do {
+
+		respuestaRegion = utn_pedirPalabra(auxConfederacion.region, sizeof(auxConfederacion.region), "\nIngrese el nombre de la Region : ", "\nError");
+	} while (respuestaRegion == -1);
+
+	do {
+		respuestaAnioCreacion = utn_pedirNumeroEntero(&auxConfederacion.anioCreacion, "\nIngrese el año de creacion (entre 1900 y 2022): ", "\nError", 2022, 1900);
+	} while (respuestaAnioCreacion == -1);
+
+	subMenu_Confederacion(&auxConfederacion.id);
+	auxJugador.idConfederacion = auxConfederacion.id;//estructuras relacionadas
+	auxJugador.isEmpty = OCUPADO;
+
+	return auxConfederacion ;
+}
+

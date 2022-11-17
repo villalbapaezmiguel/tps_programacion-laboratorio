@@ -12,13 +12,13 @@
 #define LARGO_REGION 50
 #define NOMBRE_CONFEDERACION 50
 
-
 typedef struct{
 
 	int id;
 	char nombre[NOMBRE_CONFEDERACION];
 	char region[LARGO_REGION];
 	int anioCreacion ;
+	int isEmpty ; // lo agregue para poder hacer el Alta , Baja y Modificacion , porque sino no puedo hacer ningun alta , ya que necesito saber si esa estructra esta o no libre
 
 }eConfederacion;
 
