@@ -159,41 +159,73 @@ int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador 
 	int retorno = -1;
 //	eJugador auxJugador;
 //	eConfederacion auxConfederacion ;
-	int  i, j;
+//	int  i, j;
+//	int k, l;
 //	int bandera ;
+int i;
 
 	if(listadoJugador != NULL && listadoConferacion != NULL && largoJugador > 0 && largoConfederacion > 0)
 	{
 
-
+		informar_ordenarAlfabeticamente_confederacion(listadoConferacion, largoConfederacion);
 		for (i = 0; i < largoConfederacion; ++i) {
 
-			printf("\nCONFEDERACION %s",(*(listadoConferacion+i)).nombre);
-
-			for (j = 0; j < largoJugador; ++j) {
-
-				if((*(listadoJugador+j)).idConfederacion == (*(listadoConferacion+i)).id)
-				{
-					printf("\n Nombre Jugador : %s", (*(listadoJugador+j)).nombre);
-				}
-//				if(strncmp(listadoConferacion[i].nombre, listadoConferacion[j+1].nombre, NOMBRE_CONFEDERACION) > 0)//primer criterio
-//				{
-////					bandera = 1;
-//					auxJugador = listadoJugador[i];
-//					listadoJugador[i] = listadoJugador[j+1];
-//					listadoJugador[j+1] = auxJugador;
-//
-//				}else if(strncmp(listadoJugador[i].nombre, listadoJugador[j+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
-//				{
-////					bandera = 1;
-//					auxJugador = listadoJugador[i];
-//					listadoJugador[i] = listadoJugador[j+1];
-//					listadoJugador[j+1] = auxJugador;
-//				}
-			}
+			printf("\nNombre : %s", listadoConferacion[i].nombre);
 		}
 
+//		for (i = 0; i < largoConfederacion; ++i) {
+////			printf("\nCONFEDERACION %s",(*(listadoConferacion+i)).nombre);
+//			for (j = 0; j < largoJugador; ++j) {
+//
+//				if((*(listadoJugador+j)).idConfederacion == (*(listadoConferacion+i)).id)
+//				{
+////					printf("\n Nombre Jugador : %s", (*(listadoJugador+j)).nombre);
+//					if(strncmp(listadoJugador[i].nombre, listadoJugador[j+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
+//					{
+//						auxJugador = listadoJugador[i];
+//						listadoJugador[i] = listadoJugador[j+1];
+//						listadoJugador[j+1] = auxJugador;
+//					}
+//
+//				}
+//			}
+//		}
+//
+//
+//		for (k = 0; k < largoConfederacion; ++k) {
+//			printf("\nCONFEDERACION %s",(*(listadoConferacion+k)).nombre);
+//			for (l = 0; l < largoJugador; ++l) {
+//
+//				if((*(listadoJugador+l)).idConfederacion == (*(listadoConferacion+k)).id)
+//				{
+//					printf("\n Nombre Jugador : %s", (*(listadoJugador+l)).nombre);
+//					if(strncmp(listadoJugador[k].nombre, listadoJugador[l+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
+//					{
+//						auxJugador = listadoJugador[k];
+//						listadoJugador[k] = listadoJugador[l+1];
+//						listadoJugador[l+1] = auxJugador;
+//					}
+//
+//				}
+//			}
+//		}
 
+
+
+		//				if(strncmp(listadoConferacion[i].nombre, listadoConferacion[j+1].nombre, NOMBRE_CONFEDERACION) > 0)//primer criterio
+		//				{
+		////					bandera = 1;
+		//					auxJugador = listadoJugador[i];
+		//					listadoJugador[i] = listadoJugador[j+1];
+		//					listadoJugador[j+1] = auxJugador;
+		//
+		//				}else if(strncmp(listadoJugador[i].nombre, listadoJugador[j+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
+		//				{
+		////					bandera = 1;
+		//					auxJugador = listadoJugador[i];
+		//					listadoJugador[i] = listadoJugador[j+1];
+		//					listadoJugador[j+1] = auxJugador;
+		//				}
 //		do {
 //			bandera = 0;
 //			for (i = 0; i < largoConfederacion -1; ++i) {
@@ -224,4 +256,24 @@ int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador 
 
 	 return retorno;
 }
+
+void informar_ordenarAlfabeticamente_confederacion (eConfederacion* listaConfederacion , int largoConfederacion)
+{
+	eConfederacion auxConfederacion ;
+	int i;
+
+	for (i = 0; i < NOMBRE_CONFEDERACION; ++i) {//ordenamos la confederacion
+
+		if(strncmp(listaConfederacion[i].nombre, listaConfederacion[i+1].nombre, NOMBRE_CONFEDERACION) > 0)
+		{
+				auxConfederacion = listaConfederacion[i];
+				listaConfederacion[i] = listaConfederacion[i+1];
+				listaConfederacion[i+1] = auxConfederacion;
+		}
+	}
+
+
+}
+
+
 
