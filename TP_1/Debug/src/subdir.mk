@@ -8,15 +8,15 @@ C_SRCS += \
 ../src/funciones.c \
 ../src/utn.c 
 
-OBJS += \
-./src/TP_1.o \
-./src/funciones.o \
-./src/utn.o 
-
 C_DEPS += \
 ./src/TP_1.d \
 ./src/funciones.d \
 ./src/utn.d 
+
+OBJS += \
+./src/TP_1.o \
+./src/funciones.o \
+./src/utn.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -27,4 +27,11 @@ src/%.o: ../src/%.c src/subdir.mk
 	@echo 'Finished building: $<'
 	@echo ' '
 
+
+clean: clean-src
+
+clean-src:
+	-$(RM) ./src/TP_1.d ./src/TP_1.o ./src/funciones.d ./src/funciones.o ./src/utn.d ./src/utn.o
+
+.PHONY: clean-src
 

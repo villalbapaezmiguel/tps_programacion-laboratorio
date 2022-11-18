@@ -64,7 +64,7 @@ eConfederacion altaForzadaConfederacion(int id, char* nombre , char* region, int
  *
  *Retono : retorna 0 si salio todo bien , caso contrario -1
  **/
-int confederacion_inicializar_Confederacion (eConfederacion* punteroArrayConfederacion, int largoConderacion )
+int confederacion_inicializar_ (eConfederacion* punteroArrayConfederacion, int largoConderacion )
 {
 	int retorno = -1;
 	int i ;
@@ -174,7 +174,7 @@ int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idI
  *
  *Retono : Retorna una estructura con datos del usuario guardados en sus campos
  **/
-eConfederacion altaConfederacion (void)
+eConfederacion confederacion_alta (void)
 {
 	eConfederacion auxConfederacion;
 //	eJugador auxJugador ;
@@ -217,7 +217,7 @@ static int nuevoIdConfederacion(void)
 
 
 /**/
-int baja_Confederacion(eConfederacion* punteroArrayConfederacion , int largoConfederacion)
+int confederacion_Baja(eConfederacion* punteroArrayConfederacion , int largoConfederacion)
 {
 	int retorno = -1;
 	int idBajaIngresado;
@@ -228,7 +228,7 @@ int baja_Confederacion(eConfederacion* punteroArrayConfederacion , int largoConf
 
 		if(utn_pedirNumeroEntero(&idBajaIngresado, "\nIngrese un ID de la Confederacion para dar de baja :", "\nError", largoConfederacion, 0) == 0)
 		{
-			posicion = buscarPorId(punteroArrayConfederacion, largoConfederacion, idBajaIngresado);
+			posicion = confederacion_buscarPorId(punteroArrayConfederacion, largoConfederacion, idBajaIngresado);
 			if(posicion != -1)
 			{
 				(*(punteroArrayConfederacion+idBajaIngresado)).isEmpty = VACIO;
@@ -242,14 +242,14 @@ int baja_Confederacion(eConfederacion* punteroArrayConfederacion , int largoConf
 
 
 /**/
-int modificacionJugador (eConfederacion* listaConfederacion, int largoConfederacion ,  int* idModificar )
+int confederacion_modificacion(eConfederacion* listaConfederacion, int largoConfederacion ,  int* idModificar )
 {
 	eConfederacion auxConfederacion;
 	int retorno = -1;
 
 	if(listaConfederacion != NULL && largoConfederacion > 0 && idModificar != NULL )
 	{
-		subMenu_modificacion(listaConfederacion, largoConfederacion, idModificar, &auxConfederacion.id);
+		confederacion_subMenu_modificacion(listaConfederacion, largoConfederacion, idModificar, &auxConfederacion.id);
 		retorno = 0;
 	}
 
@@ -258,7 +258,7 @@ int modificacionJugador (eConfederacion* listaConfederacion, int largoConfederac
 }
 
 
-void subMenu_modificacion_comfederacion (eConfederacion* pListaConfederacion , int largo , int* idModificar , int* tipoConfederacion)
+void confederacion_subMenu_modificacion(eConfederacion* pListaConfederacion , int largo , int* idModificar , int* tipoConfederacion)
 {
 	int opcion ;
 
@@ -293,7 +293,7 @@ void subMenu_modificacion_comfederacion (eConfederacion* pListaConfederacion , i
 			case 3:
 				printf("\n<<<<<Año de creacion>>>>>");
 				do {
-					respuestaAniosConfederacion = utn_pedirNumeroEntero((*(pListaConfederacion+*idModificar))->anioCreacion, "\nIngrese el Nuevo año de creacion (entre 1900 y 2022) :", "\nError", 2022, 1900);
+					respuestaAniosConfederacion = utn_pedirNumeroEntero(&(*(pListaConfederacion+*idModificar)).anioCreacion, "\nIngrese el Nuevo año de creacion (entre 1900 y 2022) :", "\nError", 2022, 1900);
 				} while (respuestaAniosConfederacion == -1);
 				break;
 			case 4:

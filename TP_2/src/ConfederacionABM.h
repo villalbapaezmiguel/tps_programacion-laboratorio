@@ -25,6 +25,11 @@ typedef struct{
 #include "JugadorABM.h"
 
 eConfederacion altaForzadaConfederacion(int id, char* nombre , char* region, int aniosCreacion );
-
-
+int confederacion_inicializar_ (eConfederacion* punteroArrayConfederacion, int largoConderacion );
+int confederacion_buscarLugarLibre (eConfederacion* punteroArray, int largo);
+int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idIngresado);
+eConfederacion confederacion_alta (void);
+int confederacion_Baja(eConfederacion* punteroArrayConfederacion , int largoConfederacion);
+int confederacion_modificacion(eConfederacion* listaConfederacion, int largoConfederacion ,  int* idModificar );
+void confederacion_subMenu_modificacion(eConfederacion* pListaConfederacion , int largo , int* idModificar , int* tipoConfederacion);
 #endif /* CONFEDERACIONABM_H_ */

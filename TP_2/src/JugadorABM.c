@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include "utn.h"
 #include "JugadorABM.h"
+#include "Informes.h"
 #include "ConfederacionABM.h"
 static int nuevoIdJugador(void);
 
@@ -144,7 +145,6 @@ eJugador altaJugador (void)
 	eConfederacion auxConfederacion;
 
 	int respuestaNombre = -1;
-//	int respuestaPosicion = -1;
 	int respuestaNumeroCamiseta = -1;
 	int respuestaSalario = -1;
 	int respuestaAniosContrato = -1;
@@ -154,23 +154,6 @@ eJugador altaJugador (void)
 	} while (respuestaNombre == -1);
 
 	subMenu_seleccionarPosicion(auxJugador.posicion);
-//	do {
-//		respuestaPosicion = utn_pedirPalabra(auxJugador.posicion, LARGO_POSICION, "\nIngrese Posicion (Arquero / Defensor / MedioCampista / Delantero): ", "\nError");
-//
-//		 if(convertidor_minusculas(auxJugador.posicion, LARGO_POSICION) == 0)
-//		 {
-//	 		 if(strncmp(auxJugador.posicion, "arquero",LARGO_POSICION) == 0 || strncmp(auxJugador.posicion, "defensor",LARGO_POSICION) == 0 || strncmp(auxJugador.posicion, "mediocampista",LARGO_POSICION) == 0 || strncmp(auxJugador.posicion, "delantero",LARGO_POSICION) == 0 )
-//	 		 {
-//	 			 printf("\nEntro bien");
-//	 		 }else{
-//	 			 respuestaPosicion = -1;
-//	 			 printf("Opcion incorrecta");
-//	 		 }
-//		 }else{
-//			 respuestaPosicion = -1;
-//			 printf("\nError");
-//		 }
-//	} while (respuestaPosicion == -1);
 
 	do {
 		respuestaNumeroCamiseta =utn_pedirNumeroShort(&auxJugador.numeroCamiseta, "\nIngrese numero de camiseta (entre 0 y 127): ", "\nError", 127, 0);
@@ -272,100 +255,21 @@ static int nuevoIdJugador(void)
 }
 
 
-
-
-/*void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
+/*int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
  *Objetivo de la funcion :
- * 	da un listados de todos los campos de la estructura Jugador que esten ocupados
+ * da debaja a un jugador: pone su isEmpty en VACIO
  *
  *ParaMetros : void
- * Parametro : eJugador* punteroArrayJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
- * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ *  Parametro : eJugador* punteroArrayJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ *  Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
  *
  *Variables :
- * int i ; tipo entero , es un contador que va a ir incrementando dentro del for
- * int anchoColumnaIdTransporte : tipo entero , cantidad de espacios que va a ocupar en el printf()
- * int respuestaPesoCarga : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
- * int respuestaCantidadBulto : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
- * int anchoColumnaDescripcion : tipo entero , es la cantidad de espacio que va ocupar en el Printf()
+ *  int retorno : tipo entero , es el encargado de informar si salio todo ok
+ *  int idBajaIngresado , tipo entero , va a tomar el id del jugador uqe quiere dar de baja
+ *  int posicion , tipo entero , va a tomar el retrono  de la funcion buscarPorId , si sale != -1 es porque lo encontro
  *
- *Retono : void
+ *Retono :int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
  **/
-void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
-{
-
-	int anchoColumnaIdJugador = -10;
-	int anchoColumnaNombre = -20;
-	int anchoColumnaPosicion = -15;
-	int anchoColumnaNumeroCamiseta = -16;
-	int anchoColumnaNumeroCamisetaDos = -15;
-	int anchoColumnaIdConfederacion = -20;
-	int anchoColumnaSalario = -20;
-	int anchoColumnaAniosContrato = -20;
-	int i ;
-
-	if(punteroArrayJugador != NULL && largoJugador > 0)
-	{
-		printf("\n");
-		printf("+**********+********************+***************+***************+********************+********************+********************+\n");
-		printf("|%*s|%*s|%*s|%*s|%*s|%*s|%*s|\n", anchoColumnaIdJugador,"ID",anchoColumnaNombre,"NOMBRE", anchoColumnaPosicion, "POSICION", anchoColumnaNumeroCamiseta, "N° CAMISETA", anchoColumnaSalario,"SALARIO", anchoColumnaIdConfederacion, "CONFEDERACION", anchoColumnaAniosContrato, "AÑIOS DE CONTRATO");
-		printf("+**********+********************+***************+***************+********************+********************+********************+\n");
-		for (i = 0; i < largoJugador; ++i) {
-
-			if((*(punteroArrayJugador+i)).isEmpty == OCUPADO)
-			{
-
-				switch((*(punteroArrayJugador+i)).idConfederacion)
-				{
-				case 100:
-					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
-							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
-							anchoColumnaIdConfederacion, "CONMEBOL", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
-					break;
-				case 101:
-					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
-							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
-							anchoColumnaIdConfederacion, "UEFA", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
-
-					break;
-				case 102:
-					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
-							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
-							anchoColumnaIdConfederacion, "AFC", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
-
-					break;
-				case 103:
-					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
-							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
-							anchoColumnaIdConfederacion, "CAF", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
-
-					break;
-				case 104:
-					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
-							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
-							anchoColumnaIdConfederacion, "CONCACAF", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
-
-					break;
-				case 105:
-					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
-							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
-							anchoColumnaIdConfederacion, "OFC", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
-					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
-
-					break;
-				}
-			}
-		}
-	}
-}
-
-
-
 int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
 {
 	int retorno = -1;
@@ -404,18 +308,13 @@ int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
  *
  *Variables :
  *
- * Transporte auxTransporte : tipo estructura , es una estructura auxiliar para poder almacenar los datos que le vamos a pedir al usuario
+ * eJugador auxilia : tipo estructura , es una estructura auxiliar para poder almacenar los datos que nos pasan por parametros
  *
- *Retono : Retorna una estructura con datos del usuario guardados en sus campos
+ *Retono : Retorna una estructura con datos que nos pasaron por parametros guardados en los campos de la estructura
  **/
 eJugador altaForzadaJugador(int id, char* nombre , char* posicion, short numeroCamiseta , short idConfederacion , float salario , short aniosContrato )
 {
 	eJugador auxiliar ;
-////hacer bien la documentacion
-//	if(id >= 0 && nombre != NULL && posicion != NULL && numeroCamiseta >= 0 && (idConfederacion > 100 && idConfederacion < 105) && (salario > 200.0 && salario < 20000.0) && (aniosContrato >= 1 && aniosContrato <= 8))
-//	{
-//
-//	}
 
 	auxiliar.id = id;
 	strncpy(auxiliar.nombre, nombre, LARGO_NOMBRE);
@@ -427,15 +326,25 @@ eJugador altaForzadaJugador(int id, char* nombre , char* posicion, short numeroC
 	auxiliar.isEmpty = OCUPADO;
 	nuevoIdJugador();
 
-
-
 	return auxiliar;
 }
 
 
-
-
-
+/*int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModificar )
+ *Objetivo de la funcion :
+ * hace modificaciones en los campos de la estructura del jugador
+ *
+ *ParaMetros : void
+ *	Pametro :int* idModificar , tipo puntero a entero , es el id ingresedo por el usuario para modificar
+ *  Parametro : eJugador* punteroArrayJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ *  Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ *
+ *Variables :
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * eConfederacion auxConfederacion : tipo estructura , es una estructura auxiliar para poder almacenar los datos
+ *
+ *Retono : int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
+ **/
 int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModificar )
 {
 	eConfederacion auxConfederacion;
@@ -447,11 +356,27 @@ int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModi
 		retorno = 0;
 	}
 
-
 	return retorno ;
 }
 
 
+/*void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar , int* tipoConfederacion)
+ *Objetivo de la funcion :
+ * Es un subMenu para que el usuario pueda elegir los campos que quiera modificar
+ *
+ *ParaMetros :
+ * Parametro : eJugador* listaJugador , tipo puntero a entero , es el id de una estructura Confederacion
+ * Parametro : int largo  , tipo entero ,
+ * Parametro : int* idModificar , tipo puntero a un entero , va a tener el valor de la direccion de memoria del a modificar
+ * Parametro : int* tipoConfederacion , tipo puntero a un entero ,  va a tener el valor de la direccion de memoria del tipo de confederacion
+ *
+ *Variables :
+ *
+ * int opcion : tipo entero , es una variable que me va a decir que opcion eligio
+ * int banderaConfederacion : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ *
+ *Retono : void
+ **/
 void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar , int* tipoConfederacion)
 {
 	int opcion ;
@@ -519,7 +444,20 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 
 }
 
-
+/*void subMenu_seleccionarPosicion(char* posicion )
+ *Objetivo de la funcion :
+ * Es un subMenu para que el usuario pueda elegir el campo de la posicion del jugador
+ *
+ *ParaMetros :
+ * char* posicionr , tipo puntero a una cadena de caracteres
+ *
+ *Variables :
+ *
+ * int opcion : tipo entero , es una variable que me va a decir que opcion eligio
+ * int banderaConfederacion : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ *
+ *Retono : void
+ **/
 void subMenu_seleccionarPosicion(char* posicion )
 {
 	int opcion ;
@@ -579,11 +517,7 @@ void subMenu_seleccionarPosicion(char* posicion )
 				break;
 			}
 		} while ( bandera == -1 );
-
-
 	}
-
-
 }
 
 

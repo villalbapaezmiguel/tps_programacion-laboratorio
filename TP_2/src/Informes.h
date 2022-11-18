@@ -9,10 +9,13 @@
 #define INFORMES_H_
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "utn.h"
 #include "JugadorABM.h"
 #include "ConfederacionABM.h"
 
 void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacion* listadoConfederacion , int largoConfederacion);
+void informar_jugador(eJugador* punteroArrayJugador , int largoJugador);
+int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConferacion , int largoConfederacion);
 
 #endif /* INFORMES_H_ */

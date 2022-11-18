@@ -6,6 +6,98 @@
  */
 #include "Informes.h"
 
+/*void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
+ *Objetivo de la funcion :
+ * 	da un listados de todos los campos de la estructura Jugador que esten ocupados
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* punteroArrayJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ *
+ *Variables :
+ * int i ; tipo entero , es un contador que va a ir incrementando dentro del for
+ * int anchoColumnaIdTransporte : tipo entero , cantidad de espacios que va a ocupar en el printf()
+ * int respuestaPesoCarga : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ * int respuestaCantidadBulto : tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ * int anchoColumnaDescripcion : tipo entero , es la cantidad de espacio que va ocupar en el Printf()
+ *
+ *Retono : void
+ **/
+void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
+{
+
+	int anchoColumnaIdJugador = -10;
+	int anchoColumnaNombre = -20;
+	int anchoColumnaPosicion = -15;
+	int anchoColumnaNumeroCamiseta = -16;
+	int anchoColumnaNumeroCamisetaDos = -15;
+	int anchoColumnaIdConfederacion = -20;
+	int anchoColumnaSalario = -20;
+	int anchoColumnaAniosContrato = -20;
+	int i ;
+
+	if(punteroArrayJugador != NULL && largoJugador > 0)
+	{
+		printf("\n");
+		printf("+**********+********************+***************+***************+********************+********************+********************+\n");
+		printf("|%*s|%*s|%*s|%*s|%*s|%*s|%*s|\n", anchoColumnaIdJugador,"ID",anchoColumnaNombre,"NOMBRE", anchoColumnaPosicion, "POSICION", anchoColumnaNumeroCamiseta, "N° CAMISETA", anchoColumnaSalario,"SALARIO", anchoColumnaIdConfederacion, "CONFEDERACION", anchoColumnaAniosContrato, "AÑIOS DE CONTRATO");
+		printf("+**********+********************+***************+***************+********************+********************+********************+\n");
+		for (i = 0; i < largoJugador; ++i) {
+
+			if((*(punteroArrayJugador+i)).isEmpty == OCUPADO)
+			{
+
+				switch((*(punteroArrayJugador+i)).idConfederacion)
+				{
+				case 100:
+					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
+							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
+							anchoColumnaIdConfederacion, "CONMEBOL", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+					break;
+				case 101:
+					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
+							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
+							anchoColumnaIdConfederacion, "UEFA", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+
+					break;
+				case 102:
+					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
+							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
+							anchoColumnaIdConfederacion, "AFC", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+
+					break;
+				case 103:
+					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
+							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
+							anchoColumnaIdConfederacion, "CAF", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+
+					break;
+				case 104:
+					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
+							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
+							anchoColumnaIdConfederacion, "CONCACAF", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+
+					break;
+				case 105:
+					printf("|%*d|%*s|%*s|%*i|%*f|%*s|%*d|\n", anchoColumnaIdJugador,(*(punteroArrayJugador+i)).id,anchoColumnaNombre,(*(punteroArrayJugador+i)).nombre,
+							anchoColumnaPosicion, (*(punteroArrayJugador+i)).posicion, anchoColumnaNumeroCamisetaDos, (*(punteroArrayJugador+i)).numeroCamiseta,anchoColumnaSalario, (*(punteroArrayJugador+i)).salario,
+							anchoColumnaIdConfederacion, "OFC", anchoColumnaAniosContrato, (*(punteroArrayJugador+i)).aniosContrato);
+					printf("+----------+--------------------+---------------+---------------+--------------------+--------------------+--------------------+\n");
+
+					break;
+				}
+			}
+		}
+	}
+}
+
+
+
 
 void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacion* listadoConfederacion , int largoConfederacion)
 {
@@ -28,7 +120,10 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 				case 1:
 					printf("\n<<Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador>>");
 
-
+					if(informe_oredenarAlfabeticamenteNombreConfederacion(listadoJugador, largoJugador, listadoConfederacion, largoConfederacion) == 0)
+					{
+						printf("\nInforme OK");
+					}
 
 					break;
 				case 2:
@@ -59,20 +154,74 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 
 //Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador
 
-void informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConferacion , int largoConfederacion)
+int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConferacion , int largoConfederacion)
 {
-
-
+	int retorno = -1;
+//	eJugador auxJugador;
+//	eConfederacion auxConfederacion ;
+	int  i, j;
+//	int bandera ;
 
 	if(listadoJugador != NULL && listadoConferacion != NULL && largoJugador > 0 && largoConfederacion > 0)
 	{
 
+
+		for (i = 0; i < largoConfederacion; ++i) {
+
+			printf("\nCONFEDERACION %s",(*(listadoConferacion+i)).nombre);
+
+			for (j = 0; j < largoJugador; ++j) {
+
+				if((*(listadoJugador+j)).idConfederacion == (*(listadoConferacion+i)).id)
+				{
+					printf("\n Nombre Jugador : %s", (*(listadoJugador+j)).nombre);
+				}
+//				if(strncmp(listadoConferacion[i].nombre, listadoConferacion[j+1].nombre, NOMBRE_CONFEDERACION) > 0)//primer criterio
+//				{
+////					bandera = 1;
+//					auxJugador = listadoJugador[i];
+//					listadoJugador[i] = listadoJugador[j+1];
+//					listadoJugador[j+1] = auxJugador;
+//
+//				}else if(strncmp(listadoJugador[i].nombre, listadoJugador[j+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
+//				{
+////					bandera = 1;
+//					auxJugador = listadoJugador[i];
+//					listadoJugador[i] = listadoJugador[j+1];
+//					listadoJugador[j+1] = auxJugador;
+//				}
+			}
+		}
+
+
+//		do {
+//			bandera = 0;
+//			for (i = 0; i < largoConfederacion -1; ++i) {
+//
+//				if(strncmp(listadoConferacion[i].nombre, listadoConferacion[i+1].nombre, NOMBRE_CONFEDERACION) > 0)//primer criterio
+//				{
+//					bandera = 1;
+//					auxJugador = listadoJugador[i];
+//					listadoJugador[i] = listadoJugador[i+1];
+//					listadoJugador[i+1] = auxJugador;
+//
+//				}else if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
+//				{
+//					bandera = 1;
+//					auxJugador = listadoJugador[i];
+//					listadoJugador[i] = listadoJugador[i+1];
+//					listadoJugador[i+1] = auxJugador;
+//				}
+//			}
+//			largoConfederacion--;
+//		} while (bandera);
+//		informar_jugador(listadoJugador, largoJugador);
 
 
 	}
 
 
 
-
+	 return retorno;
 }
 

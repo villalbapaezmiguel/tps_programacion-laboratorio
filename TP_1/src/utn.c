@@ -434,7 +434,7 @@ int utn_pedirLetra(char* pLetra , char* mensaje , char* mensajeError)
 	{
 		printf("\nsolo se va tomar como letra el primer caracter (ejemp : si ingreso ->Hola , va a tomar la -> H)");
 		printf("%s",mensaje);
-		__fpurge(stdin);
+		fflush(stdin);
 
 		if(fgets(bufferCaracter, sizeof(bufferCaracter), stdin) != NULL)
 		{
