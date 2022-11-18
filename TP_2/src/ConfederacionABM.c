@@ -12,7 +12,7 @@
 #include <ctype.h>
 #include "utn.h"
 #include "ConfederacionABM.h"
-
+static int nuevoIdConfederacion(void);
 
 /*eJugador altaForzadaConfederacion(int id, char* nombre , char* region, int aniosCreacion )
  *Objetivo de la funcion :
@@ -177,7 +177,7 @@ int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idI
 eConfederacion altaConfederacion (void)
 {
 	eConfederacion auxConfederacion;
-	eJugador auxJugador ;
+//	eJugador auxJugador ;
 
 	int respuestaNombre = -1;
 	int respuestaRegion = -1;
@@ -197,10 +197,114 @@ eConfederacion altaConfederacion (void)
 		respuestaAnioCreacion = utn_pedirNumeroEntero(&auxConfederacion.anioCreacion, "\nIngrese el año de creacion (entre 1900 y 2022): ", "\nError", 2022, 1900);
 	} while (respuestaAnioCreacion == -1);
 
-	subMenu_Confederacion(&auxConfederacion.id);
-	auxJugador.idConfederacion = auxConfederacion.id;//estructuras relacionadas
-	auxJugador.isEmpty = OCUPADO;
+//	subMenu_Confederacion(&auxConfederacion.id);
+//	auxJugador.idConfederacion = auxConfederacion.id;//estructuras relacionadas
+	auxConfederacion.id = nuevoIdConfederacion();
+	auxConfederacion.isEmpty = OCUPADO;
 
 	return auxConfederacion ;
 }
 
+/*static int nuevoId()
+ *int contador = es el contador y va agregando +1  cada vez que se lo llame
+ *se encangar de generar un nuevo id*/
+static int nuevoIdConfederacion(void)
+{
+	static int contador =105;
+
+	return (contador++);
+}
+
+
+/**/
+int baja_Confederacion(eConfederacion* punteroArrayConfederacion , int largoConfederacion)
+{
+	int retorno = -1;
+	int idBajaIngresado;
+	int posicion = -1;
+
+	if(punteroArrayConfederacion != NULL && largoConfederacion > 0)
+	{
+
+		if(utn_pedirNumeroEntero(&idBajaIngresado, "\nIngrese un ID de la Confederacion para dar de baja :", "\nError", largoConfederacion, 0) == 0)
+		{
+			posicion = buscarPorId(punteroArrayConfederacion, largoConfederacion, idBajaIngresado);
+			if(posicion != -1)
+			{
+				(*(punteroArrayConfederacion+idBajaIngresado)).isEmpty = VACIO;
+			}
+		}
+	}
+
+	return retorno;
+}
+
+
+
+/**/
+int modificacionJugador (eConfederacion* listaConfederacion, int largoConfederacion ,  int* idModificar )
+{
+	eConfederacion auxConfederacion;
+	int retorno = -1;
+
+	if(listaConfederacion != NULL && largoConfederacion > 0 && idModificar != NULL )
+	{
+		subMenu_modificacion(listaConfederacion, largoConfederacion, idModificar, &auxConfederacion.id);
+		retorno = 0;
+	}
+
+
+	return retorno ;
+}
+
+
+void subMenu_modificacion_comfederacion (eConfederacion* pListaConfederacion , int largo , int* idModificar , int* tipoConfederacion)
+{
+	int opcion ;
+
+	int respuestaNombreConfederacion = -1;
+	int respuestaRegionConfederacion = -1;
+	int respuestaAniosConfederacion = -1;
+	if(pListaConfederacion != NULL && largo > 0 )
+	{
+
+		printf("\nSeleccione el campo que desea modificar");
+
+		do {
+			printf("\n1)Nombre de la Confederacion\n2)Nombre de la Region\n3)Año de creacion\n4)Salir");
+			utn_pedirNumeroEntero(&opcion, "\nIngrese Opcion :", "\nerror", 3, 1);
+
+			switch(opcion)
+			{
+			case 1:
+				printf("\n<<<<<Nombre de la Confederacion>>>>>");
+				do {
+
+					respuestaNombreConfederacion = utn_pedirPalabra((*(pListaConfederacion+*idModificar)).nombre, sizeof(pListaConfederacion->nombre),"\nIngrese el Nuevo nomnbre de la Confederacion", "\nError");
+				} while (respuestaNombreConfederacion == -1);
+				break;
+			case 2:
+				printf("\n<<<<<Nombre de la Region>>>>>");
+				do {
+
+					respuestaRegionConfederacion = utn_pedirPalabra((*(pListaConfederacion+*idModificar)).region, sizeof((*pListaConfederacion).region),"\nIngrese la Nueva Region de la Confederacion", "\nError");
+				} while (respuestaRegionConfederacion == -1);
+				break;
+			case 3:
+				printf("\n<<<<<Año de creacion>>>>>");
+				do {
+					respuestaAniosConfederacion = utn_pedirNumeroEntero((*(pListaConfederacion+*idModificar))->anioCreacion, "\nIngrese el Nuevo año de creacion (entre 1900 y 2022) :", "\nError", 2022, 1900);
+				} while (respuestaAniosConfederacion == -1);
+				break;
+			case 4:
+				printf("\nSalion de la modificacion de Confederacion");
+				break;
+			}
+
+		} while (opcion != 4);
+
+			(*(pListaConfederacion+*idModificar)).id = *idModificar;
+			(*(pListaConfederacion+*idModificar)).isEmpty = OCUPADO;
+	}
+
+}
