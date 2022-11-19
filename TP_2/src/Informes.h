@@ -18,4 +18,9 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 void informar_jugador(eJugador* punteroArrayJugador , int largoJugador);
 int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConferacion , int largoConfederacion);
 void informar_ordenarAlfabeticamente_confederacion (eConfederacion* listaConfederacion , int largoConfederacion);
+void informar_listadoConfederacionConSusJugadores(eJugador* pListadoJugador, int largoJugador,eConfederacion* pListadoConfederacion, int largoConfederacion );
+float calcular_PromedioJugador (int* cantidadJugadoresIngresados ,int* contadorConfederaciones);
+void informar_totalPromedioSalarios(eJugador* pListadoJugador, int largoJugador);
+void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, int largoJugador);
+void informar_porcentajeJugadoresPorCadaConfederacion(eJugador* pListaJugador , int largoJugador);
 #endif /* INFORMES_H_ */

@@ -162,7 +162,7 @@ eJugador altaJugador (void)
 
 
 	do {
-		respuestaSalario = utn_pedirNumeroFlotante(&auxJugador.salario, "\nIngrese el salario del jugador (entre 100.0 y 20000.0): ", "\nError", 20000.0, 100.0);
+		respuestaSalario = utn_pedirNumeroFlotante(&auxJugador.salario, "\nIngrese el salario del jugador (entre 100.0 y 100000.0): ", "\nError", 100000.0, 100.0);
 	} while (respuestaSalario == -1);
 
 	do {
@@ -416,7 +416,7 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 				case 4://salario
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Salario_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaSalario = utn_pedirNumeroFlotante(&(*(listaJugador+*idModificar)).salario, "\nIngrese el Nuevo salario del jugador (entre 100.0 y 20000.0): ", "\nError", 20000.0, 100.0);
+						respuestaSalario = utn_pedirNumeroFlotante(&(*(listaJugador+*idModificar)).salario, "\nIngrese el Nuevo salario del jugador (entre 100.0 y 100000.0): ", "\nError", 100000.0, 100.0);
 					} while (respuestaSalario == -1);
 
 					break;
