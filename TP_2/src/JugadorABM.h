@@ -44,6 +44,6 @@ eJugador altaJugador (eJugador* pListaJugador , int largo);
 int baja_jugador(eJugador* punteroArrayJugador , int largoJugador);
 eJugador altaForzadaJugador(int id, char* nombre , char* posicion, short numeroCamiseta , short idConfederacion , float salario , short aniosContrato );
 int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModificar );
-void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar , int* tipoConfederacion);
+void subMenu_modificacion (eJugador* listaJugador , int largo , int* posicionIdModificar , int* tipoConfederacion );
 void subMenu_seleccionarPosicion(char* posicion );
 #endif /* JUGADORABM_H_ */

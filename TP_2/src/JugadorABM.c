@@ -154,7 +154,7 @@ eJugador altaJugador (eJugador* pListaJugador , int largo)
 	int i;
 
 	do {
-		respuestaNombre = utn_pedirNombre(auxJugador.nombre, LARGO_NOMBRE, "\nIngrese el nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
+		respuestaNombre = utn_pedirNombreConEspacio(auxJugador.nombre, LARGO_NOMBRE, "\nIngrese el nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
 	} while (respuestaNombre == -1);
 
 	subMenu_seleccionarPosicion(auxJugador.posicion);
@@ -315,8 +315,8 @@ int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
 			if(posicion != -1)
 			{
 				printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d",
-				(*(punteroArrayJugador+idBajaIngresado)).id, (*(punteroArrayJugador+idBajaIngresado)).nombre, (*(punteroArrayJugador+idBajaIngresado)).posicion ,(*(punteroArrayJugador+idBajaIngresado)).numeroCamiseta,
-				(*(punteroArrayJugador+idBajaIngresado)).idConfederacion , (*(punteroArrayJugador+idBajaIngresado)).salario, (*(punteroArrayJugador+idBajaIngresado)).aniosContrato);
+				(*(punteroArrayJugador+posicion)).id, (*(punteroArrayJugador+posicion)).nombre, (*(punteroArrayJugador+posicion)).posicion ,(*(punteroArrayJugador+posicion)).numeroCamiseta,
+				(*(punteroArrayJugador+posicion)).idConfederacion , (*(punteroArrayJugador+posicion)).salario, (*(punteroArrayJugador+posicion)).aniosContrato);
 
 				do {
 					respuestaBaja = utn_pedirNumeroEntero(&opcionBaja,"\nSegura/o  que quiere eliminar a este jugador (1-SI / 2-NO)??", "\nError", 2, 1);
@@ -325,7 +325,7 @@ int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
 
 				if(opcionBaja == 1 )
 				{
-					(*(punteroArrayJugador+idBajaIngresado)).isEmpty = VACIO;
+					(*(punteroArrayJugador+posicion)).isEmpty = VACIO;
 				}
 				retorno = 0;
 			}else{
@@ -391,14 +391,14 @@ eJugador altaForzadaJugador(int id, char* nombre , char* posicion, short numeroC
  *
  *Retono : int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
  **/
-int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModificar )
+int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* posicionIdModificar )
 {
 	eConfederacion auxConfederacion;
 	int retorno = -1;
 
-	if(listaJugador != NULL && largoJugador > 0 && idModificar != NULL )
+	if(listaJugador != NULL && largoJugador > 0 && posicionIdModificar != NULL )
 	{
-		subMenu_modificacion(listaJugador, largoJugador, idModificar, &auxConfederacion.id);
+		subMenu_modificacion(listaJugador, largoJugador, posicionIdModificar, &auxConfederacion.id);
 		retorno = 0;
 	}
 
@@ -423,7 +423,7 @@ int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModi
  *
  *Retono : void
  **/
-void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar , int* tipoConfederacion)
+void subMenu_modificacion (eJugador* listaJugador , int largo , int* posicionIdModificar , int* tipoConfederacion )
 {
 	int opcion ;
 	int respuestaNombre = -1;
@@ -443,18 +443,18 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 				case 1://nombre
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Nombre_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaNombre = utn_pedirNombre((*(listaJugador+*idModificar)).nombre, LARGO_NOMBRE, "\nIngrese el Nuevo nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
+						respuestaNombre = utn_pedirNombreConEspacio((*(listaJugador+*posicionIdModificar)).nombre, LARGO_NOMBRE, "\nIngrese el Nuevo nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
 					} while (respuestaNombre == -1);
 
 					break;
 				case 2://posicion del jugador
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Posicion del jugador_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-					subMenu_seleccionarPosicion((*(listaJugador+*idModificar)).posicion);
+					subMenu_seleccionarPosicion((*(listaJugador+*posicionIdModificar)).posicion);
 					break;
 				case 3://numero de camiseta
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Numero de camiseta_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaNumeroCamiseta =utn_pedirNumeroShort(&(*(listaJugador+*idModificar)).numeroCamiseta, "\nIngrese el Nuevo numero de camiseta (entre 1 y 127): ", "\nError", 127, 1);
+						respuestaNumeroCamiseta =utn_pedirNumeroShort(&(*(listaJugador+*posicionIdModificar)).numeroCamiseta, "\nIngrese el Nuevo numero de camiseta (entre 1 y 127): ", "\nError", 127, 1);
 
 					} while (respuestaNumeroCamiseta == -1);
 
@@ -462,14 +462,14 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 				case 4://salario
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Salario_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaSalario = utn_pedirNumeroFlotante(&(*(listaJugador+*idModificar)).salario, "\nIngrese el Nuevo salario del jugador (entre 100.0 y 100000.0): ", "\nError", 100000.0, 100.0);
+						respuestaSalario = utn_pedirNumeroFlotante(&(*(listaJugador+*posicionIdModificar)).salario, "\nIngrese el Nuevo salario del jugador (entre 100.0 y 100000.0): ", "\nError", 100000.0, 100.0);
 					} while (respuestaSalario == -1);
 
 					break;
 				case 5://años de contrato
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Años de contrato_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaAniosContrato = utn_pedirNumeroShort(&(*(listaJugador+*idModificar)).aniosContrato, "\nIngrese el Nuevo años de contrato (entre 1 y 8 años): ", "\nError", 8, 1);
+						respuestaAniosContrato = utn_pedirNumeroShort(&(*(listaJugador+*posicionIdModificar)).aniosContrato, "\nIngrese el Nuevo años de contrato (entre 1 y 8 años): ", "\nError", 8, 1);
 
 					} while (respuestaAniosContrato == -1);
 
@@ -477,15 +477,15 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 				case 6://confederacion
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Confederacion_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					subMenu_Confederacion(tipoConfederacion);
-					(*(listaJugador+*idModificar)).idConfederacion = *tipoConfederacion;
+					(*(listaJugador+*posicionIdModificar)).idConfederacion = *tipoConfederacion;
 					break;
 				case 7://salir
 					printf("\nSaliste del menu de Modificacion ");
 					break;
 			}
 		} while (opcion != 7 );
-			(*(listaJugador+*idModificar)).id = *idModificar;
-			(*(listaJugador+*idModificar)).isEmpty = OCUPADO;
+//			(*(listaJugador+*posicionIdModificar)).id = *posicionIdModificar;
+			(*(listaJugador+*posicionIdModificar)).isEmpty = OCUPADO;
 	}
 }
 

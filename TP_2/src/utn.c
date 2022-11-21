@@ -305,6 +305,47 @@ int utn_pedirNombre(char* pRespuesta, int largo , char* mensaje , char* mensajeE
 		{
 			if(validarNombre(bufferString, largo) == 0)//validamos que lo que nos haya devuelto sea un nombre
 			{
+				bufferString[0] = toupper(bufferString[0]);
+				strncpy(pRespuesta, bufferString , largo);
+				retorno = 0;//todo salio ok
+			}else{
+				printf("\n%s", mensajeError);//mensaje de error
+			}
+		}
+	}
+
+	return retorno;
+}
+
+/*int utn_pedirNombre(char* pRespuesta, int largo , char* mensaje , char* mensajeError)
+ *Objetivo de la funcion :
+ * pide un nombre al usuario , lo valida , comprueba y devuelve el resultado.
+ *
+ *ParaMetros :
+ * Parametro : char* pRespuesta, : tipo puntero de cadena de caracteres , Puntero a una cadena de caracteres , alli se dejara el nombre ingresado
+ * Parametro : int largo : tipo entero , es el largo de la cadena de caracteres
+ * Parametro : char* mensaje : tipo char , es una cadena de caracteres que contendra un mensaje para pedir que ingrese una letra
+ * Parametro : char* mensajeError : tipo char , es una cadena de caracteres que contendra un mensaje de ERROR para resaltar que algo salio mal al ingreso del caracter
+ *
+ *Variables :
+ * int retorno : tipo entero , es el encargado de informar si salio todo ok
+ * char bufferString : tipo char , se encarga de pedir el nombre para luego pasarle al puntero pRespuetas que se encuentra como parametro (char* pRespuesta)
+ *
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ **/
+int utn_pedirNombreConEspacio(char* pRespuesta, int largo , char* mensaje , char* mensajeError)
+{
+	int retorno = -1;
+	char bufferString [largo];
+
+	if(pRespuesta != NULL && largo > 0 && mensaje != NULL && mensajeError != NULL )//validamos los parametros
+	{
+		printf("\n%s",mensaje);//imprimimos mensaje
+
+		if(pedirDatos(bufferString, largo) == 0)//pedimos los datos (en formato string)
+		{
+			if(esNombre(bufferString, largo)== 1)//validamos que lo que nos haya devuelto sea un nombre
+			{
 				strncpy(pRespuesta, bufferString , largo);
 				retorno = 0;//todo salio ok
 			}else{
@@ -331,19 +372,19 @@ int utn_pedirNombre(char* pRespuesta, int largo , char* mensaje , char* mensajeE
  *Retorno :
  *Retono : retorna 0 si salio todo bien , caso contrario -1
  * */
-int validarNombre(char* pRespuesta , int largo)
+int validarNombre(char* pCadena , int largo)
 {
 	int retorno = -1;
 	int i;
 
-	if(pRespuesta != NULL && largo > 0)
+	if(pCadena != NULL && largo > 0)
 	{
-		if(pRespuesta[0]  <= 'Z' && pRespuesta[0] >= 'A')
+		if(pCadena[0]  <= 'Z' && pCadena[0] >= 'A')
 		{
 			retorno = 0;
-			for (i = 1; pRespuesta[i] != '\0' ; ++i) {
+			for (i = 1; pCadena[i] != '\0' ; ++i) {
 
-				if(pRespuesta[i] < 'a' || pRespuesta[i] > 'z')
+				if(pCadena[i] < 'a' || pCadena[i] > 'z' )
 				{
 					retorno = -1;
 					break;
@@ -351,6 +392,49 @@ int validarNombre(char* pRespuesta , int largo)
 			}
 		}else{
 			printf("La primera letra de un nombre tiene que ir con MAYUSCULAS");
+		}
+	}
+	return retorno;
+}
+
+
+/*int validarNombre(char* nombre , int largo)
+ *Objetivo de la funcion :
+ *		verifica si la cadena ingresada es un nombre (char* pRespuesta)
+ *
+ *Parametros :
+ *parametro : char* pRespuesta , Puntero al espacio de memoria donde se copiara la cadena obtenida
+ *Parametro : int largo : tipo entero , es el largo de la cadena de caracteres
+ *
+ *Variables :
+ *varible : int retorno , tipo entero :  es el encargado de informar si salio todo ok
+ *varible : int i , tipo entero ; es el indice del bucle for
+ *
+ *Retorno :
+ *Retono : retorna 0 si salio todo bien , caso contrario -1
+ * */
+int esNombre(char* cadena,int longitud)//agregar q acepte parentesis
+{
+	int i=0;
+	int retorno = 1;
+
+	if(cadena != NULL && longitud > 0)
+	{
+
+		cadena[0] = toupper(cadena[0]);
+		for(i=0 ; cadena[i] != '\0' && i < longitud; i++)
+		{
+			if(cadena[i] == ' ' || cadena[i] == '(' || cadena[i] == ')')
+			{
+				cadena[i+1] = toupper(cadena[i+1]);
+			}
+			if(cadena[i] == '(' && cadena[i] == ')' && cadena[i] != ' ' && (cadena[i] < 'A' || cadena[i] > 'Z' ) && (cadena[i] < 'a' || cadena[i] > 'z' ))
+			{
+	//cadena[i] == '(' && cadena[i] == ')' && ///28/10
+//&& cadena[i] != ' '
+				retorno = 0;
+				break;
+			}
 		}
 	}
 	return retorno;

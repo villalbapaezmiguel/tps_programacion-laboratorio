@@ -21,7 +21,7 @@ int utn_pedirNumeroFlotante(float* pRespuesta , char* mensaje  , char* mensajeEr
 int utn_pedirLetra(char* letra , char* mensaje , char* mensajeError);
 int utn_pedirNumeroShort(short* pRespuesta , char* mensaje  , char* mensajeError , int maximo , int minimo);
 int utn_pedirPalabra(char* pRespuesta, int largo , char* mensaje , char* mensajeError);
-
+int utn_pedirNombreConEspacio(char* pRespuesta, int largo , char* mensaje , char* mensajeError);
 //valiaciones:
 int validarAfanumerico(char* pRespuesta , int largo);
 int validarNombre(char* nombre , int largo);
@@ -30,5 +30,6 @@ int validarNumeroFlotante(char* caracter );
 int validarLetra(char* pLetra);
 int validarPalabra(char* pRespuesta , int largo);
 int convertidor_minusculas(char* pRespuesta , int largo);
+int esNombre(char* cadena,int longitud);
 
 #endif /* UTN_H_ */

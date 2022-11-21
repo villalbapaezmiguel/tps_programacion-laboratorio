@@ -56,7 +56,8 @@ int main(void) {
 		int posicionLibre ;
 		int idModificar ;
 		int opcionModificar ;
-
+		int posicionIdModificar ;
+		banderaAlta = 0;
 		printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_MENU_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		do {
 			printf("\n1)ALTA DE JUGADOR \n2)BAJA DEL JUGADOR \n3)MODIFICACION DEL JUGADOR \n4)INFORMES\n5)SALIR");
@@ -92,21 +93,22 @@ int main(void) {
 					informar_jugador(jugadores, JUGADOORES_LEN);
 					if(utn_pedirNumeroEntero(&idModificar, "\nIngrese el ID a modificar : ", "\nError", JUGADOORES_LEN, 0) == 0)
 					{
-						if(buscarPorId(jugadores, JUGADOORES_LEN, idModificar) >= 0)
+						posicionIdModificar = buscarPorId(jugadores, JUGADOORES_LEN, idModificar);
+						if(posicionIdModificar >= 0)
 						{
 							printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d",
-									(*(jugadores+idModificar)).id, (*(jugadores+idModificar)).nombre, (*(jugadores+idModificar)).posicion ,(*(jugadores+idModificar)).numeroCamiseta,
-									(*(jugadores+idModificar)).idConfederacion , (*(jugadores+idModificar)).salario, (*(jugadores+idModificar)).aniosContrato);
+									(*(jugadores+posicionIdModificar)).id, (*(jugadores+posicionIdModificar)).nombre, (*(jugadores+posicionIdModificar)).posicion ,(*(jugadores+posicionIdModificar)).numeroCamiseta,
+									(*(jugadores+posicionIdModificar)).idConfederacion , (*(jugadores+posicionIdModificar)).salario, (*(jugadores+posicionIdModificar)).aniosContrato);
 							if(utn_pedirNumeroEntero(&opcionModificar,"\nEsta seguro de modificar este jugador (1-SI/2-NO)??", "\nERROR", 2, 1) == 0)
 							{
 								if(opcionModificar == 1)
 								{
-									if(modificacionJugador(jugadores , JUGADOORES_LEN, &idModificar) == 0)
+									if(modificacionJugador(jugadores , JUGADOORES_LEN, &posicionIdModificar) == 0)
 									{
 										printf("\nModificacion del Jugador : ");
 										printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d\n",
-												(*(jugadores+idModificar)).id, (*(jugadores+idModificar)).nombre, (*(jugadores+idModificar)).posicion ,(*(jugadores+idModificar)).numeroCamiseta,
-												(*(jugadores+idModificar)).idConfederacion , (*(jugadores+idModificar)).salario, (*(jugadores+idModificar)).aniosContrato);
+												(*(jugadores+posicionIdModificar)).id, (*(jugadores+posicionIdModificar)).nombre, (*(jugadores+posicionIdModificar)).posicion ,(*(jugadores+posicionIdModificar)).numeroCamiseta,
+												(*(jugadores+posicionIdModificar)).idConfederacion , (*(jugadores+posicionIdModificar)).salario, (*(jugadores+posicionIdModificar)).aniosContrato);
 									}else{
 										printf("\nError al modificar el jugador");
 									}
