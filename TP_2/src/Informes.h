@@ -23,4 +23,8 @@ float calcular_PromedioJugador (int* cantidadJugadoresIngresados ,int* contadorC
 void informar_totalPromedioSalarios(eJugador* pListadoJugador, int largoJugador);
 void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, int largoJugador);
 void informar_porcentajeJugadoresPorCadaConfederacion(eJugador* pListaJugador , int largoJugador);
+void informar_regionConMasJugadores(eJugador* pListaJugador , int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion);
+int calcular_mayorCantidadJugadoresRegion(eJugador* pListaJugador, int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion );
+void subMenu_informar_regionConMasJugadores(eJugador* pListadoJugador , int largoJugador);
+int listado_jugadoresPorConfederacion(eJugador* pListadoJugador , int largoJugador , int* idConfederacion );
 #endif /* INFORMES_H_ */

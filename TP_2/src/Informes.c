@@ -144,6 +144,7 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 					break;
 				case 6:
 					printf("\n<<6)Informar cual es la región con más jugadores y el listado de los mismos>>");
+					informar_regionConMasJugadores(listadoJugador, largoJugador, listadoConfederacion, largoConfederacion);
 					break;
 				case 7:
 					printf("\n<<7)Salir>>");
@@ -584,9 +585,11 @@ void informar_porcentajeJugadoresPorCadaConfederacion(eJugador* pListaJugador , 
 					break;
 				case 102:
 					contadorAFC ++;
+//					printf("\nAFC Nombre : %s", (*(pListaJugador+i)).nombre);
 					break;
 				case 103:
 					contadorCAF ++;
+//					printf("\nCAF Nombre : %s", (*(pListaJugador+i)).nombre);
 					break;
 				case 104:
 					contadorCONCACAF ++;
@@ -605,7 +608,7 @@ void informar_porcentajeJugadoresPorCadaConfederacion(eJugador* pListaJugador , 
 		porcentajeAFC = (float)(100*contadorAFC)/contadorTotalJugadores;
 		porcentajeOFC = (float)(100*contadorOFC)/contadorTotalJugadores;
 
-
+		// las lineas 587 y 591 que son los porcentajes de AFC y CAF ,estan alreves
 		printf("\n**************************************");
 		printf("\nUEFA : %.2f %c", porcentajeUEFA, porcentaje);
 		printf("\nCONMEBOL : %.2f %c", porcentajeCONMEBOL, porcentaje);
@@ -618,8 +621,282 @@ void informar_porcentajeJugadoresPorCadaConfederacion(eJugador* pListaJugador , 
 	}
 }
 
+/*void informar_regionConMasJugadores(eJugador* pListaJugador , int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion)
+ *Objetivo de la funcion :
+ * 	Informa la region con mas jugadores y te muestra un listado de los mismos , tambien hay un submenu para poder
+ * 	los listados de todos los jugadores de las confedaraciones
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* pListaJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ * Parametro : eConfederacion* pListaConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConfederacion : tipo entero , es el largo del array de estrutura
+ *
+ *Variables :
+ * int i ; tipo entero , tipo entero ,es un contador que va a ir incrementando dentro del for
+ * int auxIdConderacion , tipo entero , es un  auxiliar para poder tomar el id de la confederacion
+ *Retono : void
+ **/
+void informar_regionConMasJugadores(eJugador* pListaJugador , int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion)
+{
+	int auxIdConderacion ;
+	int i;
+	if(pListaJugador != NULL && largoJugador > 0 && pListaConfederacion != NULL && largoConfederacion > 0)
+	{
+		auxIdConderacion = calcular_mayorCantidadJugadoresRegion(pListaJugador, largoJugador, pListaConfederacion, largoConfederacion);
+		if(auxIdConderacion != -1)
+		{
+			for (i = 0; i < largoConfederacion; ++i) {
+
+				if((*(pListaConfederacion+i)).id == auxIdConderacion)
+				{
+					printf("\nLa region con mas jugadores es : %s", (*(pListaConfederacion+i)).region);
+					if(listado_jugadoresPorConfederacion(pListaJugador, largoJugador, &auxIdConderacion) == 0)
+					{
+						subMenu_informar_regionConMasJugadores(pListaJugador, largoJugador);
+					}
+				}
+			}
+		}
+	}
+}
+
+int listado_jugadoresPorConfederacion(eJugador* pListadoJugador , int largoJugador , int* idConfederacion )
+{
+	int retorno = -1;
+	int i ;
+	int anchoColumnaId = -6;
+	int anchoColumnaNombre = -20;
+	int anchoColumnaPosicion = -15;
+	int anchoColumnaNumeroCamiseta = -10;
+	int anchoColumnaSueldo = -15;
+	int anchoColumnaConfederacion = -15;
+	int anchoColumnaAniosContrato = -15;
+
+	if(pListadoJugador != NULL && largoJugador > 0 && idConfederacion != NULL )
+	{
+		retorno = 0;
+		printf("\n*******+********************+***************+*************+***************+***************+****************+\n");
+		printf("%*s | %*s | %*s | %*s | %*s | %*s | %*s|\n",anchoColumnaId, "ID",anchoColumnaNombre+2,"NOMBRE" ,anchoColumnaPosicion+2 ,"POSICION",
+				anchoColumnaNumeroCamiseta,"N° CAMISETA",anchoColumnaSueldo+2,"SUELDO",anchoColumnaConfederacion+2,"CONFEDERACION",anchoColumnaAniosContrato+1,"AÑOS DE CONTRATO");
+		printf("*******+********************+***************+*************+***************+***************+****************+\n");
+		for (i = 0; i < largoJugador; ++i) {
+
+			if((*(pListadoJugador+i)).isEmpty == OCUPADO)
+			{
+				if((*(pListadoJugador+i)).idConfederacion == *idConfederacion)
+				{
+					switch(*idConfederacion)
+					{
+					case 100:
+						printf("%*d|%*s|%*s|%*d|%*f|%*s|%*d|\n",anchoColumnaId-1,(*(pListadoJugador+i)).id, anchoColumnaNombre, (*(pListadoJugador+i)).nombre,
+								anchoColumnaPosicion, (*(pListadoJugador+i)).posicion, anchoColumnaNumeroCamiseta, (*(pListadoJugador+i)).numeroCamiseta,
+								anchoColumnaSueldo, (*(pListadoJugador+i)).salario , anchoColumnaConfederacion, "CONMEBOL",
+								anchoColumnaAniosContrato ,(*(pListadoJugador+i)).aniosContrato);
+						printf("-------+-------------------+---------------+----------+---------------+---------------+----------------+\n");
+						break;
+					case 101:
+						printf("%*d|%*s|%*s|%*d|%*f|%*s|%*d|\n",anchoColumnaId-1,(*(pListadoJugador+i)).id, anchoColumnaNombre, (*(pListadoJugador+i)).nombre,
+								anchoColumnaPosicion, (*(pListadoJugador+i)).posicion, anchoColumnaNumeroCamiseta, (*(pListadoJugador+i)).numeroCamiseta,
+								anchoColumnaSueldo, (*(pListadoJugador+i)).salario , anchoColumnaConfederacion, "UEFA",
+								anchoColumnaAniosContrato ,(*(pListadoJugador+i)).aniosContrato);
+						printf("-------+-------------------+---------------+----------+---------------+---------------+----------------+\n");
+						break;
+					case 102:
+						printf("%*d|%*s|%*s|%*d|%*f|%*s|%*d|\n",anchoColumnaId-1,(*(pListadoJugador+i)).id, anchoColumnaNombre, (*(pListadoJugador+i)).nombre,
+								anchoColumnaPosicion, (*(pListadoJugador+i)).posicion, anchoColumnaNumeroCamiseta, (*(pListadoJugador+i)).numeroCamiseta,
+								anchoColumnaSueldo, (*(pListadoJugador+i)).salario , anchoColumnaConfederacion, "AFC",
+								anchoColumnaAniosContrato ,(*(pListadoJugador+i)).aniosContrato);
+						printf("-------+-------------------+---------------+----------+---------------+---------------+----------------+\n");
+						break;
+					case 103:
+						printf("%*d|%*s|%*s|%*d|%*f|%*s|%*d|\n",anchoColumnaId-1,(*(pListadoJugador+i)).id, anchoColumnaNombre, (*(pListadoJugador+i)).nombre,
+								anchoColumnaPosicion, (*(pListadoJugador+i)).posicion, anchoColumnaNumeroCamiseta, (*(pListadoJugador+i)).numeroCamiseta,
+								anchoColumnaSueldo, (*(pListadoJugador+i)).salario , anchoColumnaConfederacion, "CAF",
+								anchoColumnaAniosContrato ,(*(pListadoJugador+i)).aniosContrato);
+						printf("-------+-------------------+---------------+----------+---------------+---------------+----------------+\n");
+						break;
+					case 104:
+						printf("%*d|%*s|%*s|%*d|%*f|%*s|%*d|\n",anchoColumnaId-1,(*(pListadoJugador+i)).id, anchoColumnaNombre, (*(pListadoJugador+i)).nombre,
+								anchoColumnaPosicion, (*(pListadoJugador+i)).posicion, anchoColumnaNumeroCamiseta, (*(pListadoJugador+i)).numeroCamiseta,
+								anchoColumnaSueldo, (*(pListadoJugador+i)).salario , anchoColumnaConfederacion, "CONCACAF",
+								anchoColumnaAniosContrato ,(*(pListadoJugador+i)).aniosContrato);
+						printf("-------+-------------------+---------------+----------+---------------+---------------+----------------+\n");
+						break;
+					case 105:
+						printf("%*d|%*s|%*s|%*d|%*f|%*s|%*d|\n",anchoColumnaId-1,(*(pListadoJugador+i)).id, anchoColumnaNombre, (*(pListadoJugador+i)).nombre,
+								anchoColumnaPosicion, (*(pListadoJugador+i)).posicion, anchoColumnaNumeroCamiseta, (*(pListadoJugador+i)).numeroCamiseta,
+								anchoColumnaSueldo, (*(pListadoJugador+i)).salario , anchoColumnaConfederacion, "OFC",
+								anchoColumnaAniosContrato ,(*(pListadoJugador+i)).aniosContrato);
+						printf("-------+-------------------+---------------+----------+---------------+---------------+----------------+\n");
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return retorno;
+}
 
 
+//Informar cual es la región con más jugadores y el listado de los mismos.
+//Este proceso debe contar con menú propio permitiendo elegir qué informe se desea ver
+
+void subMenu_informar_regionConMasJugadores(eJugador* pListadoJugador , int largoJugador)
+{
+	int opcion ;
+	int confederacion_SUDAMERICA = CONFEDERACION_CONMEBOL;
+	int confederacion_EUROPA = CONFEDERACION_UEFA;
+	int confederacion_ASIA = CONFEDERACION_AFC;
+	int confederacion_AFRICA = confederacion_AFRICA;
+	int confederacion_NORTE_Y_CENTRO_AMAERICA = CONFEDERACION_CONCACAF;
+	int confederacion_OCEANIA = confederacion_OCEANIA;
+	printf("\n<<<<<<<<<<<<<<<<BIENVENIDO AL MENU DE OPCIONES>>>>>>>>>>>>>>>>");
+	printf("\nEn este menu podras ver cuantos jugadores hay una la region que usted quiera !!");
+	do {
+		printf("\n1)SUDAMERICA\n2)EUROPA\n3)ASIA\n4)AFRICA\n5)NORTE Y CENTRO AMAERICA\n6)OCEANIA\n7)SALIR DEL MENU");
+		utn_pedirNumeroEntero(&opcion, "\nIngrese opcion :", "\nError", 7, 1);
+		switch(opcion)
+		{
+			case 1://SUDAMERICA
+				printf("\n<<<<<SUDAMERICA>>>>>");
+				listado_jugadoresPorConfederacion(pListadoJugador, largoJugador, &confederacion_SUDAMERICA);
+				break;
+			case 2://EUROPA
+				printf("\n<<<<<EUROPA>>>>>");
+				listado_jugadoresPorConfederacion(pListadoJugador, largoJugador, &confederacion_EUROPA);
+				break;
+			case 3://ASIA
+				printf("\n<<<<<ASIA>>>>>");
+				listado_jugadoresPorConfederacion(pListadoJugador, largoJugador, &confederacion_ASIA);
+				break;
+			case 4://AFRICA
+				printf("\n<<<<<AFRICA>>>>>");
+				listado_jugadoresPorConfederacion(pListadoJugador, largoJugador, &confederacion_AFRICA);
+				break;
+			case 5://NORTE Y CENTRO AMAERICA
+				printf("\n<<<<<NORTE Y CENTRO AMAERICA>>>>>");
+				listado_jugadoresPorConfederacion(pListadoJugador, largoJugador, &confederacion_NORTE_Y_CENTRO_AMAERICA);
+				break;
+			case 6://OCEANIA
+				printf("\n<<<<<OCEANIA>>>>>");
+				listado_jugadoresPorConfederacion(pListadoJugador, largoJugador, &confederacion_OCEANIA);
+				break;
+			case 7://SALIR
+				printf("\nSalio de informar region con mas jugadores");
+				break;
+			default : printf("\nOpcion Incorrecta");
+		}
+
+
+	} while (opcion != 7);
+
+
+}
+//rertorna el id de la confederacion
+int calcular_mayorCantidadJugadoresRegion(eJugador* pListaJugador, int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion )
+{
+	int retorno = -1;
+	int contadorCONMEBOL = 0;
+	int contadorUEFA = 0;
+	int contadorAFC = 0;
+	int contadorCAF = 0;
+	int contadorCONCACAF = 0;
+	int contadorOFC = 0;
+	int i;
+
+
+	if(pListaJugador != NULL && largoJugador > 0 && pListaConfederacion != NULL && largoConfederacion > 0 )
+	{
+			if(pListaJugador != NULL && largoJugador > 0)
+			{
+				for (i = 0; i < largoJugador; ++i) {
+
+					if((*(pListaJugador+i)).isEmpty == OCUPADO)
+					{
+						switch((*(pListaJugador+i)).idConfederacion)
+						{
+						case 100:
+							contadorCONMEBOL ++;
+							break;
+						case 101:
+							contadorUEFA ++;
+							break;
+						case 102:
+							contadorAFC ++;
+							break;
+						case 103:
+							contadorCAF ++;
+							break;
+						case 104:
+							contadorCONCACAF ++;
+							break;
+						case 105:
+							contadorOFC ++;
+							break;
+						}
+					}
+				}
+
+				if(contadorCONMEBOL > contadorUEFA &&
+						contadorCONMEBOL > contadorAFC &&
+						contadorCONMEBOL > contadorCAF &&
+						contadorCONMEBOL > contadorCONCACAF &&
+						contadorCONMEBOL > contadorOFC)
+				{
+					retorno = CONFEDERACION_CONMEBOL;
+				}
+				if(contadorUEFA > contadorCONMEBOL &&
+						contadorUEFA > contadorAFC &&
+						contadorUEFA > contadorCAF &&
+						contadorUEFA > contadorCONCACAF &&
+						contadorUEFA > contadorOFC)
+				{
+					retorno = CONFEDERACION_UEFA;
+				}
+				if(contadorAFC > contadorUEFA &&
+						contadorAFC > contadorCONMEBOL &&
+						contadorAFC > contadorCAF &&
+						contadorAFC > contadorCONCACAF &&
+						contadorAFC > contadorOFC)
+				{
+					retorno = CONFEDERACION_AFC;
+				}
+				if(contadorCAF > contadorUEFA &&
+						contadorCAF > contadorCONMEBOL &&
+						contadorCAF > contadorCONMEBOL &&
+						contadorCAF > contadorCONCACAF &&
+						contadorCAF > contadorOFC)
+				{
+					retorno = CONFEDERACION_CAF;
+				}
+				if(contadorCONCACAF > contadorUEFA &&
+						contadorCONCACAF > contadorAFC &&
+						contadorCONCACAF > contadorCAF &&
+						contadorCONCACAF > contadorCONMEBOL &&
+						contadorCONCACAF > contadorOFC)
+				{
+					retorno = CONFEDERACION_CONCACAF;
+				}
+				if(contadorOFC > contadorUEFA &&
+						contadorOFC > contadorAFC &&
+						contadorOFC > contadorCAF &&
+						contadorOFC > contadorCONMEBOL &&
+						contadorOFC > contadorCONCACAF )
+				{
+					retorno = CONFEDERACION_OFC;
+				}
+			}else{
+				printf("\nError con la lista de confederaciones y los jugadores!! ");
+			}
+
+
+	}
+
+
+	return retorno;
+}
 
 
 

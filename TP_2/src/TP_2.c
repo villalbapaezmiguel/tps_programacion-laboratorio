@@ -68,7 +68,6 @@ int main(void) {
 				if(posicionLibre >= 0)
 				{
 					*(jugadores+posicionLibre) = altaJugador();
-
 					banderaAlta = 0;
 				}
 				break;
