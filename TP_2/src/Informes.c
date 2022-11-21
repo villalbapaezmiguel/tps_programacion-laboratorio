@@ -124,7 +124,6 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 					{
 						printf("\nInforme OK");
 					}
-
 					break;
 				case 2:
 					printf("\n<<2)Listado de confederaciones con sus jugadores>>");

@@ -40,7 +40,7 @@ int inicializar_Jugador (eJugador* punteroArrayJugador, int largoJugador );
 int buscarLugarLibre (eJugador* punteroArray, int largo);
 int buscarPorId(eJugador* punteroArray , int largo , int idIngresado);
 void subMenu_Confederacion(int* tipoConfederacion);
-eJugador altaJugador (void);
+eJugador altaJugador (eJugador* pListaJugador , int largo);
 int baja_jugador(eJugador* punteroArrayJugador , int largoJugador);
 eJugador altaForzadaJugador(int id, char* nombre , char* posicion, short numeroCamiseta , short idConfederacion , float salario , short aniosContrato );
 int modificacionJugador (eJugador* listaJugador, int largoJugador ,  int* idModificar );

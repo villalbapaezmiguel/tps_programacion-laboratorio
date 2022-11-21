@@ -215,7 +215,6 @@ int utn_pedirNumeroEntero(int* pRespuesta , char* mensaje  , char* mensajeError 
 
 				}else{
 					printf("\n%s",mensajeError);//imprimimos mensaje error
-					printf("\nEl numero ingresado excede los limites del valor maximo o minimo ");
 				}
 			}else{
 				printf("\n%s", mensajeError);//imprimimos mensaje error

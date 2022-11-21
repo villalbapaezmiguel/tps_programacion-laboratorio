@@ -99,7 +99,7 @@ int buscarLugarLibre (eJugador* punteroArray, int largo)
  *
  *Retono : int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
  **/
-int buscarPorId(eJugador* punteroArray , int largo , int idIngresado)
+int buscarPorId(eJugador* pListaJugador , int largo , int idIngresado)
 {
 	int retorno  = -1;
 	int i ;
@@ -108,10 +108,13 @@ int buscarPorId(eJugador* punteroArray , int largo , int idIngresado)
 	{
 		for (i = 0; i < largo; ++i) {
 
-			if((punteroArray+i)->id == idIngresado)
+			if((*(pListaJugador+i)).isEmpty == OCUPADO)
 			{
-				retorno = i;
-				break;
+				if((*(pListaJugador+i)).id == idIngresado)
+				{
+					retorno = i;
+					break;
+				}
 			}
 		}
 	}
@@ -126,7 +129,7 @@ int buscarPorId(eJugador* punteroArray , int largo , int idIngresado)
  * pone el isEmtpy en OCUPADO ,luego retorna esa misma estructra
  *
  *ParaMetros : void
- *
+ *	Parametro : int* cantidadJugadores , tipo puntero a entero , el largo del array
  *
  *Variables :
  *
@@ -139,7 +142,7 @@ int buscarPorId(eJugador* punteroArray , int largo , int idIngresado)
  *
  *Retono : Retorna una estructura con datos del usuario guardados en sus campos
  **/
-eJugador altaJugador (void)
+eJugador altaJugador (eJugador* pListaJugador , int largo)
 {
 	eJugador auxJugador ;
 	eConfederacion auxConfederacion;
@@ -148,15 +151,16 @@ eJugador altaJugador (void)
 	int respuestaNumeroCamiseta = -1;
 	int respuestaSalario = -1;
 	int respuestaAniosContrato = -1;
+	int i;
 
 	do {
-		respuestaNombre = utn_pedirNombre(auxJugador.nombre, LARGO_NOMBRE, "\nIngrese el nombre del Jugador : ", "\nError");
+		respuestaNombre = utn_pedirNombre(auxJugador.nombre, LARGO_NOMBRE, "\nIngrese el nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
 	} while (respuestaNombre == -1);
 
 	subMenu_seleccionarPosicion(auxJugador.posicion);
 
 	do {
-		respuestaNumeroCamiseta =utn_pedirNumeroShort(&auxJugador.numeroCamiseta, "\nIngrese numero de camiseta (entre 0 y 127): ", "\nError", 127, 0);
+		respuestaNumeroCamiseta =utn_pedirNumeroShort(&auxJugador.numeroCamiseta, "\nIngrese numero de camiseta (entre 1 y 127): ", "\nError", 127, 1);
 
 	} while (respuestaNumeroCamiseta == -1);
 
@@ -176,6 +180,24 @@ eJugador altaJugador (void)
 	auxJugador.id = nuevoIdJugador();
 	auxJugador.isEmpty = OCUPADO;
 
+	for (i = 0; i < largo; ++i) {
+
+		if((*(pListaJugador+i)).isEmpty == OCUPADO)
+		{
+			if((*(pListaJugador+i)).id == auxJugador.id)
+			{
+				auxJugador.id = nuevoIdJugador();
+			}
+		}
+	}
+
+
+	printf("*********************************************************************************************************************\n");
+	printf("Se cargo el Jugador :\n");
+	printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d\n",
+			auxJugador.id, auxJugador.nombre, auxJugador.posicion ,auxJugador.numeroCamiseta ,
+			auxJugador.idConfederacion , auxJugador.salario, auxJugador.aniosContrato);
+	printf("*********************************************************************************************************************\n");
 	return auxJugador ;
 }
 
@@ -199,6 +221,7 @@ void subMenu_Confederacion(int* tipoConfederacion)
 {
 
 	int banderaConfederacion = -1;
+//	int bandaeraDos = -1;
 	int opcion ;
 		do {
 			printf("\n1)CONMEBOL \n2)UEFA\n3)AFC\n4)CAF \n5)CONCACAF\n6)OFC\n7)Guardar y salir");
@@ -233,13 +256,15 @@ void subMenu_Confederacion(int* tipoConfederacion)
 			case 7:
 				if(banderaConfederacion == 0)
 				{
-					printf("\ntipo de confederacion Guardado");
+					printf("tipo de confederacion Guardado\n");
 				}else{
+					opcion = 2;
 					printf("\nERROR Tiene que elegir un tipo de confederacion");
 				}
 				break;
+			default : printf("\nOpcion incorrecta ");
 			}
-		} while (banderaConfederacion == -1);
+		} while (opcion != 7 );
 
 }
 
@@ -267,6 +292,8 @@ static int nuevoIdJugador(void)
  *  int retorno : tipo entero , es el encargado de informar si salio todo ok
  *  int idBajaIngresado , tipo entero , va a tomar el id del jugador uqe quiere dar de baja
  *  int posicion , tipo entero , va a tomar el retrono  de la funcion buscarPorId , si sale != -1 es porque lo encontro
+ *  int opcionBaja , tipo entero , toma la opcion que eligio el usuario (1-SI / 2-NO)
+ *	int respuestaBaja = -1, tipo entero ,  es una bandera para verificar si lo que devolvio la funcion esta bien
  *
  *Retono :int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
  **/
@@ -275,6 +302,8 @@ int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
 	int retorno = -1;
 	int idBajaIngresado;
 	int posicion = -1;
+	int opcionBaja ;
+	int respuestaBaja = -1;
 
 	if(punteroArrayJugador != NULL && largoJugador > 0)
 	{
@@ -285,8 +314,25 @@ int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
 			posicion = buscarPorId(punteroArrayJugador, largoJugador, idBajaIngresado);
 			if(posicion != -1)
 			{
-				(*(punteroArrayJugador+idBajaIngresado)).isEmpty = VACIO;
+				printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d",
+				(*(punteroArrayJugador+idBajaIngresado)).id, (*(punteroArrayJugador+idBajaIngresado)).nombre, (*(punteroArrayJugador+idBajaIngresado)).posicion ,(*(punteroArrayJugador+idBajaIngresado)).numeroCamiseta,
+				(*(punteroArrayJugador+idBajaIngresado)).idConfederacion , (*(punteroArrayJugador+idBajaIngresado)).salario, (*(punteroArrayJugador+idBajaIngresado)).aniosContrato);
+
+				do {
+					respuestaBaja = utn_pedirNumeroEntero(&opcionBaja,"\nSegura/o  que quiere eliminar a este jugador (1-SI / 2-NO)??", "\nError", 2, 1);
+
+				} while (respuestaBaja == -1);
+
+				if(opcionBaja == 1 )
+				{
+					(*(punteroArrayJugador+idBajaIngresado)).isEmpty = VACIO;
+				}
+				retorno = 0;
+			}else{
+				printf("\nERROR El id no fue encontrado");
 			}
+		}else{
+			printf("\nError no se encontro el ID : %d", idBajaIngresado);
 		}
 	}
 
@@ -397,7 +443,7 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 				case 1://nombre
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Nombre_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaNombre = utn_pedirNombre((*(listaJugador+*idModificar)).nombre, LARGO_NOMBRE, "\nIngrese el Nuevo nombre del Jugador : ", "\nError");
+						respuestaNombre = utn_pedirNombre((*(listaJugador+*idModificar)).nombre, LARGO_NOMBRE, "\nIngrese el Nuevo nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
 					} while (respuestaNombre == -1);
 
 					break;
@@ -408,7 +454,7 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 				case 3://numero de camiseta
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Numero de camiseta_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaNumeroCamiseta =utn_pedirNumeroShort(&(*(listaJugador+*idModificar)).numeroCamiseta, "\nIngrese el Nuevo numero de camiseta (entre 0 y 127): ", "\nError", 127, 0);
+						respuestaNumeroCamiseta =utn_pedirNumeroShort(&(*(listaJugador+*idModificar)).numeroCamiseta, "\nIngrese el Nuevo numero de camiseta (entre 1 y 127): ", "\nError", 127, 1);
 
 					} while (respuestaNumeroCamiseta == -1);
 
@@ -441,7 +487,6 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* idModificar
 			(*(listaJugador+*idModificar)).id = *idModificar;
 			(*(listaJugador+*idModificar)).isEmpty = OCUPADO;
 	}
-
 }
 
 /*void subMenu_seleccionarPosicion(char* posicion )
@@ -462,61 +507,69 @@ void subMenu_seleccionarPosicion(char* posicion )
 {
 	int opcion ;
 	int bandera = -1;
+	int banderaDos = -1;
 
 	if(posicion != NULL)
 	{
 		printf("\nTiene que eleigir si o si una posicion");
 		do {
-			printf("\n1)Arquero\n2)Defensor\n3)Mediocampista\n4)Delantero\n5)Salir");
+			printf("\n1)Arquero\n2)Defensor\n3)Mediocampista\n4)Delantero\n5)Guardar y Salir");
 			utn_pedirNumeroEntero(&opcion, "\nIngrese una opcion : ", "\nError", 5, 1);
 			switch(opcion)
 			{
 			case 1://arquero
-				if(bandera == -1)
+				if(bandera == -1 || banderaDos == 0)
 				{
 					strncpy(posicion,"Arquero",LARGO_POSICION);
 					bandera = 0;
+					banderaDos = 0 ;
 				}else{
 					printf("\nTiene que eleigir si o si una posicion");
 				}
 				break;
 			case 2://defensor
-				if(bandera == -1)
+				if(bandera == -1 || banderaDos == 0)
 				{
 					strncpy(posicion,"Defensor",LARGO_POSICION);
 					bandera = 0;
+					banderaDos = 0;
 				}else{
 					printf("\nTiene que eleigir si o si una posicion");
 				}
 				break;
 			case 3://mediocampista
-				if(bandera == -1)
+				if(bandera == -1 || banderaDos == 0 )
 				{
 					strncpy(posicion,"Mediocampista",LARGO_POSICION);
 					bandera = 0;
+					banderaDos = 0;
 				}else{
 					printf("\nTiene que eleigir si o si una posicion");
 				}
 				break;
 			case 4://delantero
-				if(bandera == -1)
+				if(bandera == -1 || banderaDos == 0)
 				{
 					strncpy(posicion,"Delantero",LARGO_POSICION);
 					bandera = 0;
+					banderaDos = 0;
 				}else{
 					printf("\nTiene que eleigir si o si una posicion");
 				}
 				break;
 			case 5://salir
-				if(bandera == 0)
+				if(bandera == 0 || banderaDos == 0)
 				{
 					printf("\nEligio la posicion : %s", posicion);
+					banderaDos = 0;
 				}else{
+					opcion = 2;
 					printf("\nTiene que eleigir si o si una posicion");
 				}
 				break;
+			default : printf("\nOpcion incorrecta ");
 			}
-		} while ( bandera == -1 );
+		} while ( opcion != 5 );
 	}
 }
 

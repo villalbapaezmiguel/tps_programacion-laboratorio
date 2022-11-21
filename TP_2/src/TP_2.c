@@ -22,6 +22,7 @@ int main(void) {
 	eConfederacion confederacion [CONFEDERACION_LEN];
 	eJugador jugadores [JUGADOORES_LEN];
 	int banderaSalir = -1;
+	int largoJugadores = JUGADOORES_LEN;
 
 	if(inicializar_Jugador(jugadores, JUGADOORES_LEN) == 0)
 	{
@@ -54,6 +55,7 @@ int main(void) {
 		int banderaAlta = -1;
 		int posicionLibre ;
 		int idModificar ;
+		int opcionModificar ;
 
 		printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_MENU_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		do {
@@ -67,7 +69,7 @@ int main(void) {
 				posicionLibre = buscarLugarLibre(jugadores, JUGADOORES_LEN);
 				if(posicionLibre >= 0)
 				{
-					*(jugadores+posicionLibre) = altaJugador();
+					*(jugadores+posicionLibre) = altaJugador(jugadores ,largoJugadores);
 					banderaAlta = 0;
 				}
 				break;
@@ -75,7 +77,10 @@ int main(void) {
 				printf("\n-----------------------------BAJA DEL JUGADOR-----------------------------------------");
 				if(banderaAlta == 0)
 				{
-					baja_jugador(jugadores, JUGADOORES_LEN);
+					if(baja_jugador(jugadores, JUGADOORES_LEN) == 0)
+					{
+						printf("\nBaja lista");
+					}
 				}else{
 					printf("\nNo se puede ingresar a los casos 2, 3 y 4 sin antes haber realizado la carga de algún jugador.");
 				}
@@ -89,11 +94,26 @@ int main(void) {
 					{
 						if(buscarPorId(jugadores, JUGADOORES_LEN, idModificar) >= 0)
 						{
-							printf("\nEl id es el : %d", idModificar);
-							if(modificacionJugador(jugadores , JUGADOORES_LEN, &idModificar) == 0)
+							printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d",
+									(*(jugadores+idModificar)).id, (*(jugadores+idModificar)).nombre, (*(jugadores+idModificar)).posicion ,(*(jugadores+idModificar)).numeroCamiseta,
+									(*(jugadores+idModificar)).idConfederacion , (*(jugadores+idModificar)).salario, (*(jugadores+idModificar)).aniosContrato);
+							if(utn_pedirNumeroEntero(&opcionModificar,"\nEsta seguro de modificar este jugador (1-SI/2-NO)??", "\nERROR", 2, 1) == 0)
 							{
-								printf("\nMoficacion ok");
+								if(opcionModificar == 1)
+								{
+									if(modificacionJugador(jugadores , JUGADOORES_LEN, &idModificar) == 0)
+									{
+										printf("\nModificacion del Jugador : ");
+										printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d\n",
+												(*(jugadores+idModificar)).id, (*(jugadores+idModificar)).nombre, (*(jugadores+idModificar)).posicion ,(*(jugadores+idModificar)).numeroCamiseta,
+												(*(jugadores+idModificar)).idConfederacion , (*(jugadores+idModificar)).salario, (*(jugadores+idModificar)).aniosContrato);
+									}else{
+										printf("\nError al modificar el jugador");
+									}
+								}
 							}
+						}else{
+							printf("\nError el id ingresado no existe ");
 						}
 					}
 				}else{
