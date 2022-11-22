@@ -296,6 +296,8 @@ static int nuevoIdJugador(void)
  *  int posicion , tipo entero , va a tomar el retrono  de la funcion buscarPorId , si sale != -1 es porque lo encontro
  *  int opcionBaja , tipo entero , toma la opcion que eligio el usuario (1-SI / 2-NO)
  *	int respuestaBaja = -1, tipo entero ,  es una bandera para verificar si lo que devolvio la funcion esta bien
+ *	int sinJugador , tipo entero , es una bandera para verificar si lo que devolvio la funcion esta bien
+ *	int i, tipo entero , es el contador que se incrementa en el for
  *
  *Retono :int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
  **/
@@ -306,36 +308,55 @@ int baja_jugador(eJugador* punteroArrayJugador , int largoJugador)
 	int posicion = -1;
 	int opcionBaja ;
 	int respuestaBaja = -1;
+	int sinJugador = 0;
+	int i;
 
 	if(punteroArrayJugador != NULL && largoJugador > 0)
 	{
-		informar_jugador(punteroArrayJugador, largoJugador);
+		for (i = 0; i < largoJugador; ++i) {
 
-		if(utn_pedirNumeroEntero(&idBajaIngresado, "\nIngrese un ID para dar de baja :", "\nError", largoJugador, 0) == 0)
-		{
-			posicion = buscarPorId(punteroArrayJugador, largoJugador, idBajaIngresado);
-			if(posicion != -1)
+			if((*(punteroArrayJugador +i)).isEmpty == OCUPADO)
 			{
-				printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d",
-				(*(punteroArrayJugador+posicion)).id, (*(punteroArrayJugador+posicion)).nombre, (*(punteroArrayJugador+posicion)).posicion ,(*(punteroArrayJugador+posicion)).numeroCamiseta,
-				(*(punteroArrayJugador+posicion)).idConfederacion , (*(punteroArrayJugador+posicion)).salario, (*(punteroArrayJugador+posicion)).aniosContrato);
-
-				do {
-					respuestaBaja = utn_pedirNumeroEntero(&opcionBaja,"\nSegura/o  que quiere eliminar a este jugador (1-SI / 2-NO)??", "\nError", 2, 1);
-
-				} while (respuestaBaja == -1);
-
-				if(opcionBaja == 1 )
-				{
-					(*(punteroArrayJugador+posicion)).isEmpty = VACIO;
-				}
-				retorno = 0;
+				break;//encontro un jugador
 			}else{
-				printf("\nERROR El id no fue encontrado");
+				sinJugador = 1;//no encontro ningun jugador
+				printf("\nNo se puede hacer mas bajas , no hay jugadores !!");
+				printf("\nPor favor ingrese jugadores !!!");
+				break;
 			}
-		}else{
-			printf("\nError no se encontro el ID : %d", idBajaIngresado);
 		}
+
+		if(sinJugador == 0)
+		{
+			informar_jugador(punteroArrayJugador, largoJugador);
+			if(utn_pedirNumeroEntero(&idBajaIngresado, "\nIngrese un ID para dar de baja :", "\nError", largoJugador, 0) == 0)
+			{
+				posicion = buscarPorId(punteroArrayJugador, largoJugador, idBajaIngresado);
+				if(posicion != -1)
+				{
+					printf("\nID : %d | NOMBRE : %s | POSICION : %s | N° CAMISETA : %d | ID CONFEDERACION : %d | SALARIO : %.2f | ANIOS CONTRATO : %d",
+					(*(punteroArrayJugador+posicion)).id, (*(punteroArrayJugador+posicion)).nombre, (*(punteroArrayJugador+posicion)).posicion ,(*(punteroArrayJugador+posicion)).numeroCamiseta,
+					(*(punteroArrayJugador+posicion)).idConfederacion , (*(punteroArrayJugador+posicion)).salario, (*(punteroArrayJugador+posicion)).aniosContrato);
+
+					do {
+						respuestaBaja = utn_pedirNumeroEntero(&opcionBaja,"\nSegura/o  que quiere eliminar a este jugador (1-SI / 2-NO)??", "\nError", 2, 1);
+
+					} while (respuestaBaja == -1);
+
+					if(opcionBaja == 1 )
+					{
+						(*(punteroArrayJugador+posicion)).isEmpty = VACIO;
+					}
+					retorno = 0;
+				}else{
+					printf("\nERROR El id no fue encontrado");
+				}
+			}else{
+				printf("\nError no se encontro el ID : %d", idBajaIngresado);
+			}
+
+		}
+
 	}
 
 	return retorno;

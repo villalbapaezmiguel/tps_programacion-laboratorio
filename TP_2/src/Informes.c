@@ -203,102 +203,6 @@ int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador 
 			}
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//		do {
-//			bandera = 0;
-//			for (i = 0; i < largoJugador-1; ++i) {//JUGADORES
-//
-//				if((*(listadoJugador+i)).isEmpty == OCUPADO)
-//				{
-//					for (j = i+1; j < largoConfederacion; ++j) {
-//						if(listadoJugador[i].idConfederacion == listadoConfederacion[j].id)
-//						{
-//							if(strncmp(listadoConfederacion[j].nombre, listadoConfederacion[j+1].nombre, LARGO_NOMBRE) > 0)
-//							{
-//								bandera = 1;
-//								auxConfederacion = listadoConfederacion[i];
-//								listadoConfederacion[i] = listadoConfederacion[i+1];
-//								listadoConfederacion[j+1] = auxConfederacion;
-//
-//							}else if(strncmp(listadoConfederacion[j].nombre, listadoConfederacion[j+1].nombre, LARGO_NOMBRE) == 0)
-//							{
-//								if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) > 0)
-//								{
-//									auxJugador = listadoJugador[i];
-//									listadoJugador[i] = listadoJugador[i+1];
-//									listadoJugador[i+1] = auxJugador;
-//								}
-//							}
-//						}
-//					}
-//
-//
-////					if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) > 0)
-////						{
-////							bandera = 1;
-////							auxJugador = listadoJugador[i];
-////							listadoJugador[i] = listadoJugador[i+1];
-////							listadoJugador[i+1] = auxJugador;
-////
-////						}else if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) == 0)
-////						{
-////
-////						}
-//				}
-//			}
-//			largoJugador --;
-//
-//		} while (bandera);
-
-
-
-
-		//		for (j = 0; j < largoJugador-1; ++j) {//JUGADORES
-		//
-		//			if((*(listadoJugador+j)).isEmpty == OCUPADO)
-		//			{
-		//				for (i = 0; i < largoConfederacion; ++i) {//ordenamos la confederacion // CONFEDERACION
-		//
-		//					if((*(listadoJugador+j)).idConfederacion == (*(listadoConfederacion+i)).id)
-		//					{
-		//						if(strncmp(listadoConfederacion[i].nombre, listadoConfederacion[i+1].nombre, NOMBRE_CONFEDERACION) < 0)
-		//						{
-		//								auxConfederacion = listadoConfederacion[i];
-		//								listadoConfederacion[i] = listadoConfederacion[i+1];
-		//								listadoConfederacion[i+1] = auxConfederacion;
-		//
-		//						}else if( strncmp(listadoConfederacion[i].nombre, listadoConfederacion[i+1].nombre, NOMBRE_CONFEDERACION) == 0)
-		//						{
-		//							if(strncmp(listadoJugador[j].nombre, listadoJugador[j+1].nombre,LARGO_NOMBRE) < 0)
-		//							{
-		//								auxJugador = listadoJugador[j];
-		//								listadoJugador[j] = listadoJugador[j+1];
-		//								listadoJugador[j+1] = auxJugador;
-		//							}
-		//						}
-		//					}
-		//				}
-		//			}
-		//		}
-
-
-
-
-
-
-
 		informar_jugador(listadoJugador, largoJugador);
 	}
 
@@ -637,6 +541,7 @@ void informar_porcentajeJugadoresPorCadaConfederacion(eJugador* pListaJugador , 
 		porcentajeOFC = (float)(100*contadorOFC)/contadorTotalJugadores;
 
 		// las lineas 587 y 591 que son los porcentajes de AFC y CAF ,estan alreves
+		printf("\nCreo que los porcentajes de CAF y AFC estan invertidos en su PDF....");
 		printf("\n**************************************");
 		printf("\nUEFA : %.2f %c", porcentajeUEFA, porcentaje);
 		printf("\nCONMEBOL : %.2f %c", porcentajeCONMEBOL, porcentaje);
