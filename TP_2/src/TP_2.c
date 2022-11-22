@@ -41,7 +41,8 @@ int main(void) {
 		*(jugadores+11) = altaForzadaJugador(12, "Luis Romo", "medicampista", 7, 104, 100000.0, 2);
 		*(jugadores+12) = altaForzadaJugador(13, "Bamba Dieng", "delantero", 9, 103, 100000.0, 2);
 		*(jugadores+13) = altaForzadaJugador(14, "Demba Seck", "delantero", 11, 103, 6000.0, 2);
-//		*(jugadores+14) = altaForzadaJugador(15, "Tarek Salman", "defensor", 6, 102, 78000.0, 5);
+		*(jugadores+14) = altaForzadaJugador(15, "Tarek Salman", "defensor", 6, 102, 78000.0, 5);
+		*(jugadores+15) = altaForzadaJugador(16, "Tarek Salman", "defensor", 6, 103, 78000.0, 5);
 
 		*(confederacion+0) = altaForzadaConfederacion(CONFEDERACION_CONMEBOL, "CONMEBOL", "Sudamerica", 1916);
 		*(confederacion+1) = altaForzadaConfederacion(CONFEDERACION_UEFA, "UEFA", "Europa", 1954);

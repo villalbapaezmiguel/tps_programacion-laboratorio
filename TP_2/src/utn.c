@@ -459,7 +459,7 @@ int validarNumeroFlotante(char* pRespuesta )
 {
 	int retorno  = -1;
 	int i = 0;
-	int banderaFlotante = -1;
+//	int banderaFlotante = -1;
 
 	if(pRespuesta != NULL)
 	{
@@ -470,21 +470,21 @@ int validarNumeroFlotante(char* pRespuesta )
 		}
 		for (; pRespuesta[i] != '\0'; ++i) {
 
-			if(pRespuesta[i] == '.')
-			{
-				banderaFlotante = 0;
-				continue;
-			}
+//			if(pRespuesta[i] == '.')
+//			{
+//				banderaFlotante = 0;
+//				continue;
+//			}
 			if(pRespuesta[i] > '9' || pRespuesta[i] < '0')
 			{
 				retorno = -1;
 				break;
 			}
 		}
-		if(banderaFlotante != 0)
-		{
-			retorno = -1;
-		}
+//		if(banderaFlotante != 0)
+//		{
+//			retorno = -1;
+//		}
 	}
 
 

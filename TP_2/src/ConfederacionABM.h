@@ -27,7 +27,7 @@ typedef struct{
 eConfederacion altaForzadaConfederacion(int id, char* nombre , char* region, int aniosCreacion );
 int confederacion_inicializar_ (eConfederacion* punteroArrayConfederacion, int largoConderacion );
 int confederacion_buscarLugarLibre (eConfederacion* punteroArray, int largo);
-int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idIngresado);
+int confederacion_buscarPorId(int* idJugadorConfederacion , eConfederacion* punteroArray , int largo , int* idEncontrado);
 eConfederacion confederacion_alta (void);
 int confederacion_Baja(eConfederacion* punteroArrayConfederacion , int largoConfederacion);
 int confederacion_modificacion(eConfederacion* listaConfederacion, int largoConfederacion ,  int* idModificar );

@@ -134,18 +134,19 @@ int confederacion_buscarLugarLibre (eConfederacion* punteroArray, int largo)
  *
  *Retono : int retorno , si salio todo bien retorna un entero >= 0 , de lo contrario -1
  **/
-int confederacion_buscarPorId(eConfederacion* punteroArray , int largo , int idIngresado)
+int confederacion_buscarPorId(int* idJugadorConfederacion , eConfederacion* punteroArray , int largo , int* idEncontrado)
 {
 	int retorno  = -1;
 	int i ;
 
-	if(largo > 0 )
+	if(punteroArray != NULL && largo > 0 && idEncontrado != NULL && idJugadorConfederacion != NULL)
 	{
 		for (i = 0; i < largo; ++i) {
 
-			if((punteroArray+i)->id == idIngresado)
+			if((punteroArray+i)->id == *idJugadorConfederacion)
 			{
-				retorno = i;
+				*idEncontrado = i;
+				retorno = 0;
 				break;
 			}
 		}
@@ -223,15 +224,17 @@ int confederacion_Baja(eConfederacion* punteroArrayConfederacion , int largoConf
 	int idBajaIngresado;
 	int posicion = -1;
 
+
 	if(punteroArrayConfederacion != NULL && largoConfederacion > 0)
 	{
 
 		if(utn_pedirNumeroEntero(&idBajaIngresado, "\nIngrese un ID de la Confederacion para dar de baja :", "\nError", largoConfederacion, 0) == 0)
 		{
-			posicion = confederacion_buscarPorId(punteroArrayConfederacion, largoConfederacion, idBajaIngresado);
-			if(posicion != -1)
+
+			if(confederacion_buscarPorId(&idBajaIngresado,punteroArrayConfederacion, largoConfederacion, &posicion) == 0)
 			{
-				(*(punteroArrayConfederacion+idBajaIngresado)).isEmpty = VACIO;
+				(*(punteroArrayConfederacion+posicion)).isEmpty = VACIO;
+				retorno = 0;
 			}
 		}
 	}

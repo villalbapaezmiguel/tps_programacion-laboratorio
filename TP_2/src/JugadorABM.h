@@ -29,7 +29,7 @@ typedef struct{
 	char nombre[LARGO_NOMBRE];
 	char posicion [LARGO_POSICION];
 	short numeroCamiseta;
-	short idConfederacion ;
+	int idConfederacion ;
 	float salario;
 	short aniosContrato ;
 	short isEmpty;

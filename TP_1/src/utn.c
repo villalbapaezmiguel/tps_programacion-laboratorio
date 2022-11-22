@@ -325,36 +325,36 @@ int validarNombre(char* pRespuesta , int largo)
  *Retorno :
  *Retono : retorna 0 si salio todo bien , caso contrario -1
  * */
-int validarNumeroFlotante(char* pRespuesta )
+int validarNumeroFlotante(char* pCadena )
 {
 	int retorno  = -1;
 	int i = 0;
-	int banderaFlotante = -1;
+//	int banderaFlotante = -1;
 
-	if(pRespuesta != NULL)
+	if(pCadena != NULL)
 	{
 		retorno = 0;
-		if(pRespuesta[0] == '-')
+		if(pCadena[0] == '-')
 		{
 			i = 1;
 		}
-		for (; pRespuesta[i] != '\0'; ++i) {
+		for (; pCadena[i] != '\0'; ++i) {
 
-			if(pRespuesta[i] == '.')
-			{
-				banderaFlotante = 0;
-				continue;
-			}
-			if(pRespuesta[i] > '9' || pRespuesta[i] < '0')
+//			if(pCadena[i] == '.')
+//			{
+//				banderaFlotante = 0;
+//				continue;
+//			}
+			if(pCadena[i] > '9' || pCadena[i] < '0')
 			{
 				retorno = -1;
 				break;
 			}
 		}
-		if(banderaFlotante != 0)
-		{
-			retorno = -1;
-		}
+//		if(banderaFlotante != 0)
+//		{
+//			retorno = -1;
+//		}
 	}
 
 

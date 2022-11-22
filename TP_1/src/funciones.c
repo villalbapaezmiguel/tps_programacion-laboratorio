@@ -683,7 +683,7 @@ int	subMenu_costosDeMantenimiento (int* opcionCostos ,float* costoTransporte , f
 			{
 				case 1:
 					printf("\n*********Costo de Hospedaje*********\n");
-					if(utn_pedirNumeroFlotante(costoHospedaje,"\nIngrese el costo del Hospedaje (entre 0.0 y 10000.00): ", "\nError", 10000.00, 0.0) == 0)
+					if(utn_pedirNumeroFlotante(costoHospedaje,"\nIngrese el costo del Hospedaje (entre 1 y 10000): ", "\nError", 10000, 1) == 0)
 					{
 						printf("\n--> Costo de Hospedaje OK <--\n");
 						banderaCostoHospedaje = 0;
@@ -691,7 +691,7 @@ int	subMenu_costosDeMantenimiento (int* opcionCostos ,float* costoTransporte , f
 					break;
 				case 2:
 					printf("\n*********Costo de comida*********\n");
-					if(utn_pedirNumeroFlotante(costoComida, "\nIngrese el costo de la Comida (entre 0.0 y 10000.00): ", "\nError", 10000.0, 0.0) == 0)
+					if(utn_pedirNumeroFlotante(costoComida, "\nIngrese el costo de la Comida (entre 1 y 10000): ", "\nError", 10000, 1) == 0)
 					{
 						printf("\n--> Costo de comida OK <--\n");
 						banderaCostoComida = 0;
@@ -699,7 +699,7 @@ int	subMenu_costosDeMantenimiento (int* opcionCostos ,float* costoTransporte , f
 					break;
 				case 3:
 					printf("\n*********Costo de transporte*********\n");
-					if(utn_pedirNumeroFlotante(costoTransporte, "\nIngrese el costo del Transporte (entre 0.0 y 10000.00): ", "\nError", 10000.0, 0.0) == 0)
+					if(utn_pedirNumeroFlotante(costoTransporte, "\nIngrese el costo del Transporte (entre 1 y 10000): ", "\nError", 10000, 1) == 0)
 					{
 						printf("\n--> Costo de transporte OK <--\n");
 						banderaCostoTransporte = 0;
@@ -722,7 +722,5 @@ int	subMenu_costosDeMantenimiento (int* opcionCostos ,float* costoTransporte , f
 		} while (banderaSalir == -1);
 
 	}
-
-
 	return retono;
 }

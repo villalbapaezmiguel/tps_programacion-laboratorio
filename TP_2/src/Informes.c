@@ -158,124 +158,153 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 
 //Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador
 
-int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConferacion , int largoConfederacion)
+int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConfederacion , int largoConfederacion)
 {
-	int retorno = -1;
-//	eJugador auxJugador;
 //	eConfederacion auxConfederacion ;
-//	int  i, j;
-//	int k, l;
+	eJugador auxJugador;
+	int retorno = -1;
+	int i,j;
 //	int bandera ;
-int i;
+	char bufferConfederacion [50];
+	char bufferDosConfederacion [50];
+	int indice ;
 
-	if(listadoJugador != NULL && listadoConferacion != NULL && largoJugador > 0 && largoConfederacion > 0)
+	if(listadoJugador != NULL && listadoConfederacion != NULL && largoJugador > 0 && largoConfederacion > 0)
 	{
+		retorno = 0;
 
-		informar_ordenarAlfabeticamente_confederacion(listadoConferacion, largoConfederacion);
-		for (i = 0; i < largoConfederacion; ++i) {
+		for (i = 0; i < largoJugador-1; ++i) {
 
-			printf("\nNombre : %s", listadoConferacion[i].nombre);
+			for (j = i+1; j < largoJugador; ++j) {
+
+				if(confederacion_buscarPorId(&listadoJugador[i].idConfederacion, listadoConfederacion , largoConfederacion, &indice ) == 0)
+				{
+					strcpy(bufferConfederacion, listadoConfederacion[indice].nombre);
+				}
+				if(confederacion_buscarPorId(&listadoJugador[j].idConfederacion, listadoConfederacion , largoConfederacion, &indice ) == 0)
+				{
+					strcpy(bufferDosConfederacion, listadoConfederacion[indice].nombre);
+				}
+
+				if(stricmp(bufferDosConfederacion , bufferConfederacion) < 0)
+				{
+					auxJugador = listadoJugador[j];
+					listadoJugador[j] = listadoJugador[i];
+					listadoJugador[i] = auxJugador;
+				}
+				if(stricmp(bufferDosConfederacion, bufferConfederacion) == 0 &&
+						stricmp(listadoJugador[j].nombre, listadoJugador[i].nombre) < 0)
+				{
+					auxJugador = listadoJugador[j];
+					listadoJugador[j] = listadoJugador[i];
+					listadoJugador[i] = auxJugador;
+				}
+
+			}
 		}
 
-//		for (i = 0; i < largoConfederacion; ++i) {
-////			printf("\nCONFEDERACION %s",(*(listadoConferacion+i)).nombre);
-//			for (j = 0; j < largoJugador; ++j) {
-//
-//				if((*(listadoJugador+j)).idConfederacion == (*(listadoConferacion+i)).id)
-//				{
-////					printf("\n Nombre Jugador : %s", (*(listadoJugador+j)).nombre);
-//					if(strncmp(listadoJugador[i].nombre, listadoJugador[j+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
-//					{
-//						auxJugador = listadoJugador[i];
-//						listadoJugador[i] = listadoJugador[j+1];
-//						listadoJugador[j+1] = auxJugador;
-//					}
-//
-//				}
-//			}
-//		}
-//
-//
-//		for (k = 0; k < largoConfederacion; ++k) {
-//			printf("\nCONFEDERACION %s",(*(listadoConferacion+k)).nombre);
-//			for (l = 0; l < largoJugador; ++l) {
-//
-//				if((*(listadoJugador+l)).idConfederacion == (*(listadoConferacion+k)).id)
-//				{
-//					printf("\n Nombre Jugador : %s", (*(listadoJugador+l)).nombre);
-//					if(strncmp(listadoJugador[k].nombre, listadoJugador[l+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
-//					{
-//						auxJugador = listadoJugador[k];
-//						listadoJugador[k] = listadoJugador[l+1];
-//						listadoJugador[l+1] = auxJugador;
-//					}
-//
-//				}
-//			}
-//		}
 
 
 
-		//				if(strncmp(listadoConferacion[i].nombre, listadoConferacion[j+1].nombre, NOMBRE_CONFEDERACION) > 0)//primer criterio
-		//				{
-		////					bandera = 1;
-		//					auxJugador = listadoJugador[i];
-		//					listadoJugador[i] = listadoJugador[j+1];
-		//					listadoJugador[j+1] = auxJugador;
-		//
-		//				}else if(strncmp(listadoJugador[i].nombre, listadoJugador[j+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
-		//				{
-		////					bandera = 1;
-		//					auxJugador = listadoJugador[i];
-		//					listadoJugador[i] = listadoJugador[j+1];
-		//					listadoJugador[j+1] = auxJugador;
-		//				}
+
+
+
+
+
+
+
+
+
+
 //		do {
 //			bandera = 0;
-//			for (i = 0; i < largoConfederacion -1; ++i) {
+//			for (i = 0; i < largoJugador-1; ++i) {//JUGADORES
 //
-//				if(strncmp(listadoConferacion[i].nombre, listadoConferacion[i+1].nombre, NOMBRE_CONFEDERACION) > 0)//primer criterio
+//				if((*(listadoJugador+i)).isEmpty == OCUPADO)
 //				{
-//					bandera = 1;
-//					auxJugador = listadoJugador[i];
-//					listadoJugador[i] = listadoJugador[i+1];
-//					listadoJugador[i+1] = auxJugador;
+//					for (j = i+1; j < largoConfederacion; ++j) {
+//						if(listadoJugador[i].idConfederacion == listadoConfederacion[j].id)
+//						{
+//							if(strncmp(listadoConfederacion[j].nombre, listadoConfederacion[j+1].nombre, LARGO_NOMBRE) > 0)
+//							{
+//								bandera = 1;
+//								auxConfederacion = listadoConfederacion[i];
+//								listadoConfederacion[i] = listadoConfederacion[i+1];
+//								listadoConfederacion[j+1] = auxConfederacion;
 //
-//				}else if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) == 0)//segundo criterio
-//				{
-//					bandera = 1;
-//					auxJugador = listadoJugador[i];
-//					listadoJugador[i] = listadoJugador[i+1];
-//					listadoJugador[i+1] = auxJugador;
+//							}else if(strncmp(listadoConfederacion[j].nombre, listadoConfederacion[j+1].nombre, LARGO_NOMBRE) == 0)
+//							{
+//								if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) > 0)
+//								{
+//									auxJugador = listadoJugador[i];
+//									listadoJugador[i] = listadoJugador[i+1];
+//									listadoJugador[i+1] = auxJugador;
+//								}
+//							}
+//						}
+//					}
+//
+//
+////					if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) > 0)
+////						{
+////							bandera = 1;
+////							auxJugador = listadoJugador[i];
+////							listadoJugador[i] = listadoJugador[i+1];
+////							listadoJugador[i+1] = auxJugador;
+////
+////						}else if(strncmp(listadoJugador[i].nombre, listadoJugador[i+1].nombre, LARGO_NOMBRE) == 0)
+////						{
+////
+////						}
 //				}
 //			}
-//			largoConfederacion--;
+//			largoJugador --;
+//
 //		} while (bandera);
-//		informar_jugador(listadoJugador, largoJugador);
 
 
+
+
+		//		for (j = 0; j < largoJugador-1; ++j) {//JUGADORES
+		//
+		//			if((*(listadoJugador+j)).isEmpty == OCUPADO)
+		//			{
+		//				for (i = 0; i < largoConfederacion; ++i) {//ordenamos la confederacion // CONFEDERACION
+		//
+		//					if((*(listadoJugador+j)).idConfederacion == (*(listadoConfederacion+i)).id)
+		//					{
+		//						if(strncmp(listadoConfederacion[i].nombre, listadoConfederacion[i+1].nombre, NOMBRE_CONFEDERACION) < 0)
+		//						{
+		//								auxConfederacion = listadoConfederacion[i];
+		//								listadoConfederacion[i] = listadoConfederacion[i+1];
+		//								listadoConfederacion[i+1] = auxConfederacion;
+		//
+		//						}else if( strncmp(listadoConfederacion[i].nombre, listadoConfederacion[i+1].nombre, NOMBRE_CONFEDERACION) == 0)
+		//						{
+		//							if(strncmp(listadoJugador[j].nombre, listadoJugador[j+1].nombre,LARGO_NOMBRE) < 0)
+		//							{
+		//								auxJugador = listadoJugador[j];
+		//								listadoJugador[j] = listadoJugador[j+1];
+		//								listadoJugador[j+1] = auxJugador;
+		//							}
+		//						}
+		//					}
+		//				}
+		//			}
+		//		}
+
+
+
+
+
+
+
+		informar_jugador(listadoJugador, largoJugador);
 	}
 
 
 
 	 return retorno;
-}
-
-void informar_ordenarAlfabeticamente_confederacion (eConfederacion* listaConfederacion , int largoConfederacion)
-{
-	eConfederacion auxConfederacion ;
-	int i;
-
-	for (i = 0; i < largoConfederacion; ++i) {//ordenamos la confederacion
-
-		if(strncmp(listaConfederacion[i].nombre, listaConfederacion[i+1].nombre, NOMBRE_CONFEDERACION) > 0)
-		{
-				auxConfederacion = listaConfederacion[i];
-				listaConfederacion[i] = listaConfederacion[i+1];
-				listaConfederacion[i+1] = auxConfederacion;
-		}
-	}
-
 }
 
 /*void informar_listadoConfederacionConSusJugadores(eJugador* pListadoJugador, int largoJugador,eConfederacion* pListadoConfederacion, int largoConfederacion )
@@ -298,13 +327,13 @@ void informar_listadoConfederacionConSusJugadores(eJugador* pListadoJugador, int
 
 			for (i = 0; i < largoConfederacion; ++i) {
 				printf("*************************\n");
-				printf("\nCONFEDERACION %s",(*(pListadoConfederacion+i)).nombre);
+				printf("CONFEDERACION %s\n",(*(pListadoConfederacion+i)).nombre);
 				printf("*************************\n");
 				for (j = 0; j < largoJugador; ++j) {
 
 					if((*(pListadoJugador+j)).idConfederacion == (*(pListadoConfederacion+i)).id)
 					{
-						printf("\n Nombre Jugador : %s", (*(pListadoJugador+j)).nombre);
+						printf("Nombre Jugador : %s\n", (*(pListadoJugador+j)).nombre);
 						printf("---------------------------\n");
 					}
 				}

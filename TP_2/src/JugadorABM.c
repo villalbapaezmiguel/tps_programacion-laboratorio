@@ -154,7 +154,7 @@ eJugador altaJugador (eJugador* pListaJugador , int largo)
 	int i;
 
 	do {
-		respuestaNombre = utn_pedirNombreConEspacio(auxJugador.nombre, LARGO_NOMBRE, "\nIngrese el nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
+		respuestaNombre = utn_pedirNombreConEspacio(auxJugador.nombre, LARGO_NOMBRE, "\nIngrese el nombre del Jugador : ", "\nError");
 	} while (respuestaNombre == -1);
 
 	subMenu_seleccionarPosicion(auxJugador.posicion);
@@ -190,6 +190,8 @@ eJugador altaJugador (eJugador* pListaJugador , int largo)
 			}
 		}
 	}
+
+
 
 
 	printf("*********************************************************************************************************************\n");
@@ -443,7 +445,7 @@ void subMenu_modificacion (eJugador* listaJugador , int largo , int* posicionIdM
 				case 1://nombre
 					printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<_Nombre_>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					do {
-						respuestaNombre = utn_pedirNombreConEspacio((*(listaJugador+*posicionIdModificar)).nombre, LARGO_NOMBRE, "\nIngrese el Nuevo nombre del Jugador (La primera letra tiene que ser MUSYUSCULAS): ", "\nError");
+						respuestaNombre = utn_pedirNombreConEspacio((*(listaJugador+*posicionIdModificar)).nombre, LARGO_NOMBRE, "\nIngrese el Nuevo nombre del Jugador : ", "\nError");
 					} while (respuestaNombre == -1);
 
 					break;
