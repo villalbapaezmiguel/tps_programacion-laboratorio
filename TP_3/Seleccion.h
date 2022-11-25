@@ -9,7 +9,7 @@ typedef struct
 	char pais[30];
 	char confederacion[30];
 	int convocados;
-	int isEmpty;
+
 }Seleccion;
 
 Seleccion* selec_new();
@@ -18,12 +18,12 @@ void selec_delete();
 
 int selec_getId(Seleccion* this,int* id);
 int selec_getPais(Seleccion* this,char* pais);
-int selec_getConfederacion(Seleccion* this,int* confederacion);
-int selec_getIsEmpty(Seleccion* this,int* isEmpty);
 
+int selec_getConfederacion(Seleccion* this,char* confederacion);
+
+void encabezadoSelecciones();
+int selec_imprimirUnaSeleccion(Seleccion* this);
 int selec_setConvocados(Seleccion* this,int convocados);
 int selec_getConvocados(Seleccion* this,int* convocados);
-
-
-
+int selec_ordenarPorConfederacion(void* p1,void*p2);
 #endif // selec_H_INCLUDED
