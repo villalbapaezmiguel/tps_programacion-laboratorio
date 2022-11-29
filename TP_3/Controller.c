@@ -147,16 +147,16 @@ int buscarJugadorId(int* idABuscar, LinkedList* pArrayListJugador)
 {
 	int retorno = -1;
 	int i;
-	int id;//id del jugador
+	int auxId;
 	Jugador* jugador;
 
 	if(idABuscar != NULL && pArrayListJugador != NULL)
 	{
 		for(i = 0; i < ll_len(pArrayListJugador); i++)
 		{
-			jugador = (Jugador*) ll_get(pArrayListJugador, i); //tomo un jug
-			jug_getID(jugador,&id); //tomo su id
-			if(*idABuscar == id)
+			jugador = (Jugador*) ll_get(pArrayListJugador, i);
+			jug_getID(jugador,&auxId);
+			if(*idABuscar == auxId)
 			{
 				retorno = i;
 				break;
@@ -358,24 +358,32 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 			"Irani","Japones","Marroqui","Mexicano","Polaco","Portugues","Qatari","Senegales","Serbio","Suizo","Tunecino","Uruguayo"};
 
 	Jugador* jugadorAmodificar;
+	int respuestaOpcion = -1;
+	int respuestaNacionalidad = -1;
+	int respuestaIdBucar = -1;
 
 	if(pArrayListJugador != NULL)
 	{
 		retorno =0;
 		obtenerID(&idMax);
 		controller_listarJugadores(pArrayListJugador);
-		utn_pedirNumeroEntero(&idABuscar, "\nIngrese el ID del jugador que quiere modificar: \n", "\nError", (idMax-1), 0);
-		//		utn_getNumero(&idABuscar,"\nIngrese el id del jugador que quiere modificar: \n","ERROR!!!\n",0,(idMax-1),10);
+		do {
+
+			respuestaIdBucar = utn_pedirNumeroEntero(&idABuscar, "\nIngrese el ID del jugador que quiere modificar: \n", "\nError", (idMax-1), 0);
+		} while (respuestaIdBucar == -1);
+
 		indice = buscarJugadorId(&idABuscar, pArrayListJugador);
 
 		jugadorAmodificar = (Jugador*)ll_get(pArrayListJugador,indice);
-		jug_getID(jugadorAmodificar,&obtenerId);//agruegue desp q dio 0
+		jug_getID(jugadorAmodificar,&obtenerId);
 
 		jugador_encabezado();
 		jugador_imprimirUnJugador(jugadorAmodificar);
 		if(indice == -1)
 		{
-			printf("ERROR. El id ingresado no existe\n");
+			printf("\n*************************************");
+			printf("\nError, el ID : %d no se encuetra...",idABuscar);
+			printf("\n*************************************");
 		}
 		do{
 			printf("\n*****************************************************\n");
@@ -383,53 +391,61 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 			printf("\n1) Nombre\n2)Edad\n3)Posicion\n4)Nacionalidad\n5)Salir\n");
 			printf("\n*****************************************************\n");
 
-			if(utn_pedirNumeroEntero(&opcion, "\nIngrese opcion : " , "\nError", 5, 1) == 0)
+			do {
+				respuestaOpcion = utn_pedirNumeroEntero(&opcion, "\nIngrese opcion : " , "\nError", 5, 1);
+			} while (respuestaOpcion == -1);
+
+			switch(opcion)
 			{
-				switch(opcion)
-				{
-					case 1:
+				case 1:
 
-						if(utn_pedirNombreConEspacio(auxNombre, NOMBRE_LEN, "\nIngrese el Nuevo nombre del jugador : ", "\nError") == 0)
-						{
-							jug_setNombreCompleto(jugadorAmodificar,auxNombre);
-							jugador_encabezado();
-							jugador_imprimirUnJugador(jugadorAmodificar);
-							printf("\nSe ha modificado el nombre con exito\n");
-						}
-						break;
-					case 2:
-
-						if(utn_pedirNumeroEntero(&auxEdad, "\nIngrese la Nueva edad (entre 18 y 32)", "\nError", 32, 18) == 0)
-						{
-							jug_setEdad(jugadorAmodificar,auxEdad);
-							jugador_encabezado();
-							jugador_imprimirUnJugador(jugadorAmodificar);
-							printf("\nSe han modificado edad con exito\n");
-						}
-						break;
-					case 3:
-						jugador_subMenuListadoPosiciones();
-						utn_pedirNumeroEntero(&opcion, "\nIngrese Nueva posicion del Jugador :", "\nError", 12, 1);
-						//					get_Int("\nIngrese Opcion de posicion: ",&opcion,1,12);
-						strcpy(auxPosicion,auxPosicionHarcodeo[opcion-1]);
-						jug_setPosicion(jugadorAmodificar,auxPosicion);
+					if(utn_pedirNombreConEspacio(auxNombre, NOMBRE_LEN, "\nIngrese el Nuevo nombre del jugador : ", "\nError") == 0)
+					{
+						jug_setNombreCompleto(jugadorAmodificar,auxNombre);
 						jugador_encabezado();
 						jugador_imprimirUnJugador(jugadorAmodificar);
-						printf("\nSe ha modificado posicon con exito\n");
-						break;
-					case 4:
-						jugador_subMenuListadoNacionalidades();
-						utn_pedirNumeroEntero(&opcionNacionalidad, "\nIngrese Nueva opcion de nacionalidad : ", "\nError", 32, 1);
-						//					get_Int("Ingrese Opcion de nacionalidad: ",&opcionN,1,32);
-						strcpy(auxNacionalidad,auxNacionalidadH[opcionNacionalidad-1]);
-						jug_setNacionalidad(jugadorAmodificar,auxNacionalidad);
+						printf("\nSe ha modificado el nombre con exito\n");
+					}
+					break;
+				case 2:
+
+					if(utn_pedirNumeroEntero(&auxEdad, "\nIngrese la Nueva edad (entre 18 y 32)", "\nError", 32, 18) == 0)
+					{
+						jug_setEdad(jugadorAmodificar,auxEdad);
 						jugador_encabezado();
 						jugador_imprimirUnJugador(jugadorAmodificar);
-						printf("\nSe ha modificado nacionalidad con exito\n");
-						break;
-					default : printf("\nOpcion Incorrecta ");
-				}
+						printf("\nSe han modificado edad con exito\n");
+					}
+					break;
+				case 3:
+					jugador_subMenuListadoPosiciones();
+					utn_pedirNumeroEntero(&opcion, "\nIngrese Nueva posicion del Jugador :", "\nError", 12, 1);
+					strcpy(auxPosicion,auxPosicionHarcodeo[opcion-1]);
+					jug_setPosicion(jugadorAmodificar,auxPosicion);
+					jugador_encabezado();
+					jugador_imprimirUnJugador(jugadorAmodificar);
+					printf("\nSe ha modificado posicon con exito\n");
+					break;
+				case 4:
+					jugador_subMenuListadoNacionalidades();
+
+					do {
+						respuestaNacionalidad = utn_pedirNumeroEntero(&opcionNacionalidad, "\nIngrese Nueva opcion de nacionalidad : ", "\nError", 32, 1);
+					} while (respuestaNacionalidad == -1);
+
+					strcpy(auxNacionalidad,auxNacionalidadH[opcionNacionalidad-1]);
+					jug_setNacionalidad(jugadorAmodificar,auxNacionalidad);
+					jugador_encabezado();
+					jugador_imprimirUnJugador(jugadorAmodificar);
+					printf("\nSe ha modificado nacionalidad con exito\n");
+					break;
+				case 5 :
+					printf("\nSalio de la modificacion");
+					break;
+
+				default : printf("\nOpcion Incorrecta ");
 			}
+
 		}while(opcion != 5);
 	}
 	return retorno;
@@ -441,7 +457,7 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
  * \return int
  *
  */
-int controller_removerJugador(LinkedList* pArrayListJugador)
+int controller_removeJugador(LinkedList* pArrayListJugador)
 {
 	int retorno = -1;
 
@@ -618,14 +634,13 @@ int controller_ordenarSelecciones(LinkedList* pArrayListSeleccion)
 		printf("\n0) Descendente Z-A\n1)Ascendente A-Z");
 		respuestaB = utn_pedirNumeroEntero(&orden, "\nIngrese opcion de como quiere ordenar : ", "\nError", 1, 0);
 	} while (respuestaB == -1);
-	//	utn_getNumero(&orden, "\n\nIngrese opcion como desea ordenar:\n0.Descendente Z-A \n1.Ascendente. A-Z \nOpcion: ", "Error.", 0, 1,5);
 	ll_sort(pArrayListSeleccion,selec_ordenarPorConfederacion,orden);
 	retorno =0;
 
 	return retorno;
 }
 
-int controller_listarJugYSelec(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion)
+int controller_mostrarJug_selec(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion)
 {
 	int opcion;
 	int retorno =-1;
@@ -697,6 +712,7 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador,LinkedList* pArray
 				printf("\n0)Descendente Z-A\n1)Ascendente A-Z");
 				respuestaA = utn_pedirNumeroEntero(&orden, "\nIngrese como quiere ordenar las nacionladidades : ", "\nError", 1, 0);
 			} while (respuestaA == -1);
+
 			ll_sort(pArrayListJugador, jugador_ordenarPorNacionalidad, orden);
 			controller_listarJugadores(pArrayListJugador);
 			break;
@@ -722,7 +738,10 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador,LinkedList* pArray
 			ll_sort(pArrayListJugador, jugador_ordenarPorNombre, orden);
 			controller_listarJugadores(pArrayListJugador);
 			break;
-		default : printf("\nError, Opcion invalida, tiene que ingresar mayusculas de A-E");
+		default :
+			printf("\n**************************************************************");
+			printf("\nError, Opcion invalida, tiene que ingresar mayusculas de A-E");
+			printf("\n**************************************************************");
 		}
 	}while(rta < 'E');
 	return retorno;
@@ -778,7 +797,7 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 				}
 			}
 			fclose(fpArchivo);
-			printf("El Archivo de jugadores fue guardado correctamente\n");
+			printf("El Archivo de jugadores fue guardado correctamente !!!\n");
 		}
 	}
 	return retorno;
@@ -811,16 +830,16 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 					if(fwrite(auxJugador,sizeof(Jugador),1, auxP) != 1)
 					{
 						retorno = 0;
-						printf(" Archivo cargado exitosamente\n");
+						printf("\nArchivo cargado exitosamente !!!!\n");
 						break;
 					}
 					retorno = 1;
 				}
 			}
-		}
-		else
-		{
-			printf("No se pudo escribir en el archivo");
+		}else{
+			printf("\n*************************************");
+			printf("\nError, No se pudo escribir el archivo...");
+			printf("\n*************************************");
 		}
 		fclose(auxP);
 	}
@@ -842,23 +861,16 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 	FILE *pArchivo= fopen(path, "r");
 	if(pArchivo != NULL )
 	{
-		//	if(pArchivo != NULL && parser_SeleccionFromText(pArchivo,pArrayListSeleccion)==0)
 		flag=ll_isEmpty(pArrayListSeleccion);
 		if(flag == 1)
 		{
 			retorno = parser_SeleccionFromText(pArchivo,pArrayListSeleccion);
 			fclose(pArchivo);
-		}
-		//printf("Archivo de selecciones cargado Exitosamente\n");
-		else{
+		}else{
 			printf("El archivo no puede abrirse\n");
 		}
 	}
-	/*	else{
-						printf("El archivo no puede abrirse\n");
-					}*/
 
-	//fclose(pArchivo);
 	return retorno;
 }
 
@@ -964,7 +976,9 @@ int controller_editarSeleccion(LinkedList* pArrayListJugador, LinkedList* pArray
 			}
 			if(bandera==0)
 			{
+				printf("\n****************************************************************");
 				printf("ERROR, No se pueden quitar convocados si aun no hay ninguno.\n");
+				printf("\n****************************************************************");
 			}
 		break;
 		}
@@ -994,7 +1008,6 @@ int jugador_sacarConvocado(LinkedList* pArrayListJugador, LinkedList* pArrayList
 	char jug_NombreCompleto[100];
 	if(pArrayListJugador!=NULL && pArrayListSeleccion!=NULL)
 	{
-		//jug_Listar_Convocados(pArrayListJugador, pArrayListSeleccion, 2);
 		jugador_imprimirListaJugadores(pArrayListJugador, pArrayListSeleccion, 2);
 		do
 		{
@@ -1010,15 +1023,8 @@ int jugador_sacarConvocado(LinkedList* pArrayListJugador, LinkedList* pArrayList
 						pSeleccion=ll_get(pArrayListSeleccion, indiceSeleccion);
 						if(selec_getConvocados(pSeleccion, &selecConvocados)==0)
 						{
-							//printf("CANTIDAD DE CONVOCADOS ANTES DE BAJAR %d\n",selecConvocados);
-							//1 CONVOCADO MENOS - LUEGO SETEO ESTE CAMBIO
 							selecConvocados=selecConvocados-1;
-							//(*(seleccion)).convocados=(*(seleccion)).convocados-1
-
-							//PONGO EN 0 AL ID DE SELECCION DEL JUGADOR
-							//(*(pJugador)).idSeleccion=0;
 							jugIdSeleccion=0;
-							//SETEO NUEVOS VALORES PARA EL JUGADOR (idSeleccion) y para la seleccion 1 convocado menos
 							if(jug_setIdSeleccion(pJugador, jugIdSeleccion)==0 && selec_setConvocados(pSeleccion, selecConvocados)==0)
 							{
 								if(jug_getNombreCompleto(pJugador, jug_NombreCompleto)==0)
@@ -1028,22 +1034,32 @@ int jugador_sacarConvocado(LinkedList* pArrayListJugador, LinkedList* pArrayList
 									printf("<<<<<<<<<< El jugador : %s fue bajado de la convocatoria. >>>>>>>>>>\n",jug_NombreCompleto);
 								}
 							}else{
-								printf("ERROR al setear el id de seleccion del jugador en 0 / al setear la cantidad de convocados nueva de la seleccion.\n");
+								printf("\n*****************************************************************************************************************");
+								printf("\nERROR al setear el id de seleccion del jugador en 0 / al setear la cantidad de convocados nueva de la seleccion...");
+								printf("\n*****************************************************************************************************************");
 							}
 						}else{
-							printf("ERROR al buscar el indice por desde el ID.\n");
+							printf("\n*********************************************");
+							printf("\nERROR al buscar el indice por desde el ID...");
+							printf("\n*********************************************");
 						}
 
 					}else{
-						printf("\nNO se pudo encontrar ese ID ");
+						printf("\n*********************************************");
+						printf("\nNO se pudo encontrar ese ID...");
+						printf("\n*********************************************");
 					}
 
 				}else{
-					printf("ERROR, El id ingresado pertenece a un jugador que NO esta convocado por ninguna seleccion.\n");
+					printf("\n*******************************************************************************************");
+					printf("\nERROR, El id ingresado pertenece a un jugador que NO esta convocado por ninguna seleccion...");
+					printf("\n*******************************************************************************************");
 				}
 
 			}else{
+				printf("\n****************************************************************************");
 				printf("ERROR al intentar acceder al id de la seleccion o al nombre del jugador.\n");
+				printf("\n****************************************************************************");
 			}
 
 		}while(bandera==0);

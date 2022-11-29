@@ -16,26 +16,24 @@ int actualizarIdok(int id);
 int controller_guardarComoTextoMaxID(FILE* pFile,char* path, LinkedList* pArrayListJugador);
 int controller_guardarComoTexto_maximoId(FILE* pFile, LinkedList* pArrayListJugador,int* maxID);
 int buscarJugadorId(int* idABuscar, LinkedList* pArrayListJugador);
-//2 ALTA HECHO PERO PONER OPCION DE NACION Y POS
+
 int controller_agregarJugador(LinkedList* pArrayListJugador);
-//.5 LISTADOS: A) TODOS LOS JUGADORES.
-//HECHO
+
 int controller_listarJugadores(LinkedList* pArrayListJugador);
-//3  MODIFICAR HECHO PERO PONER OPCION DE NACION Y POS
+
 int controller_editarJugador(LinkedList* pArrayListJugador);
-//  4 BAJA
-int controller_removerJugador(LinkedList* pArrayListJugador);
-//.5 LISTADOS: A) TODOS LOS JUGADORES.
+
+int controller_removeJugador(LinkedList* pArrayListJugador);
 
 
-int controller_listarJugYSelec(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion);
+
+int controller_mostrarJug_selec(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion);
 int controller_ordenarJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion);
-//7. ORDENAR Y LISTAR
+
 int controller_ordenarJugadores2(LinkedList* pArrayListJugador);
-//10. GUARDAR ARCHIVOS .CSV: Se deber� guardar en sus respectivos archivos todos los cambios realizados en jugadores
-//HECHO
+
 int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJugador);
-//hecho probar bien
+
 int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador);
 
 //SELECIOOOON

@@ -5,11 +5,9 @@
 #include "Seleccion.h"
 #include "Jugador.h"
 #include "utn.h"
-//****tp3 q si
+
 int main()
 {
-
-	 //solo limpio p subir a gitd aca p arriba volver a traer al parcial
 	setbuf(stdout,NULL);
     int opcion = 0;
     int banderaCargaArchivo=0;
@@ -39,7 +37,6 @@ int main()
 						printf("Archivo Jugadores cargado exitosamente\n");
 						printf("Archivo selecciones cargado exitosamente\n");
 						banderaCargaArchivo =1;
-	//            		controller_editarSeleccion(listaSelecciones);
 					}else{
 						printf("No se pudo cargar los archivos \n");
 					}
@@ -78,7 +75,7 @@ int main()
             case 4:
             	if(ll_isEmpty(listaJugadores) == 0 && ll_isEmpty(listaSelecciones) == 0 )
             	{
-            		controller_removerJugador(listaJugadores);
+            		controller_removeJugador(listaJugadores);
             	}else{
         			printf("\n******************************************************");
 					printf("\nError ,Tiene que cargar los archivos para poder dar de BAJA...");
@@ -88,7 +85,7 @@ int main()
             case 5:
             	if(ll_isEmpty(listaJugadores) == 0 && ll_isEmpty(listaSelecciones) == 0)
             	{
-            		if(controller_listarJugYSelec(listaJugadores,listaSelecciones) == -1)
+            		if(controller_mostrarJug_selec(listaJugadores,listaSelecciones) == -1)
             		{
             			printf("\nError al Listar");
             			printf("\nRecuerde que para acceder a JUGADORES CONVOCADOS primero tiene que tener por lo menos un convocado ");

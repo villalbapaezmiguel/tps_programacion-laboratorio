@@ -322,7 +322,9 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion)
 		retorno = 0;
 	}
 	return retorno;
-}//=======================
+}
+
+
 int jugador_obtenerElmaximoId(Jugador* this,int* id)
 {
     int retorno = -1;
@@ -334,6 +336,11 @@ int jugador_obtenerElmaximoId(Jugador* this,int* id)
     }
     return retorno;
 }
+
+/*void jugador_encabezado()
+ * objetivo : muestra un encabezado de los campos del la lista
+ *
+ *return void*/
 void jugador_encabezado()
 {
 	int anchoColumnaId = -6;
@@ -350,11 +357,11 @@ void jugador_encabezado()
 	printf("*******+*************************+**********+*************************+********************+***************+*************************\n");
 
 }
-/**
- * Convierte un id en texto dependiendo a la posicon que le corresponda.
+/**int jugador_convertirIdEnPosicion(int id, char* nombrePosicion)
+ * oBjetivo : convierte el id en modo texto y escribe la posicion del jugador que fue pasado como parametro
  * \param id recibe id a convertir en texto.
  * \param descripcionCorrespondiente devuelve por referenciaposicion correspondite al id.
- * \return retorna -1 si no se pudo hacer la conversion y 0 si se pudo.
+ *returna :  retrona  0 salio todo bien , de lo contrario -1
  */
 int jugador_convertirIdEnPosicion(int id, char* nombrePosicion)
 {
@@ -418,9 +425,10 @@ int jugador_convertirIdEnPosicion(int id, char* nombrePosicion)
 	}
 	return retorno;
 }
-/** \brief imprime un  jugador
- *\param Jugador* this
- * \return int 0 si pudo -1 si no pudo
+/**int jugador_imprimirUnJugador(Jugador* this )
+ *objetivo :  imprime SOLO un  jugador
+ *parametro :  Jugador* this
+ *returna :  retrona  0 salio todo bien , de lo contrario -1
  *
 */
 int jugador_imprimirUnJugador(Jugador* this )
@@ -445,7 +453,6 @@ int jugador_imprimirUnJugador(Jugador* this )
 	{
 
 		jug_getId(this,&id);
-		//jug_getId(this,&id);
 		jug_getNombreCompleto(this,nombreCompleto);
 		jug_getEdad(this,&edad);
 		jug_getPosicion(this,posicion);
@@ -470,22 +477,23 @@ int jugador_imprimirUnJugador(Jugador* this )
 	printf("-------+-------------------------+----------+-------------------------+--------------------+---------------+--------------------+\n");
 	return retorno;
 }
-//===============
 
-/** \brief reserva espacio de memoria dinamica para un elemento de tipo jugador cargando en todos sus campos los datos pasados como parametros en los formatos correspondientes
+/**Jugador* jugador_newConParametros(int id,char* nombreC,int edad,char* posicion, char*nacionalidad, int idSeleccion)
+ *objetivo : reserva espacio de memoria dinamica para un elemento de tipo jugador cargando en todos sus campos
+ *  los datos pasados como parametros en los formatos correspondientes
  *
- * \param id int
- * \param nombreC char*
- * \param int edad
- * \param  char* posicion
- * \param  char* nacionalidad
- *\param int idSeleccion
- * \return jugador* retorna un puntero al lugar de la memoria asignado o devuelve NULL si no lo logro
+ *parametro id int
+ *parametro nombreC char*
+ *parametro int edad
+ *parametro  char* posicion
+ *parametro  char* nacionalidad
+ *parametro int idSeleccion
+ *
+ *return retrona un nuevo jugador , de lo contrario un null
  *
  */
 Jugador* jugador_newConParametros(int id,char* nombreC,int edad,char* posicion, char*nacionalidad, int idSeleccion)
-
-{//ya no con * los parametros
+{
 	Jugador* nuevoJugador = NULL;
 
 	if(id > 0 && nombreC != NULL && edad > 0 && posicion != NULL && nacionalidad != NULL  && idSeleccion >0){
@@ -501,13 +509,23 @@ Jugador* jugador_newConParametros(int id,char* nombreC,int edad,char* posicion, 
 	}
 	return nuevoJugador;
 }
+
+
+/**Jugador* jugador_newConParametros_tomaDatoArchivo(int* id,char* nombreC,int* edad,char* posicion, char*nacionalidad, int* idSeleccion)
+ * objetivo : inicializa los campos de u nuevo jugador con los datos pasados como parametros
+ *
+ *retur un nuevo jugador
+ */
 Jugador* jugador_newConParametros_tomaDatoArchivo(int* id,char* nombreC,int* edad,char* posicion, char*nacionalidad, int* idSeleccion)
 {
 	Jugador* nuevoJugador = NULL;
 
-	if(id != NULL && nombreC != NULL && edad != NULL && posicion != NULL && nacionalidad != NULL  && idSeleccion != NULL){
+	if(id != NULL && nombreC != NULL && edad != NULL && posicion != NULL && nacionalidad != NULL  && idSeleccion != NULL)
+	{
+
 		nuevoJugador = jug_new();
-		if(nuevoJugador != NULL){
+		if(nuevoJugador != NULL)
+		{
 			jug_setId(nuevoJugador,(*id));
 					jug_setNombreCompleto(nuevoJugador,nombreC);
 					jug_setEdad(nuevoJugador,*edad);
@@ -515,21 +533,18 @@ Jugador* jugador_newConParametros_tomaDatoArchivo(int* id,char* nombreC,int* eda
 					jug_setNacionalidad(nuevoJugador,nacionalidad);
 					jug_setIdSeleccion(nuevoJugador,*idSeleccion);
 
-				//employee_delete(nuevoJugador);
-				//nuevoJugador = NULL;
 		}
 	}
 	return nuevoJugador;
 }
-///
 
 
-/**
- * Lista los posiciones disponibles con sus ids.
-
+/**void jugador_subMenuListadoPosiciones()
+ * objetivo : hace un lisatdo de las posiciones y se puede seleccionar con el id de las posiciones
+ *
+ *retur void
  */
-//2 formas
-void jugador_subMenuListadoPosiciones()//se muestra corrido pro los \t estan bien!
+void jugador_subMenuListadoPosiciones()
 {
 	int anchoColumnaOpcion = -7;
 	int anchoColumnaPosicion = -20;
@@ -553,8 +568,10 @@ void jugador_subMenuListadoPosiciones()//se muestra corrido pro los \t estan bie
 	printf("--------+-------------------+");
 
 }
-/**
- * Lista los nacionalidades disponIbLes con sus ids.
+
+
+/**void jugador_subMenuListadoNacionalidades()
+ * objetivio : hace unlisatdos de las necionalidades disposibles de manera harcodeada
 
  */
 void jugador_subMenuListadoNacionalidades()
