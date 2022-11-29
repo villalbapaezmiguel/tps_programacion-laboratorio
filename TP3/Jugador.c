@@ -334,7 +334,7 @@ int jugador_obtenerElmaximoId(Jugador* this,int* id)
     }
     return retorno;
 }
-void jug_encabezado()
+void jugador_encabezado()
 {
 	int anchoColumnaId = -6;
 	int anchoColumnaNombre = -25;
@@ -356,7 +356,7 @@ void jug_encabezado()
  * \param descripcionCorrespondiente devuelve por referenciaposicion correspondite al id.
  * \return retorna -1 si no se pudo hacer la conversion y 0 si se pudo.
  */
-int convertirIdEnPosicion(int id, char* nombrePosicion)
+int jugador_convertirIdEnPosicion(int id, char* nombrePosicion)
 {
 	int retorno = -1;
 
@@ -423,7 +423,7 @@ int convertirIdEnPosicion(int id, char* nombrePosicion)
  * \return int 0 si pudo -1 si no pudo
  *
 */
-int jug_imprimirUnJugador(Jugador* this )
+int jugador_imprimirUnJugador(Jugador* this )
 {
 	int retorno = -1;
 	int id;
@@ -452,8 +452,8 @@ int jug_imprimirUnJugador(Jugador* this )
 		jug_getNacionalidad(this,nacionalidad);
 		jug_getSIdSeleccion(this,&idSeleccion);
 
-		convertirIdEnPosicion(posicionInt,posicion);
-		convertirIdEnPosicion(nacionalidadInt,nacionalidad);
+		jugador_convertirIdEnPosicion(posicionInt,posicion);
+		jugador_convertirIdEnPosicion(nacionalidadInt,nacionalidad);
 
 		if(idSeleccion != 0)
 		{
@@ -483,7 +483,7 @@ int jug_imprimirUnJugador(Jugador* this )
  * \return jugador* retorna un puntero al lugar de la memoria asignado o devuelve NULL si no lo logro
  *
  */
-Jugador* jug_newParametrosReales(int id,char* nombreC,int edad,char* posicion, char*nacionalidad, int idSeleccion)
+Jugador* jugador_newConParametros(int id,char* nombreC,int edad,char* posicion, char*nacionalidad, int idSeleccion)
 
 {//ya no con * los parametros
 	Jugador* nuevoJugador = NULL;
@@ -501,7 +501,7 @@ Jugador* jug_newParametrosReales(int id,char* nombreC,int edad,char* posicion, c
 	}
 	return nuevoJugador;
 }
-Jugador* jug_newParametrosReales2(int* id,char* nombreC,int* edad,char* posicion, char*nacionalidad, int* idSeleccion)
+Jugador* jugador_newConParametros_tomaDatoArchivo(int* id,char* nombreC,int* edad,char* posicion, char*nacionalidad, int* idSeleccion)
 {
 	Jugador* nuevoJugador = NULL;
 
@@ -529,7 +529,7 @@ Jugador* jug_newParametrosReales2(int* id,char* nombreC,int* edad,char* posicion
 
  */
 //2 formas
-void subMenuListadoPosiciones()//se muestra corrido pro los \t estan bien!
+void jugador_subMenuListadoPosiciones()//se muestra corrido pro los \t estan bien!
 {
 	int anchoColumnaOpcion = -7;
 	int anchoColumnaPosicion = -20;
@@ -557,7 +557,7 @@ void subMenuListadoPosiciones()//se muestra corrido pro los \t estan bien!
  * Lista los nacionalidades disponIbLes con sus ids.
 
  */
-void subMenuListadoNacionalidades()
+void jugador_subMenuListadoNacionalidades()
 {
 	int anchoColumnaOpcion = -7;
 	int anchoColumnaNacionalidades = -20;
@@ -607,7 +607,7 @@ void subMenuListadoNacionalidades()
  *\param void* p2
  * \return int
 */
-int jug_ordenarPorNacionalidad(void* p1,void*p2)
+int jugador_ordenarPorNacionalidad(void* p1,void*p2)
 {
 	char nacionalidad1[50];
 
@@ -632,29 +632,26 @@ int jug_ordenarPorNacionalidad(void* p1,void*p2)
  *
 */
 //0 descendente 1 ascendente
-int jug_ordenarPorEdad(void* p1,void*p2)//void puntero al elemento lo casteo
+int jugador_ordenarPorEdad(void* p1,void*p2)//void puntero al elemento lo casteo
 {
-	int edad1=0;
-
-	int edad2=0;
-
+	int auxEdadUno=0;
+	int auxEdadDos=0;
 	int retorno;
 	Jugador* jugador1 = (Jugador*)p1;
 	Jugador* jugador2 = (Jugador*)p2;
+
+
 	if(jugador1 != NULL && jugador2 != NULL)
 	{
-		jug_getEdad(jugador1, &edad1);
-		jug_getEdad(jugador2, &edad2);
-		if(edad1 > edad2)
+		jug_getEdad(jugador1, &auxEdadUno);
+		jug_getEdad(jugador2, &auxEdadDos);
+		if(auxEdadUno > auxEdadDos)
 		{
 			retorno = 1;
-		}
-		else if(edad1 < edad2)
+		}else if(auxEdadUno < auxEdadDos)
 		{
 			retorno = -1;
-		}
-		else
-		{
+		}else{
 			retorno = 0;
 		}
 	}
@@ -665,7 +662,7 @@ int jug_ordenarPorEdad(void* p1,void*p2)//void puntero al elemento lo casteo
  *\param void* p2
  * \return int
 */
-int jug_ordenarPorNombre(void* p1,void*p2)
+int jugador_ordenarPorNombre(void* p1,void*p2)
 {
 	char nombre1[50];
 	char nombre2[50];
@@ -690,53 +687,45 @@ int jug_ordenarPorNombre(void* p1,void*p2)
 /// \param pArrayListJugador
 /// \param pArrayListSeleccion
 /// \return return return int return=0 SALIO BIEN / return=-1 SALIO MAL.
-int jug_convocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
+int jugador_paraConvocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
 	int idSeleccion;
 	int jugIdSeleccion;
 	int indiceSeleccion;
 	int indiceJugador;
-	int convocados;//SI SE CONFIRMA LA CONVOCACION DEBO SUMAR 1 A LA CANTIDAD DE CONVOCADOS EXISTENTES
+	int convocados;
 	Seleccion* pSeleccion;
 	Jugador* pJugador;
 	char nombreCompleto[100];
 	char pais[30];
 	if(pArrayListJugador!=NULL && pArrayListSeleccion!=NULL)
 	{
-		//LISTO A LAS SELECCIONES
-		//jug_imprimirJugadores(pArrayListJugador, pArrayListSeleccion, 3);
+
 		ll_sort(pArrayListSeleccion, selec_ordenarPorId, 1);
 		controller_listarSelecciones(pArrayListSeleccion);
-		//SOLICITO ID VALIDANDO DESDE ESTA MISMA FUNCION A TRAVEZ DE LLAMAR A selec_Solicitar_Id QUE EL PAIS NO HAYA LLEGADO A 22 CONVOCADOS.
 		if(selec_Solicitar_Id(pArrayListSeleccion, &indiceSeleccion)==0)
 		{
-			jug_imprimirJugadores(pArrayListJugador, pArrayListSeleccion, 3);
-			jug_Solicitar_Id(pArrayListJugador, &indiceJugador, "\nIngrese ID del jugador que quiere convocar :");
-			//PIDO EL PUNTERO AL JUGADOR TENIENDO EN CUENTA EL INDICE.
+			jugador_imprimirListaJugadores(pArrayListJugador, pArrayListSeleccion, 3);
+			jugador_pedirId(pArrayListJugador, &indiceJugador, "\nIngrese ID del jugador que quiere convocar :");
 			pJugador = ll_get(pArrayListJugador, indiceJugador);
-			//if((*(pJugador)).idSeleccion==0)
-
-			//APUNTO A LA ESTRUCUTRA DE SELECCION.
 			pSeleccion=ll_get(pArrayListSeleccion, indiceSeleccion);
 
 			if(jug_getSIdSeleccion(pJugador, &jugIdSeleccion)==0 && selec_getConvocados(pSeleccion, &convocados)==0 && selec_getId(pSeleccion, &idSeleccion)==0)
 			{
-				//printf("ID SELECCION: %d\n",idSeleccion);
 				if(jugIdSeleccion == 0)
 				{
-					//SUMO 1 A LOS CONVOCADOS YA EXISTENTES.
 					convocados=convocados+1;
-					//SETEO A LA SELECCION 1 CONVOCADO + Y AL JUGADOR EL ID DE LA SELECCION
 					if(selec_setConvocados(pSeleccion, convocados)==0 && jug_setIdSeleccion(pJugador, idSeleccion)==0 &&
 							jug_getNombreCompleto(pJugador, nombreCompleto)==0 && selec_getPais(pSeleccion, pais)==0)
 					{
-						//printf("<<<<<<<<<< %s fue CONVOCADO exitosamente por %s >>>>>>>>>>\n\n",(*(pJugador)).nombreCompleto,(*(pSeleccion)).pais);
 						printf("<<<<<<<<<<El jugador CONVOCADO por : %s fue : %s >>>>>>>>>>\n\n",pais , nombreCompleto);
 						retorno=0;
 					}
 				}else{
-					printf("ERROR, el jugador ya esta convocado.\n");
+					printf("\n****************************************");
+					printf("\nERROR, el jugador fue esta convocado...");
+					printf("\n****************************************");
 				}
 			}
 		}
@@ -757,7 +746,7 @@ int jug_convocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 ///	referenciaDeUso==2 / SE MUESTRAN LOS JUGADORES CONVOCADOS.
 ///	 referenciaDeUso==3 / SE MUESTRAN LOS JUGADORES NO CONVOCADOS.
 /// \return
-int jug_imprimirJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion, int referenciaDeUso)
+int jugador_imprimirListaJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion, int referenciaDeUso)
 {
 	int retorno=-1;
 	int id;
@@ -801,9 +790,7 @@ int jug_imprimirJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSe
 				if(idSeleccion>0 && (referenciaDeUso==2 || referenciaDeUso==1))
 				{
 					retorno=0;
-					//printf("ENTRE AL IF isSeleccion>0\n");
 					selec_AsignarDescripcionPais(pArrayListSeleccion, pArrayListJugador, i, descripcionSeleccion);
-					//printf("|  %*d|%*s| %*d|%*s|%*s|    %*d|\n",-4,id,-40,nombreCompleto,-3,edad,-25,posicion,-18,nacionalidad,-5,idSeleccion,-20,descripcionSeleccion);
 					printf("|  %*d|%*s| %*d|%*s|%*s|    %*d|%*s|\n",
 							-4,id,-40,nombreCompleto,-3,edad,-25,posicion,-18,nacionalidad,-5,idSeleccion,-20,descripcionSeleccion);
 				}
@@ -812,7 +799,6 @@ int jug_imprimirJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSe
 					if(idSeleccion==0 && (referenciaDeUso==3 || referenciaDeUso==1))
 					{
 						retorno=0;
-						//printf("|  %*d|%*s| %*d|%*s|%*s|    %*d|\n",-4,id,-40,nombreCompleto,-3,edad,-25,posicion,-18,nacionalidad,-5,idSeleccion);
 						printf("|  %*d|%*s| %*d|%*s|%*s|    %*d|%*s|\n",
 									-4,id,-40,nombreCompleto,-3,edad,-25,posicion,-18,nacionalidad,-5,idSeleccion,-20,"NO CONVOCADO");
 					}
@@ -832,7 +818,7 @@ int jug_imprimirJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSe
 /// \param indice posicion del id
 /// \param mensaje descripcion para solicitar el id
 /// \return return return int return=0 SALIO BIEN / return=-1 SALIO MAL.
-int jug_Solicitar_Id(LinkedList* pArrayListJugador, int * indice ,char * mensaje)
+int jugador_pedirId(LinkedList* pArrayListJugador, int * indice ,char * mensaje)
 {
 	int retorno=-1;
 	int idBuscado;
@@ -846,12 +832,12 @@ int jug_Solicitar_Id(LinkedList* pArrayListJugador, int * indice ,char * mensaje
 			utn_pedirNumeroEnteroComoMinimo(&idBuscado, mensaje, "\nError", 1);
 //			ingresarIntConMinimo(&idBuscado, mensaje, "ERROR, Ingrese ID existente\n", 1);
 			//ESTE PRINT ES POR SI EL USUARIO CARGA UN ID QUE ESTA POR DEBAJO DEL MAXIMO PERO QUE YA FUE BORRADO.
-			if(jug_BuscarPorId(pArrayListJugador, idBuscado, &(*(indice)))==-1)
+			if(jugador_buscarPorId(pArrayListJugador, idBuscado, &(*(indice)))==-1)
 			{
 				printf("ERROR, Ingrese ID existente.\n");
 			}
 			//printf("POSICION %d\n",posicion);
-		}while(jug_BuscarPorId(pArrayListJugador, idBuscado, &(*(indice)))==-1);
+		}while(jugador_buscarPorId(pArrayListJugador, idBuscado, &(*(indice)))==-1);
 		retorno=0;
 	}
 	return retorno;
@@ -864,7 +850,7 @@ int jug_Solicitar_Id(LinkedList* pArrayListJugador, int * indice ,char * mensaje
 /// \param idBuscado
 /// \param indice posicion retornada por referencia
 /// \return return return int return=0 SALIO BIEN / return=-1 SALIO MAL.
-int jug_BuscarPorId(LinkedList* pArrayListJugador, int idBuscado, int* indice)
+int jugador_buscarPorId(LinkedList* pArrayListJugador, int idBuscado, int* indice)
 {
 	int retorno=-1;
 	Jugador* AuxJugador;

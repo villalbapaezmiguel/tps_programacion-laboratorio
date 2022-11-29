@@ -16,14 +16,18 @@ int main()
     int banderaGuardarArchivo=-1;
 	int respuestaSalir = -1;
 	int auxSalir =  2 ;
+	int respuestaMenuOpcion = -1;
     LinkedList* listaJugadores = ll_newLinkedList();
     LinkedList* listaSelecciones = ll_newLinkedList();
-    printf("BIENVENIDOS\n\n");
+    printf("<<<<<<<<<<<<<<<<<<<<_BIENVENIDOS A MI PROGRAMA_>>>>>>>>>>>>>>>>>>>>\n\n");
     do{
-
     	printf("\n<<<<<<<<<<<<<<<<<<<<_MENU_>>>>>>>>>>>>>>>>>>>>\n");
     	printf("\n1).CARGA DE ARCHIVOS\n2)ALTA DE JUGADOR\n3)MODIFICACION DE JUGADOR\n4)BAJA DE JUGADOR\n5)LISTADOS\n6)CONVOCAR JUGADORES\n7)ORDENAR Y LISTAR\n8)GENERAR ARCHIVO BINARIO\n9)CARGAR ARCHIVO BINARIO\n10)GUARDAR ARCHIVOS .CSV\n11)SALIR");
-    	if(utn_pedirNumeroEntero(&opcion,"\nIngrese Opcion : ", "\nerror", 11, 1) == 0){
+
+    	do {
+    		respuestaMenuOpcion = utn_pedirNumeroEntero(&opcion,"\nIngrese Opcion : ", "\nError", 11, 1);
+		} while (respuestaMenuOpcion == -1);
+
         switch(opcion)
         {
         case 1:
@@ -55,8 +59,10 @@ int main()
 							printf("Error con Alta de Jugador \n");
 						}
             	}else{
-						printf("Tiene que cargar los archivos para poder dar de alta \n");
-					}
+            			printf("\n******************************************************");
+						printf("\nError ,Tiene que cargar los archivos para poder dar de ALTA...");
+            			printf("\n******************************************************");
+            	}
 
             	break;
             case 3:
@@ -64,7 +70,9 @@ int main()
             	{
             		controller_editarJugador(listaJugadores);
             	}else{
-            		printf("Tiene que tener jugadores cargados\n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder entrar en la opcion MODIFICAR...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 4:
@@ -72,7 +80,9 @@ int main()
             	{
             		controller_removerJugador(listaJugadores);
             	}else{
-            		printf("Tiene que tener jugadores cargados\n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder dar de BAJA...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 5:
@@ -85,7 +95,9 @@ int main()
             			printf("\nTiene que ir en : 6) CONVOCAR JUGADORES , luego ingresa 1)CONVOCAR JUGADOR");
             		}
             	}else{
-            		printf("Tiene que tener jugadores  y selecciones cargados \n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder Ver los LISTADOS...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 6://convocados
@@ -97,7 +109,9 @@ int main()
             		}
 
             	}else{
-            		printf("Tiene que tener jugadores  y selecciones cargados \n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder CONVOCAR JUGADORES...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 7:
@@ -107,7 +121,9 @@ int main()
             	}
             	else
             	{
-            		printf("Tiene que tener jugadores y selecciones cargados \n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder ORDENAR Y LISTAR...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 8://guardar  GENERAR ARCHIVO BINARIO: Generar y guardar en binario una nueva lista
@@ -118,7 +134,9 @@ int main()
             		controller_guardarJugadoresModoBinario("jugadores.bin",listaJugadores);
             		printf("Guardado modo binario con exito jugadores \n");
             	}else{
-            		printf("Tiene que tener jugadores y selecciones cargados , para poder guardarlos \n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder GENERAR EL ARCHIVO BINARIO...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 9://cargar  9. CARGAR ARCHIVO BINARIO: Se deber� leer e imprimir los datos del archivo generado en el punto 8.
@@ -131,7 +149,9 @@ int main()
                 		printf("No se pudo cargar el Archivo  binario Jugadores \n");
                 	}
             	}else{
-            		printf("Tiene que tener jugadores y selecciones cargados \n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder CARGAR EL ARCHIVO BINARIO...");
+        			printf("\n******************************************************");
             	}
             	break;
             case 10:
@@ -146,7 +166,9 @@ int main()
             		}
 
             	}else{
-            		printf("Debe tener Jugadores y selecciones cargados \n");
+        			printf("\n******************************************************");
+					printf("\nError ,Tiene que cargar los archivos para poder GUARDAR EL ARCHIVO EN .CSV...");
+        			printf("\n******************************************************");
             	}
 
             	break;
@@ -167,8 +189,13 @@ int main()
             		}
 				}
             	break;
+
+            default :
+            	printf("\n*********************");
+            	printf("\nOpcion incorrecta...");
+            	printf("\n*********************");
         }
-    	}
+
     }while(auxSalir == 2);
     printf("\nSalio del programa exitosamente....\nMuchas gracias por usarlo <3");
     return 0;

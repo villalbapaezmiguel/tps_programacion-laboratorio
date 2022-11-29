@@ -223,37 +223,28 @@ int selec_ordenarPorConfederacion(void* p1,void*p2)
 int selec_AsignarDescripcionPais(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJugador, int indice, char *descripcionPais)
 {
 	int retorno=-1;
-	Jugador* pJugador;
-	int tam;
-	Seleccion* pSeleccion;
-	int selecId;
+	Jugador* punteroJugador;
+	Seleccion* punteroSeleccion;
+	int auxIdSeleccion;
 	char selecPais[30];
-	int jugIdSeleccion;
+	int auxJugadorIdSeleccion;
 
 
 	if(pArrayListJugador!=NULL && pArrayListSeleccion!=NULL)
 	{
-		//printf("ENTRE AL IF en selec_AsignarDescripcionPais >0\n");
-		//PUNTERO A LA ESTRUCTURA TENIENDO EL INDICE
-		pJugador=ll_get(pArrayListJugador, indice);
-		//BUSCO EL TAMANIO DE LA LISTA DE SELECCIONES
-		tam=ll_len(pArrayListSeleccion);
-		for(int i=0;i<tam;i++)
+
+		punteroJugador=ll_get(pArrayListJugador, indice);
+		for(int i=0;i<ll_len(pArrayListSeleccion);i++)
 		{
-			//printf("ENTRE AL FOR en selec_AsignarDescripcionPais >0\n");
-			pSeleccion=ll_get(pArrayListSeleccion, i);
-		//	printf("PASE EL ll_get\n");
-			if(selec_getId(pSeleccion, &selecId)==0 && jug_getSIdSeleccion(pJugador, &jugIdSeleccion)==0)
+			punteroSeleccion=ll_get(pArrayListSeleccion, i);
+
+			if(selec_getId(punteroSeleccion, &auxIdSeleccion)==0 && jug_getSIdSeleccion(punteroJugador, &auxJugadorIdSeleccion)==0)
 			{
-				//printf("OBTUVE LOS GETTERS\n");
-				if(selecId==jugIdSeleccion)
+				if(auxIdSeleccion == auxJugadorIdSeleccion)
 				{
-				//	printf("COINCIDENCIA ENTRE EL ID DE SELECCION DEL JUG Y EL DE LA SELEC \n");
-					if(selec_getPais(pSeleccion, selecPais)==0)
+					if(selec_getPais(punteroSeleccion, selecPais)==0)
 					{
 						retorno=0;
-						//PASO EL NOMBRE DEL PAIS
-						//printf("HAGO STRCPY selec_AsignarDescripcionPais >0\n");
 						strcpy(descripcionPais, selecPais);
 						break;
 					}

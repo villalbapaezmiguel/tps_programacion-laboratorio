@@ -20,6 +20,7 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 	//int contadorDeJugadores = 0;
 	if(pFile != NULL && pArrayListJugador != NULL)
 	{
+		//lectura fantasma
 		fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",bufferJugador[0],bufferJugador[1],bufferJugador[2],
 				bufferJugador[3],bufferJugador[4],bufferJugador[5]);
 		while(!feof(pFile))
@@ -44,8 +45,8 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 				if(unJugador != NULL)
 				{
 					ll_add(pArrayListJugador,(Jugador*)unJugador);
+					retorno = 0;
 				}
-				retorno = 0;
 			}
 		}
 	}
@@ -74,7 +75,7 @@ int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)//lista
 			{ //VERIFICO QUE HAYA PODIDO LEVANTAR El jugador
 				break;
 			}
-			nuevoJugador = jug_newParametrosReales2(&auxJugador.id, auxJugador.nombreCompleto,&auxJugador.edad,auxJugador.posicion,auxJugador.nacionalidad,&auxJugador.idSeleccion); //CONSTRUYO UN NUEVO EMPLEADO
+			nuevoJugador = jugador_newConParametros_tomaDatoArchivo(&auxJugador.id, auxJugador.nombreCompleto,&auxJugador.edad,auxJugador.posicion,auxJugador.nacionalidad,&auxJugador.idSeleccion); //CONSTRUYO UN NUEVO EMPLEADO
 			if(nuevoJugador != NULL){
 				ll_add(pArrayListJugador, nuevoJugador); //AGREGO AL LINKEDLIST
 			}

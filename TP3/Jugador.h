@@ -20,10 +20,11 @@ Jugador* jug_new();
 Jugador* jug_newParametros(char* idStr,char* nombreCompletoStr,char* edadStr, char* posicionStr, char* nacionalidadStr, char* idSelccionStr);
 
 void jug_delete(Jugador* this);
+
 int jug_setID(Jugador *this, int *id);
 int jug_setId(Jugador* this,int id);
+
 int jug_getId(Jugador* this,int* id);
-//int jug_obtenerElmaxId(Jugador* this,int* id);
 int jug_getID(Jugador *this, int *id);
 
 int jug_setNombreCompleto(Jugador* this,char* nombreCompleto);
@@ -40,27 +41,27 @@ int jug_getEdad(Jugador* this,int* edad);
 
 int jug_setIdSeleccion(Jugador* this,int idSeleccion);
 int jug_getSIdSeleccion(Jugador* this,int* idSeleccion);
-//mias
+/*********************************************************************************/
 int jugador_obtenerElmaximoId(Jugador* this,int* id);
-void jug_encabezado();
-int jug_imprimirUnJugador(Jugador* this);
+void jugador_encabezado();
+int jugador_imprimirUnJugador(Jugador* this);
 
-Jugador* jug_newParametrosReales(int id,char* nombreC,int edad,char* posicion, char*nacionalidad, int idSeleccion);
+Jugador* jugador_newConParametros(int id,char* nombreC,int edad,char* posicion, char*nacionalidad, int idSeleccion);
+Jugador* jugador_newConParametros_tomaDatoArchivo(int* id,char* nombreC,int* edad,char* posicion, char*nacionalidad, int* idSeleccion);
 
-Jugador* jug_newParametrosReales2(int* id,char* nombreC,int* edad,char* posicion, char*nacionalidad, int* idSeleccion);
-int convertirIdEnPosicion(int id, char* nombreDeLaPosicion);
-void subMenuListadoPosiciones();
-void subMenuListadoNacionalidades();
+int jugador_convertirIdEnPosicion(int id, char* nombreDeLaPosicion);
+void jugador_subMenuListadoPosiciones();
+void jugador_subMenuListadoNacionalidades();
+int jugador_imprimirListaJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion, int referenciaDeUso);
 
-int jug_ordenarPorNacionalidad(void* p1,void*p2);
+int jugador_ordenarPorNacionalidad(void* p1,void*p2);
+int jugador_ordenarPorEdad(void* p1,void*p2);
+int jugador_ordenarPorNombre(void* p1,void*p2);
 
-int jug_ordenarPorEdad(void* p1,void*p2);
+int jugador_paraConvocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
+int jugador_sacarConvocado(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
 
-int jug_ordenarPorNombre(void* p1,void*p2);
-int jug_convocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
-int jug_imprimirJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion, int referenciaDeUso);
-int jug_Solicitar_Id(LinkedList* pArrayListJugador, int * indice ,char * mensaje);
-int jug_BuscarPorId(LinkedList* pArrayListJugador, int idBuscado, int* indice);
-int jug_Quitar_Convocado(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
+int jugador_pedirId(LinkedList* pArrayListJugador, int * indice ,char * mensaje);
+int jugador_buscarPorId(LinkedList* pArrayListJugador, int idBuscado, int* indice);
 
 #endif // jug_H_INCLUDED

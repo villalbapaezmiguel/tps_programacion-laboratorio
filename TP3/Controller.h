@@ -14,7 +14,7 @@ int actualizarId(char* path, char* id);
 int obtenerID(int* id);
 int actualizarIdok(int id);
 int controller_guardarComoTextoMaxID(FILE* pFile,char* path, LinkedList* pArrayListJugador);
-int guardarComoTexto_maxID(FILE* pFile, LinkedList* pArrayListJugador,int* maxID);
+int controller_guardarComoTexto_maximoId(FILE* pFile, LinkedList* pArrayListJugador,int* maxID);
 int buscarJugadorId(int* idABuscar, LinkedList* pArrayListJugador);
 //2 ALTA HECHO PERO PONER OPCION DE NACION Y POS
 int controller_agregarJugador(LinkedList* pArrayListJugador);

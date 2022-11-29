@@ -80,16 +80,19 @@ int pedirDatos(char* pDatos, int largo)
 
 	if(fgets(bufferString , sizeof(bufferString), stdin) != NULL)
 	{
-		if(bufferString[strnlen(bufferString, sizeof(bufferString)) -1] == '\n')
+		if(strcmp(bufferString, "\n")==0)
 		{
-			bufferString[strnlen(bufferString, sizeof(bufferString)) -1] = '\0';
-		}
-
-
-		if(strnlen(bufferString, sizeof(bufferString)) <= largo)
-		{
-			strncpy(pDatos,bufferString , largo);
-			retorno = 0;
+			printf("\nError , ENTER No es un dato correcto...");
+		}else{
+			if(bufferString[strnlen(bufferString, sizeof(bufferString)) -1] == '\n')
+			{
+				bufferString[strnlen(bufferString, sizeof(bufferString)) -1] = '\0';
+			}
+			if(strnlen(bufferString, sizeof(bufferString)) <= largo)
+			{
+				strncpy(pDatos,bufferString , largo);
+				retorno = 0;
+			}
 		}
 	}
 
