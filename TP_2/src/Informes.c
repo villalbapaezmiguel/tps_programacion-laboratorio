@@ -118,7 +118,7 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 				switch(opcion)
 				{
 				case 1:
-					printf("\n<<Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador>>");
+					printf("\n<<Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador>>\n");
 
 					if(informe_oredenarAlfabeticamenteNombreConfederacion(listadoJugador, largoJugador, listadoConfederacion, largoConfederacion) == 0)
 					{
@@ -126,27 +126,27 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 					}
 					break;
 				case 2:
-					printf("\n<<2)Listado de confederaciones con sus jugadores>>");
+					printf("\n<<2)Listado de confederaciones con sus jugadores>>\n");
 					informar_listadoConfederacionConSusJugadores(listadoJugador, largoJugador, listadoConfederacion, largoConfederacion);
 					break;
 				case 3:
-					printf("\n<<3)Total y promedio de todos los salarios y cuántos jugadores cobran más del salario promedio>>");
+					printf("\n<<3)Total y promedio de todos los salarios y cuántos jugadores cobran más del salario promedio>>\n");
 					informar_totalPromedioSalarios(listadoJugador, largoJugador);
 					break;
 				case 4:
-					printf("\n<<4)Informar la confederación con mayor cantidad de años de contratos total>>");
+					printf("\n<<4)Informar la confederación con mayor cantidad de años de contratos total>>\n");
 					informar_confederacionMayorCantidadContratoTotal(listadoJugador, largoJugador);
 					break;
 				case 5:
-					printf("\n<<5)Informar porcentaje de jugadores por cada confederación.>>");
+					printf("\n<<5)Informar porcentaje de jugadores por cada confederación.>>\n");
 					informar_porcentajeJugadoresPorCadaConfederacion(listadoJugador, largoJugador);
 					break;
 				case 6:
-					printf("\n<<6)Informar cual es la región con más jugadores y el listado de los mismos>>");
+					printf("\n<<6)Informar cual es la región con más jugadores y el listado de los mismos>>\n");
 					informar_regionConMasJugadores(listadoJugador, largoJugador, listadoConfederacion, largoConfederacion);
 					break;
 				case 7:
-					printf("\n<<7)Salir>>");
+					printf("\n<<7)Salir>>\n");
 					break;
 				}
 			}
@@ -401,6 +401,8 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\n***************************************************************************************************");
 			printf("\nLa confederacion con mayor cantidad de años total es : CONMEBOL con %d años Totales", acumuladorAniosCONMEBOL);
 			printf("\n***************************************************************************************************");
+		}else{
+			printf("\nNO conmebol");
 		}
 		if(acumuladorAniosUEFA > acumuladorAniosCONMEBOL &&
 				acumuladorAniosUEFA > acumuladorAniosAFC &&
@@ -411,6 +413,8 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\n***************************************************************************************************");
 			printf("\nLa confederacion con mayor cantidad de años total es : UEFA con %d años Totales", acumuladorAniosUEFA);
 			printf("\n***************************************************************************************************");
+		}else{
+			printf("\nNO uefa");
 		}
 		if(acumuladorAniosAFC > acumuladorAniosUEFA &&
 				acumuladorAniosAFC > acumuladorAniosCONMEBOL &&
@@ -421,7 +425,10 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\n***************************************************************************************************");
 			printf("\nLa confederacion con mayor cantidad de años total es : AFC con %d años Totales", acumuladorAniosAFC);
 			printf("\n***************************************************************************************************");
+		}else{
+			printf("\nNO afc");
 		}
+
 		if(acumuladorAniosCAF > acumuladorAniosUEFA &&
 				acumuladorAniosCAF > acumuladorAniosCONMEBOL &&
 				acumuladorAniosCAF > acumuladorAniosCONMEBOL &&
@@ -431,6 +438,8 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\n***************************************************************************************************");
 			printf("\nLa confederacion con mayor cantidad de años total es : CAF con %d años Totales", acumuladorAniosCAF);
 			printf("\n***************************************************************************************************");
+		}else{
+			printf("\nNO caf");
 		}
 		if(acumuladorAniosCONCACAF > acumuladorAniosUEFA &&
 				acumuladorAniosCONCACAF > acumuladorAniosAFC &&
@@ -441,6 +450,8 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\n***************************************************************************************************");
 			printf("\nLa confederacion con mayor cantidad de años total es : CONCACAF con %d años Totales", acumuladorAniosCONCACAF);
 			printf("\n***************************************************************************************************");
+		}else{
+			printf("\nNO concacaf");
 		}
 		if(acumuladorAniosOFC > acumuladorAniosUEFA &&
 				acumuladorAniosOFC > acumuladorAniosAFC &&
@@ -451,6 +462,8 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\n***************************************************************************************************");
 			printf("\nLa confederacion con mayor cantidad de años total es : OFC con %d años Totales", acumuladorAniosOFC);
 			printf("\n***************************************************************************************************");
+		}else{
+			printf("\nNO ofc");
 		}
 	}else{
 		printf("\nError con la lista de confederaciones y los jugadores!! ");

@@ -80,16 +80,19 @@ int pedirDatos(char* pDatos, int largo)
 
 	if(fgets(bufferString , sizeof(bufferString), stdin) != NULL)
 	{
-		if(bufferString[strnlen(bufferString, sizeof(bufferString)) -1] == '\n')
+		if(strcmp(bufferString, "\n")==0)
 		{
-			bufferString[strnlen(bufferString, sizeof(bufferString)) -1] = '\0';
-		}
-
-
-		if(strnlen(bufferString, sizeof(bufferString)) <= largo)
-		{
-			strncpy(pDatos,bufferString , largo);
-			retorno = 0;
+			printf("\nError , ENTER No es un dato correcto...");
+		}else{
+			if(bufferString[strnlen(bufferString, sizeof(bufferString)) -1] == '\n')
+			{
+				bufferString[strnlen(bufferString, sizeof(bufferString)) -1] = '\0';
+			}
+			if(strnlen(bufferString, sizeof(bufferString)) <= largo)
+			{
+				strncpy(pDatos,bufferString , largo);
+				retorno = 0;
+			}
 		}
 	}
 
@@ -263,6 +266,7 @@ int utn_pedirNumeroShort(short* pRespuesta , char* mensaje  , char* mensajeError
 					retorno = 0;//todo salio ok
 
 				}else{
+					retorno = -1;
 					printf("\n%s",mensajeError);//imprimimos mensaje error
 					printf("\nEl numero ingresado excede los limites del valor maximo o minimo ");
 				}
