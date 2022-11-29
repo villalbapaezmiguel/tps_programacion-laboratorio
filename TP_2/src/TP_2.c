@@ -27,20 +27,20 @@ int main(void) {
 	if(inicializar_Jugador(jugadores, JUGADOORES_LEN) == 0)
 	{
 		printf("init ok\n");
-		*(jugadores+0) = altaForzadaJugador(1, "Emiliano Martinez", "arquero", 1, 100, 100000.0, 4);
-		*(jugadores+1) = altaForzadaJugador(2, "Juan Musso", "arquero", 7, 100, 80000.0, 2);
-		*(jugadores+2) = altaForzadaJugador(3, "Leo Messi", "delantero", 10, 100, 80000.0, 4);
-		*(jugadores+3) = altaForzadaJugador(4, "Almirez Ali", "delantero", 9, 100, 55000.0, 1);
-		*(jugadores+4) = altaForzadaJugador(5, "Harry Maguire", "defensor", 2, 101, 70000.0, 4);
-		*(jugadores+5) = altaForzadaJugador(6, "Eric Dier", "defensor", 3, 101, 60000.0, 2);
-		*(jugadores+6) = altaForzadaJugador(7, "Harry Kane", "delantero", 10, 101, 3000.0, 2);
-		*(jugadores+7) = altaForzadaJugador(8, "Alfred Gomis", "arquero", 1, 101, 9000.0, 1);
-		*(jugadores+8) = altaForzadaJugador(9, "Abdelkarim Hassan", "mediocampista", 8, 101, 48000.0, 1);
-		*(jugadores+9) = altaForzadaJugador(10, "Guillermo Ochoa", "arquero", 1, 104, 90000.0, 4);
-		*(jugadores+10) = altaForzadaJugador(11, "Tecatito", "delantero", 11, 104, 100000.0, 3);
-		*(jugadores+11) = altaForzadaJugador(12, "Luis Romo", "medicampista", 7, 104, 100000.0, 2);
-		*(jugadores+12) = altaForzadaJugador(13, "Bamba Dieng", "delantero", 9, 103, 100000.0, 2);
-		*(jugadores+13) = altaForzadaJugador(14, "Demba Seck", "delantero", 11, 103, 6000.0, 2);
+//		*(jugadores+0) = altaForzadaJugador(1, "Emiliano Martinez", "arquero", 1, 100, 100000.0, 4);
+//		*(jugadores+1) = altaForzadaJugador(2, "Juan Musso", "arquero", 7, 100, 80000.0, 2);
+//		*(jugadores+2) = altaForzadaJugador(3, "Leo Messi", "delantero", 10, 100, 80000.0, 4);
+//		*(jugadores+3) = altaForzadaJugador(4, "Almirez Ali", "delantero", 9, 100, 55000.0, 1);
+//		*(jugadores+4) = altaForzadaJugador(5, "Harry Maguire", "defensor", 2, 101, 70000.0, 4);
+//		*(jugadores+5) = altaForzadaJugador(6, "Eric Dier", "defensor", 3, 101, 60000.0, 2);
+//		*(jugadores+6) = altaForzadaJugador(7, "Harry Kane", "delantero", 10, 101, 3000.0, 2);
+//		*(jugadores+7) = altaForzadaJugador(8, "Alfred Gomis", "arquero", 1, 101, 9000.0, 1);
+//		*(jugadores+8) = altaForzadaJugador(9, "Abdelkarim Hassan", "mediocampista", 8, 101, 48000.0, 1);
+//		*(jugadores+9) = altaForzadaJugador(10, "Guillermo Ochoa", "arquero", 1, 104, 90000.0, 4);
+//		*(jugadores+10) = altaForzadaJugador(11, "Tecatito", "delantero", 11, 104, 100000.0, 3);
+//		*(jugadores+11) = altaForzadaJugador(12, "Luis Romo", "medicampista", 7, 104, 100000.0, 2);
+//		*(jugadores+12) = altaForzadaJugador(13, "Bamba Dieng", "delantero", 9, 103, 100000.0, 2);
+//		*(jugadores+13) = altaForzadaJugador(14, "Demba Seck", "delantero", 11, 103, 6000.0, 2);
 //		*(jugadores+14) = altaForzadaJugador(15, "Tarek Salman", "defensor", 6, 102, 78000.0, 5);
 
 		*(confederacion+0) = altaForzadaConfederacion(CONFEDERACION_CONMEBOL, "CONMEBOL", "Sudamerica", 1916);

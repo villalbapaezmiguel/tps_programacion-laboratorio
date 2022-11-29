@@ -98,7 +98,19 @@ void informar_jugador(eJugador* punteroArrayJugador , int largoJugador)
 
 
 
-
+/*void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacion* listadoConfederacion , int largoConfederacion)
+ *Objetivo de la funcion :
+ * 	muestrta un menu de opcion y poder ver la informacion de los mismo
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* pListaJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ * Parametro : eConfederacion* pListaConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConfederacion : tipo entero , es el largo del array de estrutura
+ *
+ *
+ *Retono : void
+ **/
 void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacion* listadoConfederacion , int largoConfederacion)
 {
 	int opcion ;
@@ -158,6 +170,19 @@ void subMenu_informe(eJugador* listadoJugador , int largoJugador , eConfederacio
 
 //Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador
 
+/*int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConfederacion , int largoConfederacion)
+ *Objetivo de la funcion :
+ * 	muestrta la lista de los jugadores de los nombres de las confederaciones ordenadas alfabeticamete
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* pListaJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ * Parametro : eConfederacion* pListaConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConfederacion : tipo entero , es el largo del array de estrutura
+ *
+ *
+ *Retono : retorna 0 si salio todo bien , de lo contrario -1
+ **/
 int informe_oredenarAlfabeticamenteNombreConfederacion(eJugador* listadoJugador , int largoJugador, eConfederacion* listadoConfederacion , int largoConfederacion)
 {
 //	eConfederacion auxConfederacion ;
@@ -402,7 +427,7 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\nLa confederacion con mayor cantidad de años total es : CONMEBOL con %d años Totales", acumuladorAniosCONMEBOL);
 			printf("\n***************************************************************************************************");
 		}else{
-			printf("\nNO conmebol");
+//			printf("\nNO conmebol");
 		}
 		if(acumuladorAniosUEFA > acumuladorAniosCONMEBOL &&
 				acumuladorAniosUEFA > acumuladorAniosAFC &&
@@ -414,7 +439,7 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\nLa confederacion con mayor cantidad de años total es : UEFA con %d años Totales", acumuladorAniosUEFA);
 			printf("\n***************************************************************************************************");
 		}else{
-			printf("\nNO uefa");
+//			printf("\nNO uefa");
 		}
 		if(acumuladorAniosAFC > acumuladorAniosUEFA &&
 				acumuladorAniosAFC > acumuladorAniosCONMEBOL &&
@@ -426,7 +451,7 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\nLa confederacion con mayor cantidad de años total es : AFC con %d años Totales", acumuladorAniosAFC);
 			printf("\n***************************************************************************************************");
 		}else{
-			printf("\nNO afc");
+//			printf("\nNO afc");
 		}
 
 		if(acumuladorAniosCAF > acumuladorAniosUEFA &&
@@ -439,7 +464,7 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\nLa confederacion con mayor cantidad de años total es : CAF con %d años Totales", acumuladorAniosCAF);
 			printf("\n***************************************************************************************************");
 		}else{
-			printf("\nNO caf");
+//			printf("\nNO caf");
 		}
 		if(acumuladorAniosCONCACAF > acumuladorAniosUEFA &&
 				acumuladorAniosCONCACAF > acumuladorAniosAFC &&
@@ -451,7 +476,7 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\nLa confederacion con mayor cantidad de años total es : CONCACAF con %d años Totales", acumuladorAniosCONCACAF);
 			printf("\n***************************************************************************************************");
 		}else{
-			printf("\nNO concacaf");
+//			printf("\nNO concacaf");
 		}
 		if(acumuladorAniosOFC > acumuladorAniosUEFA &&
 				acumuladorAniosOFC > acumuladorAniosAFC &&
@@ -463,7 +488,7 @@ void informar_confederacionMayorCantidadContratoTotal(eJugador* pListaJugador, i
 			printf("\nLa confederacion con mayor cantidad de años total es : OFC con %d años Totales", acumuladorAniosOFC);
 			printf("\n***************************************************************************************************");
 		}else{
-			printf("\nNO ofc");
+//			printf("\nNO ofc");
 		}
 	}else{
 		printf("\nError con la lista de confederaciones y los jugadores!! ");
@@ -607,6 +632,20 @@ void informar_regionConMasJugadores(eJugador* pListaJugador , int largoJugador ,
 	}
 }
 
+
+/*int listado_jugadoresPorConfederacion(eJugador* pListadoJugador , int largoJugador , int* idConfederacion )
+ *Objetivo de la funcion :
+ * 	muestrta la lista de los jugadores de cada confederacion
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* pListaJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ * Parametro : eConfederacion* pListaConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConfederacion : tipo entero , es el largo del array de estrutura
+ *
+ *
+ *Retono : retorna 0 si salio todo bien , de lo contrario -1
+ **/
 int listado_jugadoresPorConfederacion(eJugador* pListadoJugador , int largoJugador , int* idConfederacion )
 {
 	int retorno = -1;
@@ -686,9 +725,19 @@ int listado_jugadoresPorConfederacion(eJugador* pListadoJugador , int largoJugad
 }
 
 
-//Informar cual es la región con más jugadores y el listado de los mismos.
-//Este proceso debe contar con menú propio permitiendo elegir qué informe se desea ver
-
+/*void subMenu_informar_regionConMasJugadores(eJugador* pListadoJugador , int largoJugador)
+ *Objetivo de la funcion :
+ *  informa cual es la region con mas jugadores y te muestra un listado de los mismo , tambien se puede ver la cantiad de jugadores de cada region con todos sus datos
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* pListaJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ * Parametro : eConfederacion* pListaConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConfederacion : tipo entero , es el largo del array de estrutura
+ *
+ *
+ *Retono : void
+ **/
 void subMenu_informar_regionConMasJugadores(eJugador* pListadoJugador , int largoJugador)
 {
 	int opcion ;
@@ -741,6 +790,19 @@ void subMenu_informar_regionConMasJugadores(eJugador* pListadoJugador , int larg
 
 }
 //rertorna el id de la confederacion
+/*int calcular_mayorCantidadJugadoresRegion(eJugador* pListaJugador, int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion )
+ *Objetivo de la funcion :
+ *  Calcula la region con mas jugadores y retorna el El id de la confederacion
+ *
+ *ParaMetros : void
+ * Parametro : eJugador* pListaJugador , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoJugador : tipo entero , es el largo del array de estrutura
+ * Parametro : eConfederacion* pListaConfederacion , tipo puntero a un array de estructura , es el puntero a un array de estructura
+ * Parametro : int largoConfederacion : tipo entero , es el largo del array de estrutura
+ *
+ *
+ *Retono : retorna el El id de la confederacion , de lo contrario -1
+ **/
 int calcular_mayorCantidadJugadoresRegion(eJugador* pListaJugador, int largoJugador , eConfederacion* pListaConfederacion , int largoConfederacion )
 {
 	int retorno = -1;
